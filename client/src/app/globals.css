@@ -34,7 +34,7 @@
     --text-lg: clamp(16px, 2.5vw, 20px);
     --text-xl: clamp(28px, 5vw, 40px);
 
-    --container: 1420px;
+    --container: 1240px;
   }
 }
 

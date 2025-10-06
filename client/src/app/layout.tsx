@@ -42,7 +42,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn("min-h-screen pt-6 m-0", interTight.variable)}>
-        <Header className="app-container " />
+        <Header className="app-container h-[55px]" />
         <Spacing size="lg" direction="vertical" />
         <Banner className="app-container " />
         <Spacing size="lg" direction="vertical" />

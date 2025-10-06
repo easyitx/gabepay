@@ -31,7 +31,7 @@ export const CurrencyCard: React.FC<CurrencyCardProps> = ({
           currency.isSelected && "border-primary ring-2 ring-primary/20"
         )}
       >
-        <div className="absolute top-1 right-1 bg-purple rounded-full px-3 py-1 flex items-center justify-center">
+        <div className="absolute top-2 right-2 bg-purple rounded-full px-3 py-1 flex items-center justify-center">
           <Typography
             color="accent"
             variant="caption"
@@ -42,7 +42,7 @@ export const CurrencyCard: React.FC<CurrencyCardProps> = ({
         </div>
 
         <div className="flex justify-center mb-2">
-          <div className="w-8 h-8 rounded-full flex items-center justify-center overflow-hidden">
+          <div className="w-[50px] h-[50px] rounded-full flex items-center justify-center overflow-hidden">
             {currency.icon ? (
               <Image
                 src={
@@ -51,9 +51,9 @@ export const CurrencyCard: React.FC<CurrencyCardProps> = ({
                     : `/${currency.icon}`
                 }
                 alt={currency.name}
-                width={32}
-                height={32}
-                className="w-full h-full object-cover"
+                width={42}
+                height={42}
+                className="w-full h-full object-contain"
               />
             ) : (
               <Typography

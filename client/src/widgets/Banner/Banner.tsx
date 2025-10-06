@@ -14,22 +14,20 @@ interface BannerProps {
 }
 
 export const Banner: React.FC<BannerProps> = ({
-  alt = "Banner",
   className,
   priority = false,
-  sizes = "",
 }) => {
   const BannerHeader = () => (
-    <div className="w-full custom-xl:w-1/2  flex flex-col md:gap-4 gap-1 xl:gap-10">
+    <div className="w-full custom-xl:w-1/2  flex flex-col md:gap-2 gap-1 xl:gap-2">
       <Typography color="accent" className="text-xl md:text-sm" variant="h3">
-        Пополняйте с выгодой вместе с cashinout.io
+        Пополняйте с выгодой<br/> вместе с cashinout.io
       </Typography>
       <Typography
         color="foreground"
         className="text-lg md:max-w-3/4"
         variant="body"
       >
-        Комиссия <b>0%</b> при пополнении через Telegram bot
+        Комиссия <b>0%</b> при пополнении<br/> через Telegram bot
       </Typography>
     </div>
   );
@@ -38,15 +36,15 @@ export const Banner: React.FC<BannerProps> = ({
     <Button
       variant="banner"
       size="lg"
-      className="rounded-full max-w-fit text-accent flex pl-2 gap-2 items-center"
+      className="rounded-full max-w-fit text-accent flex pl-1 gap-2 items-center"
     >
       <span className="flex flex-row gap-2 items-center">
         <Icon
           name="sphere"
           className="group-hover:rotate-12 bg-primary h-full p-2 w-auto rounded-full transition-transform duration-300"
         />
-        <Typography color="accent" variant="body">
-          Пополнить сейчас
+        <Typography color="accent" variant="caption">
+          ПОПОЛНИТЬ СЕЙЧАС
         </Typography>
       </span>
     </Button>
@@ -65,13 +63,13 @@ export const Banner: React.FC<BannerProps> = ({
   }) => (
     <div
       className={cn(
-        "flex  gap-3   w-1/3  items-start justify-start  ",
+        "flex  gap-3   w-1/3  items-start justify-start  max-w-[340px]",
         className
       )}
     >
       <Icon
         name={icon}
-        className="rounded h-12 w-12 p-2 bg-accent text-primary"
+        className="rounded-xl h-12 w-12 p-2 bg-accent text-primary"
       />
       <div className="flex w-full flex-col gap-1">
         <Typography color="accent" className="text-md" variant="body">
@@ -85,7 +83,7 @@ export const Banner: React.FC<BannerProps> = ({
   );
 
   const BannerFeatures = () => (
-    <div className="flex w-full justify-between">
+    <div className="flex w-full justify-between ">
       <FeatureCard
         icon="security-card"
         title="Полное сохранение средств"
@@ -130,7 +128,7 @@ export const Banner: React.FC<BannerProps> = ({
             </div>
           </div>
 
-          <div className="hidden custom-xl:block w-full mt-auto pb-4 custom-xl:pb-10">
+          <div className="hidden custom-xl:block w-full mt-auto">
             <BannerFeatures />
           </div>
         </div>

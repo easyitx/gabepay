@@ -40,7 +40,7 @@ export default function Navigation({
       )}
     >
       <ul
-        className={cn("flex items-center gap-4", isMobile && "flex-col gap-6")}
+        className={cn("flex items-center gap-2", isMobile && "flex-col gap-6")}
       >
         {navigationConfig.map((item) => (
           <li key={item.href}>

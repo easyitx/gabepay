@@ -21,23 +21,7 @@ const Replenishment = ({ className }: { className?: string }) => {
   );
 
   const mockCurrencies: Currency[] = [
-    { id: "1", name: "сбп", symbol: "СБП", icon: "", percentage: 0 },
-    { id: "2", name: "МИР VISA", symbol: "VISA", icon: "", percentage: 2 },
-    { id: "3", name: "USDT", symbol: "USDT", icon: "", percentage: 2 },
-    { id: "4", name: "TON", symbol: "TON", icon: "", percentage: 2 },
-    { id: "5", name: "BTC", symbol: "BTC", icon: "", percentage: 2 },
-    { id: "6", name: "LTC", symbol: "LTC", icon: "", percentage: 2 },
-    { id: "7", name: "ETH", symbol: "ETH", icon: "", percentage: 2 },
-    { id: "8", name: "SOL", symbol: "SOL", icon: "", percentage: 2 },
-    { id: "9", name: "BNB", symbol: "BNB", icon: "", percentage: 2 },
-    { id: "10", name: "TRX", symbol: "TRX", icon: "", percentage: 2 },
-    { id: "11", name: "TRX", symbol: "TRX", icon: "", percentage: 2 },
-    { id: "12", name: "TRX", symbol: "TRX", icon: "", percentage: 2 },
-    { id: "13", name: "TRX", symbol: "TRX", icon: "", percentage: 2 },
-    { id: "14", name: "TRX", symbol: "TRX", icon: "", percentage: 2 },
-    { id: "15", name: "TRX", symbol: "TRX", icon: "", percentage: 2 },
-    { id: "16", name: "TRX", symbol: "TRX", icon: "", percentage: 2 },
-    { id: "17", name: "TRX", symbol: "TRX", icon: "", percentage: 2 },
+    { id: "1", name: "CASHINOUT", symbol: "СБП", icon: "/methods/cashinout.svg", percentage: 0 },
   ];
 
   const handleSelectCurrency = (currency: Currency) => {
