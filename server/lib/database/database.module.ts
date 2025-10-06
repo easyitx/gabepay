@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ModelDefinition, MongooseModule } from '@nestjs/mongoose';
 import { config } from 'dotenv';
-import * as process from 'node:process';
 config();
 
 @Module({
