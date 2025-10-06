@@ -42,30 +42,6 @@ export class AcquiringService {
 
     const acquiringProvider = this.getAcquiringProviderService(method.provider);
 
-    // Проверяем количество активных платежей
-    // const activeInvoices = await this.invoiceModel.countDocuments({
-    //   email: data.email,
-    //   provider: method.provider,
-    //   status: InvoiceStatus.pending,
-    // });
-
-    // Если есть неоплаченный счет возвращаем его
-    // const numberValidActiveDepositOrders = 1;
-    // if (activeInvoices >= numberValidActiveDepositOrders) {
-    //   const invoice = await this.invoiceModel.findOne({
-    //     email: data.email,
-    //     provider: method.provider,
-    //     status: InvoiceStatus.pending,
-    //   });
-    //
-    //   if (invoice) {
-    //     return {
-    //       transactionId: invoice.invoiceId,
-    //       paymentLink: invoice.paymentLink,
-    //     };
-    //   }
-    // }
-
     // Создаем платеж в системе
     const acquiringCommission = new Decimal(data.amount)
       .mul(method.relativeProviderCommission)
@@ -80,6 +56,38 @@ export class AcquiringService {
           .plus(acquiringCommission)
           .plus(serviceCommission)
       : new Decimal(data.amount);
+
+    // Проверяем количество активных платежей созданных за последние 23 часа
+    const twentyThreeHoursAgo = new Date(Date.now() - 23 * 60 * 60 * 1000);
+
+    const activeInvoices = await this.invoiceModel.countDocuments({
+      email: data.email,
+      amount: amount,
+      provider: method.provider,
+      status: InvoiceStatus.pending,
+      createdAt: { $gte: twentyThreeHoursAgo }, // только счета созданные в последние 23 часа
+    });
+
+    // Если есть неоплаченный счет возвращаем его
+    const numberValidActiveDepositOrders = 1;
+    if (activeInvoices >= numberValidActiveDepositOrders) {
+      const invoice = await this.invoiceModel
+        .findOne({
+          email: data.email,
+          amount: amount,
+          provider: method.provider,
+          status: InvoiceStatus.pending,
+          createdAt: { $gte: twentyThreeHoursAgo },
+        })
+        .sort({ createdAt: -1 }); // берем самый свежий
+
+      if (invoice) {
+        return {
+          transactionId: invoice.invoiceId,
+          paymentLink: invoice.paymentLink,
+        };
+      }
+    }
 
     return await mongooseTransaction(this.connection, async (session) => {
       const payData: Partial<Invoice> = {

@@ -5,6 +5,7 @@ import { AcquiringService } from './acquiring.service';
 import { DatabaseModule } from '../../lib/database';
 import { Invoice, InvoiceSchema } from './invoice.schema';
 import { SteamAcquiringModule } from '../steam-acquiring/steam-acquiring.module';
+import { AcquiringCroneService } from './acquiring-crone.service';
 
 @Module({
   imports: [
@@ -13,6 +14,6 @@ import { SteamAcquiringModule } from '../steam-acquiring/steam-acquiring.module'
     SteamAcquiringModule,
   ],
   controllers: [AcquiringController],
-  providers: [AcquiringService],
+  providers: [AcquiringService, AcquiringCroneService],
 })
 export class AcquiringModule {}

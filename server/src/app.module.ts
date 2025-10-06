@@ -6,9 +6,11 @@ import { AcquiringModule } from './acquiring/acquiring.module';
 import { SteamAcquiringModule } from './steam-acquiring/steam-acquiring.module';
 import { SteamValidateModule } from './steam-validate/steam-validate.module';
 import { DatabaseModule } from '../lib/database';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot(),
     DatabaseModule,
     AcquiringModule,
