@@ -2,10 +2,9 @@ import Image from "next/image";
 import { cn } from "@/shared/lib/utils";
 import Button from "@/shared/ui/Button/Button";
 
-import bannerDesktop from "@/shared/assets/images/banner-desktop.png";
+import bannerDesktop from "@/shared/assets/images/banner-desktop.webp";
 import { Icon } from "@/shared/ui/Icon/Icon";
 import { Typography } from "@/shared/ui/Typography";
-import { Spacing } from "@/shared/ui/Spacing";
 
 interface BannerProps {
   alt?: string;
