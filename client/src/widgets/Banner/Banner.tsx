@@ -115,7 +115,7 @@ export const Banner: React.FC<BannerProps> = ({
         placeholder="blur"
         unoptimized
         sizes="(min-width: 1024px) 100vw, 100vw"
-        className="rounded-[3rem] object-cover w-full  min-h-65"
+        className="rounded-[4rem] object-cover w-full  min-h-65"
       />
       <div className="absolute top-0 left-0 w-full h-full">
         <div className="absolute top-0 right-0 flex w-full p-2 custom-xl:p-10 flex-col h-full justify-center items-start overflow-hidden">
