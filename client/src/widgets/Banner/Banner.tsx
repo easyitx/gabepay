@@ -1,0 +1,140 @@
+import Image from "next/image";
+import { cn } from "@/shared/lib/utils";
+import Button from "@/shared/ui/Button/Button";
+
+import bannerDesktop from "@/shared/assets/images/banner-desktop.png";
+import { Icon } from "@/shared/ui/Icon/Icon";
+import { Typography } from "@/shared/ui/Typography";
+import { Spacing } from "@/shared/ui/Spacing";
+
+interface BannerProps {
+  alt?: string;
+  className?: string;
+  priority?: boolean;
+  sizes?: string;
+}
+
+export const Banner: React.FC<BannerProps> = ({
+  alt = "Banner",
+  className,
+  priority = false,
+  sizes = "",
+}) => {
+  const BannerHeader = () => (
+    <div className="w-full custom-xl:w-1/2  flex flex-col md:gap-4 gap-1 xl:gap-10">
+      <Typography color="accent" className="text-xl md:text-sm" variant="h3">
+        Пополняйте с выгодой вместе с cashinout.io
+      </Typography>
+      <Typography
+        color="foreground"
+        className="text-lg md:max-w-3/4"
+        variant="body"
+      >
+        Комиссия <b>0%</b> при пополнении через Telegram bot
+      </Typography>
+    </div>
+  );
+
+  const BannerCTA = () => (
+    <Button
+      variant="banner"
+      size="lg"
+      className="rounded-full max-w-fit text-accent flex pl-2 gap-2 items-center"
+    >
+      <span className="flex flex-row gap-2 items-center">
+        <Icon
+          name="sphere"
+          className="group-hover:rotate-12 bg-primary h-full p-2 w-auto rounded-full transition-transform duration-300"
+        />
+        <Typography color="accent" variant="body">
+          Пополнить сейчас
+        </Typography>
+      </span>
+    </Button>
+  );
+
+  const FeatureCard = ({
+    icon,
+    title,
+    description,
+    className,
+  }: {
+    icon: "security-card" | "flash" | "strong-box";
+    title: string;
+    description: string;
+    className?: string;
+  }) => (
+    <div
+      className={cn(
+        "flex  gap-3   w-1/3  items-start justify-start  ",
+        className
+      )}
+    >
+      <Icon
+        name={icon}
+        className="rounded h-12 w-12 p-2 bg-accent text-primary"
+      />
+      <div className="flex w-full flex-col gap-1">
+        <Typography color="accent" className="text-md" variant="body">
+          {title}
+        </Typography>
+        <Typography color="foreground" className="text-sm" variant="body">
+          {description}
+        </Typography>
+      </div>
+    </div>
+  );
+
+  const BannerFeatures = () => (
+    <div className="flex w-full justify-between">
+      <FeatureCard
+        icon="security-card"
+        title="Полное сохранение средств"
+        description="0% комиссии — вы платите ровно столько, сколько пополняете"
+        className="border-r pr-5"
+      />
+      <FeatureCard
+        icon="flash"
+        title="Скорость и надежность"
+        description="Мгновенное зачисление без простоев"
+        className="border-r px-5"
+      />
+      <FeatureCard
+        icon="strong-box"
+        title="Простота и безопасность"
+        description="Интуитивный интерфейс и защита на уровне банка"
+        className="pl-5"
+      />
+    </div>
+  );
+
+  return (
+    <div className={cn("relative", className)}>
+      <Image
+        src={bannerDesktop}
+        alt={""}
+        priority={priority}
+        sizes={sizes}
+        quality={100}
+        placeholder="blur"
+        width={2000}
+        className="rounded-[3rem]  min-h-65"
+        height={2000}
+      />
+      <div className="absolute top-0 left-0 w-full h-full">
+        <div className="absolute top-0 right-0 flex w-full p-2 custom-xl:p-10 flex-col h-full justify-between overflow-hidden">
+          <div className="flex flex-col md:gap-4 sm:gap-4">
+            <BannerHeader />
+            <div className="flex justify-start">
+              <BannerCTA />
+            </div>
+          </div>
+
+          <div className="hidden custom-xl:block">
+            <BannerFeatures />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

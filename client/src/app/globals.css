@@ -1,0 +1,176 @@
+@import "tailwindcss";
+
+:root {
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-success: var(--success);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: rgba(26, 26, 26, 1);
+
+    --background-card: rgba(46, 46, 46, 1);
+    --background-card-hover: rgba(26, 26, 26, 1);
+
+    --secondary: rgba(40, 40, 40, 1);
+    --foreground-secondary: rgb(70, 69, 69);
+    --primary: rgba(112, 87, 255, 1);
+    --foreground: rgba(126, 126, 126, 1);
+    --accent: rgba(255, 255, 255, 1);
+    --success: rgba(95, 255, 87, 1);
+    --purple: rgba(112, 87, 255, 0.2);
+    --text-sm: clamp(12px, 1.8vw, 14px);
+    --text-base: clamp(13px, 2vw, 16px);
+    --text-lg: clamp(16px, 2.5vw, 20px);
+    --text-xl: clamp(28px, 5vw, 40px);
+
+    --container: 1420px;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-intertight), Arial, Helvetica, sans-serif;
+  background-image: linear-gradient(
+      rgba(26, 26, 26, 0.7),
+      rgba(26, 26, 26, 0.7)
+    ),
+    url("../shared/assets/images/background.svg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-size: var(--text-base);
+  font-feature-settings: "rlig" 1, "calt" 1;
+  line-height: clamp(1.4, 1.2 + 0.5vw, 1.6);
+}
+
+@layer utilities {
+  /* Кастомные брейкпоинты для 1120px */
+  @media (min-width: 1120px) {
+    .custom-xl\:block {
+      display: block;
+    }
+    .custom-xl\:hidden {
+      display: none;
+    }
+    .custom-xl\:w-1\/2 {
+      width: 50%;
+    }
+    .custom-xl\:p-10 {
+      padding: 2.5rem;
+    }
+  }
+
+  .bg-primary {
+    background-color: var(--primary);
+  }
+  .bg-secondary {
+    background-color: var(--secondary);
+  }
+  .bg-accent {
+    background-color: var(--accent);
+  }
+  .bg-success {
+    background-color: var(--success);
+  }
+  .bg-foreground-secondary {
+    background-color: var(--foreground-secondary);
+  }
+  .bg-purple {
+    background-color: var(--purple);
+  }
+  .bg-background-card {
+    background-color: var(--background-card);
+  }
+  .bg-background-card-hover {
+    background-color: var(--background-card-hover);
+  }
+  .text-primary {
+    color: var(--primary);
+  }
+  .text-secondary {
+    color: var(--secondary);
+  }
+  .text-accent {
+    color: var(--accent);
+  }
+  .text-purple {
+    color: var(--purple);
+  }
+  .text-success {
+    color: var(--success);
+  }
+  .text-foreground-secondary {
+    color: var(--foreground-secondary);
+  }
+  .text-foreground {
+    color: var(--foreground);
+  }
+  .max-w-container {
+    max-width: var(--container);
+  }
+
+  .text-sm {
+    font-size: var(--text-sm);
+  }
+  .text-base {
+    font-size: var(--text-base);
+  }
+  .text-lg {
+    font-size: var(--text-lg);
+  }
+  .text-xl {
+    font-size: var(--text-xl);
+  }
+}
+
+@layer components {
+  .card {
+    background-color: var(--background-card);
+    color: var(--foreground);
+    @apply rounded-3xl;
+  }
+
+  .app-container {
+    max-width: var(--container);
+    padding: 0 20px;
+    margin: 0 auto;
+  }
+}
+
+@layer utilities {
+  /* Accordion animations */
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+  .animate-accordion-down {
+    animation: accordion-down 0.2s ease-out;
+  }
+  .animate-accordion-up {
+    animation: accordion-up 0.2s ease-out;
+  }
+}
