@@ -12,6 +12,8 @@ import {
 import { Invoice, InvoiceDocument, InvoiceStatus } from './invoice.schema';
 import { AppException } from '../../lib/errors/appException';
 import { CashinoutService } from './cashinout/cashinout.service';
+import { SteamAcquiringService } from '../steam-acquiring/steam-acquiring.service';
+import { generateId, shortId } from '../../lib/database';
 
 @Injectable()
 export class AcquiringService {
@@ -19,11 +21,16 @@ export class AcquiringService {
     @InjectModel(Invoice.name)
     private readonly invoiceModel: Model<InvoiceDocument>,
     private readonly cashinoutService: CashinoutService,
+    private readonly steamAcquiringService: SteamAcquiringService,
   ) {}
 
   async createNewInvoice(
     data: AcquiringCreatePayReq,
   ): Promise<AcquiringCreatePayRes> {
+    if (data.currency !== 'RUB') {
+      throw AppException.notFound('Currency not supported.');
+    }
+
     const method = AcquiringMethods.find(
       (method) => method.code === data.methodCode,
     );
@@ -82,14 +89,16 @@ export class AcquiringService {
       acquiringCommission: new Decimal(acquiringCommission),
       serviceCommission: new Decimal(serviceCommission),
       account: data.account,
-      code: data.code,
       metadata: {},
     };
 
     const newInvoice = await this.invoiceModel.create(payData);
 
+    const verifyData = await this.steamAcquiringService.paymentVerify(data);
+    payData.code = verifyData.code;
+
     // Создаем платеж у провайдера
-    const details = await acquiringProvider.createInvoice(newInvoice, method);
+    const details = await acquiringProvider.createInvoice(newInvoice);
 
     newInvoice.paymentLink = details.paymentLink;
     newInvoice.invoiceId = details.transactionId;

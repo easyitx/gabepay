@@ -4,11 +4,13 @@ import { AcquiringController } from './acquiring.controller';
 import { AcquiringService } from './acquiring.service';
 import { DatabaseModule } from '../../lib/database';
 import { Invoice, InvoiceSchema } from './invoice.schema';
+import { SteamAcquiringModule } from '../steam-acquiring/steam-acquiring.module';
 
 @Module({
   imports: [
     DatabaseModule.forFeature([{ name: Invoice.name, schema: InvoiceSchema }]),
     CashinoutModule,
+    SteamAcquiringModule,
   ],
   controllers: [AcquiringController],
   providers: [AcquiringService],

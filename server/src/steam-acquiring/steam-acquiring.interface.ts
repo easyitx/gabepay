@@ -1,10 +1,23 @@
 export interface SteamCurrencyRateRes {}
 export interface SteamConvertCurrencyRes {}
-export interface SteamPaymentVerifyRes {}
+export interface SteamPaymentVerifyRes {
+  status_code: SteamStatusCode;
+}
 export interface SteamPaymentExecuteRes {}
 export interface SteamPaymentStatusRes {}
 
-export interface SteamVerifyPayRes {}
+export enum SteamStatusCode {
+  DUPLICATE_TRANSACTION = 'DUPLICATE_TRANSACTION',
+  INSUFFICIENT_FUNDS = 'INSUFFICIENT_FUNDS',
+  PAYMENT_VERIFICATION_FAILED = 'PAYMENT_VERIFICATION_FAILED',
+  PAYMENT_CONFIRMATION_FAILED = 'PAYMENT_CONFIRMATION_FAILED',
+  PAYMENT_SUCCESS = 'PAYMENT_SUCCESS',
+  PAYMENT_IN_PROGRESS = 'PAYMENT_IN_PROGRESS',
+  PURCHASE_NOT_FOUND = 'PURCHASE_NOT_FOUND',
+  REQUEST_ACCEPTED = 'REQUEST_ACCEPTED',
+  CALCULATION_ERROR = 'CALCULATION_ERROR',
+  TOP_UP_ERROR = 'TOP_UP_ERROR',
+}
 
 export type SteamCurrency =
   | 'USD'

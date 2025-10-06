@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { CashinoutApiService } from './cashinout-api.service';
-import { AcquiringCreatePayRes, AcquiringMethod } from '../acquiring.interface';
-import { CashinoutCreateOneTimeInvoiceReq } from './cashonout.interface';
+import { AcquiringCreatePayRes } from '../acquiring.interface';
+import {
+  CashinoutCreateOneTimeInvoiceReq,
+  CashinoutCurrencyCodes,
+} from './cashonout.interface';
 import { InvoiceDocument } from '../invoice.schema';
 
 @Injectable()
@@ -10,11 +13,13 @@ export class CashinoutService {
 
   async createInvoice(
     invoice: InvoiceDocument,
-    method: AcquiringMethod,
   ): Promise<AcquiringCreatePayRes> {
     const body: CashinoutCreateOneTimeInvoiceReq = {
-      amount: '0', // сумма в валюте currency, USDT если currency не указана
-      currency: 'WUD',
+      amount: invoice.amount.toString(), // сумма в валюте currency, USDT если currency не указана
+      currency:
+        invoice.currency === 'RUB'
+          ? 'WUD'
+          : (invoice.currency as CashinoutCurrencyCodes),
       allowInternalPaymentSystem: true,
     };
 

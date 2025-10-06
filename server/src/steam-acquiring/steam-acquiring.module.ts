@@ -6,6 +6,6 @@ import { SteamAcquiringService } from './steam-acquiring.service';
   imports: [],
   controllers: [],
   providers: [SteamAcquiringService, SteamAcquiringApiService],
-  exports: [],
+  exports: [SteamAcquiringService],
 })
 export class SteamAcquiringModule {}

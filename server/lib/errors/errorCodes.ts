@@ -4,6 +4,7 @@ export enum ErrorCode {
   INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR',
   NOT_FOUND = 'NOT_FOUND',
   UNAUTHORIZED = 'UNAUTHORIZED',
+  B2B_VERIFICATION_FAILED = 'B2B_VERIFICATION_FAILED',
 }
 
 export interface ErrorMessage {
@@ -28,5 +29,9 @@ export const ERROR_MESSAGES: Record<ErrorCode, ErrorMessage> = {
   [ErrorCode.UNAUTHORIZED]: {
     en: 'Unauthorized access',
     ru: 'Неавторизованный доступ',
+  },
+  [ErrorCode.B2B_VERIFICATION_FAILED]: {
+    en: 'Verification failed',
+    ru: 'Ошибка верификации',
   },
 };

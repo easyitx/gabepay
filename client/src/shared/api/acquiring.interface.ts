@@ -13,9 +13,8 @@ export interface AcquiringMethod {
 
 export interface AcquiringCreatePayReq {
   amount: string;
-  currency: string;
+  currency: string; // Поддерживает только 'RUB'
   account: string;
-  code: string;
   methodCode: string;
   email: string;
 }

@@ -69,6 +69,21 @@ export class AppException extends HttpException {
     });
   }
 
+  // Ошибки B2B
+  static b2bVerificationFailed(
+    statusCode: string,
+    account: string,
+    reason: string,
+    language: 'en' | 'ru' = 'en',
+  ) {
+    return new AppException({
+      code: ErrorCode.B2B_VERIFICATION_FAILED,
+      statusCode: HttpStatus.BAD_REQUEST,
+      details: { b2bStatusCode: statusCode, account, reason },
+      language,
+    });
+  }
+
   // Метод для получения сообщения на определенном языке
   getMessage(language: 'en' | 'ru'): string {
     return ERROR_MESSAGES[this.code][language];

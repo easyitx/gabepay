@@ -21,8 +21,6 @@ export class AcquiringCreatePayReq {
   @IsString()
   account: string;
   @IsString()
-  code: string;
-  @IsString()
   methodCode: string;
   @IsString()
   email: string;
