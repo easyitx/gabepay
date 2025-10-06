@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { InjectConnection, InjectModel } from '@nestjs/mongoose';
+import { Connection, Model } from 'mongoose';
 import Decimal from 'decimal.js';
 import { AcquiringMethods } from './acquiring-methods';
 import {
@@ -13,11 +13,12 @@ import { Invoice, InvoiceDocument, InvoiceStatus } from './invoice.schema';
 import { AppException } from '../../lib/errors/appException';
 import { CashinoutService } from './cashinout/cashinout.service';
 import { SteamAcquiringService } from '../steam-acquiring/steam-acquiring.service';
-import { generateId, shortId } from '../../lib/database';
+import { mongooseTransaction } from '../../lib/database';
 
 @Injectable()
 export class AcquiringService {
   constructor(
+    @InjectConnection() private readonly connection: Connection,
     @InjectModel(Invoice.name)
     private readonly invoiceModel: Model<InvoiceDocument>,
     private readonly cashinoutService: CashinoutService,
@@ -42,28 +43,28 @@ export class AcquiringService {
     const acquiringProvider = this.getAcquiringProviderService(method.provider);
 
     // Проверяем количество активных платежей
-    const activeInvoices = await this.invoiceModel.countDocuments({
-      email: data.email,
-      provider: method.provider,
-      status: InvoiceStatus.pending,
-    });
+    // const activeInvoices = await this.invoiceModel.countDocuments({
+    //   email: data.email,
+    //   provider: method.provider,
+    //   status: InvoiceStatus.pending,
+    // });
 
     // Если есть неоплаченный счет возвращаем его
-    const numberValidActiveDepositOrders = 1;
-    if (activeInvoices >= numberValidActiveDepositOrders) {
-      const invoice = await this.invoiceModel.findOne({
-        email: data.email,
-        provider: method.provider,
-        status: InvoiceStatus.pending,
-      });
-
-      if (invoice) {
-        return {
-          transactionId: invoice.invoiceId,
-          paymentLink: invoice.paymentLink,
-        };
-      }
-    }
+    // const numberValidActiveDepositOrders = 1;
+    // if (activeInvoices >= numberValidActiveDepositOrders) {
+    //   const invoice = await this.invoiceModel.findOne({
+    //     email: data.email,
+    //     provider: method.provider,
+    //     status: InvoiceStatus.pending,
+    //   });
+    //
+    //   if (invoice) {
+    //     return {
+    //       transactionId: invoice.invoiceId,
+    //       paymentLink: invoice.paymentLink,
+    //     };
+    //   }
+    // }
 
     // Создаем платеж в системе
     const acquiringCommission = new Decimal(data.amount)
@@ -80,31 +81,36 @@ export class AcquiringService {
           .plus(serviceCommission)
       : new Decimal(data.amount);
 
-    const payData: Partial<Invoice> = {
-      provider: method.provider,
-      email: data.email,
-      currency: data.currency,
-      amount: amount,
-      status: InvoiceStatus.pending,
-      acquiringCommission: new Decimal(acquiringCommission),
-      serviceCommission: new Decimal(serviceCommission),
-      account: data.account,
-      metadata: {},
-    };
+    return await mongooseTransaction(this.connection, async (session) => {
+      const payData: Partial<Invoice> = {
+        provider: method.provider,
+        email: data.email,
+        currency: data.currency,
+        amount: amount,
+        status: InvoiceStatus.pending,
+        acquiringCommission: new Decimal(acquiringCommission),
+        serviceCommission: new Decimal(serviceCommission),
+        account: data.account,
+        metadata: {},
+      };
 
-    const newInvoice = await this.invoiceModel.create(payData);
+      const createdInvoice = await this.invoiceModel.create([payData], {
+        session,
+      });
+      const newInvoice = createdInvoice[0];
 
-    const verifyData = await this.steamAcquiringService.paymentVerify(data);
-    payData.code = verifyData.code;
+      const verifyData = await this.steamAcquiringService.paymentVerify(data);
+      payData.code = verifyData.code;
 
-    // Создаем платеж у провайдера
-    const details = await acquiringProvider.createInvoice(newInvoice);
+      // Создаем платеж у провайдера
+      const details = await acquiringProvider.createInvoice(newInvoice);
 
-    newInvoice.paymentLink = details.paymentLink;
-    newInvoice.invoiceId = details.transactionId;
-    await newInvoice.save();
+      newInvoice.paymentLink = details.paymentLink;
+      newInvoice.invoiceId = details.transactionId;
+      await newInvoice.save({ session });
 
-    return details;
+      return details;
+    });
   }
 
   getPayMethods(): AcquiringMethod[] {

@@ -7,6 +7,7 @@ import {
   SteamPaymentExecuteRes,
   SteamPaymentStatusRes,
   SteamPaymentVerifyRes,
+  SteamStatusCode,
 } from './steam-acquiring.interface';
 
 @Injectable()
@@ -109,36 +110,36 @@ export class SteamAcquiringApiService {
     );
   }
 
-  public getErrorMessageByStatusCode(statusCode: string): string {
+  public getErrorMessageByStatusCode(statusCode: SteamStatusCode): string {
     switch (statusCode) {
-      case 'REQUEST_REJECTED':
-        return 'B2B отклонил запрос на пополнение.';
-      case 'REQUEST_FAILED':
-        return 'B2B не смог обработать запрос на пополнение.';
-      case 'REQUEST_TIMEOUT':
-        return 'B2B не ответил в течение таймаута.';
-      case 'REQUEST_INVALID':
-        return 'B2B получил некорректный запрос на пополнение.';
-      case 'REQUEST_UNAUTHORIZED':
-        return 'B2B не авторизован для обработки запроса на пополнение.';
-      case 'REQUEST_FORBIDDEN':
-        return 'B2B запретил обработку запроса на пополнение.';
-      case 'REQUEST_NOT_FOUND':
-        return 'B2B не смог найти аккаунт для пополнения.';
-      case 'REQUEST_CONFLICT':
-        return 'B2B получил конфликтный запрос на пополнение.';
-      case 'REQUEST_TOO_MANY_REQUESTS':
-        return 'B2B получил слишком много запросов на пополнение.';
-      case 'REQUEST_INTERNAL_SERVER_ERROR':
-        return 'B2B получил внутреннюю ошибку сервера.';
-      case 'REQUEST_BAD_GATEWAY':
-        return 'B2B получил плохой шлюз.';
-      case 'REQUEST_SERVICE_UNAVAILABLE':
-        return 'B2B получил недоступный сервис.';
-      case 'REQUEST_GATEWAY_TIMEOUT':
-        return 'B2B получил таймаут шлюза.';
-      case 'PAYMENT_VERIFICATION_FAILED':
+      case SteamStatusCode.PAYMENT_VERIFICATION_FAILED:
         return 'Невозможно пополнить текущий аккаунт';
+      // case 'REQUEST_REJECTED':
+      //   return 'B2B отклонил запрос на пополнение.';
+      // case 'REQUEST_FAILED':
+      //   return 'B2B не смог обработать запрос на пополнение.';
+      // case 'REQUEST_TIMEOUT':
+      //   return 'B2B не ответил в течение таймаута.';
+      // case 'REQUEST_INVALID':
+      //   return 'B2B получил некорректный запрос на пополнение.';
+      // case 'REQUEST_UNAUTHORIZED':
+      //   return 'B2B не авторизован для обработки запроса на пополнение.';
+      // case 'REQUEST_FORBIDDEN':
+      //   return 'B2B запретил обработку запроса на пополнение.';
+      // case 'REQUEST_NOT_FOUND':
+      //   return 'B2B не смог найти аккаунт для пополнения.';
+      // case 'REQUEST_CONFLICT':
+      //   return 'B2B получил конфликтный запрос на пополнение.';
+      // case 'REQUEST_TOO_MANY_REQUESTS':
+      //   return 'B2B получил слишком много запросов на пополнение.';
+      // case 'REQUEST_INTERNAL_SERVER_ERROR':
+      //   return 'B2B получил внутреннюю ошибку сервера.';
+      // case 'REQUEST_BAD_GATEWAY':
+      //   return 'B2B получил плохой шлюз.';
+      // case 'REQUEST_SERVICE_UNAVAILABLE':
+      //   return 'B2B получил недоступный сервис.';
+      // case 'REQUEST_GATEWAY_TIMEOUT':
+      //   return 'B2B получил таймаут шлюза.';
       default:
         return 'Неизвестная ошибка B2B.';
     }

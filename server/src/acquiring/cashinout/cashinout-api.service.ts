@@ -24,8 +24,9 @@ export class CashinoutApiService {
     body.callbackUrl = this.callbackUrl;
     body.redirectUrl = this.redirectUrl;
     body.durationSeconds = 86400; // Сутки
-    body.currencies = [0];
+    body.currencies = [3, 4, 5, 8, 9, 10, 11];
 
+    console.log(body);
     const response: AxiosResponse<CashinoutCreateOneTimeInvoiceRes> =
       await this.client.post('/merchant/createOneTimeInvoice', body);
 
@@ -37,7 +38,7 @@ export class CashinoutApiService {
       baseURL: this.apiUrl,
       headers: {
         Accept: 'application/json',
-        Authorization: `Bearer ${this.apiKey}`,
+        Authorization: `${this.apiKey}`,
       },
     });
 

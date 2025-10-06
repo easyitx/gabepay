@@ -20,7 +20,7 @@ export class SteamAcquiringService {
       data.currency as SteamCurrency,
     );
 
-    if (response.status_code === SteamStatusCode.REQUEST_ACCEPTED) {
+    if (response.data.status_code === SteamStatusCode.REQUEST_ACCEPTED) {
       return {
         ...data,
         code,
@@ -28,11 +28,11 @@ export class SteamAcquiringService {
     }
 
     const reason = this.steamAcquiringApiService.getErrorMessageByStatusCode(
-      response.status_code,
+      response.data.status_code,
     );
 
     throw AppException.b2bVerificationFailed(
-      response.status_code,
+      response.data.status_code,
       data.account,
       reason,
     );

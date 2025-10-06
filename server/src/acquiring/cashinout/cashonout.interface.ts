@@ -67,7 +67,7 @@ export const CashinoutCurrencies: CashinoutCurrency[] = [
 
 export interface CashinoutCreateOneTimeInvoiceReq {
   amount: string;
-  currency?: CashinoutCurrencyCodes;
+  currency?: CashinoutCurrencyIds;
   currencies?: CashinoutCurrencyIds[];
   durationSeconds?: number;
   callbackUrl?: string;
@@ -76,4 +76,7 @@ export interface CashinoutCreateOneTimeInvoiceReq {
   allowInternalPaymentSystem: boolean;
 }
 
-export type CashinoutCreateOneTimeInvoiceRes = string;
+export type CashinoutCreateOneTimeInvoiceRes = {
+  ok: boolean;
+  data: string;
+};

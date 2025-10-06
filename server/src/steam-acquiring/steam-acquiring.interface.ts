@@ -1,7 +1,20 @@
 export interface SteamCurrencyRateRes {}
 export interface SteamConvertCurrencyRes {}
+
 export interface SteamPaymentVerifyRes {
-  status_code: SteamStatusCode;
+  success: boolean;
+  message: string;
+  data: {
+    status_code: SteamStatusCode;
+    code: string;
+    currency: SteamCurrency;
+    steam_login: string;
+    amount: number;
+    amount_usd: string;
+    // cashback: null;
+    // user_login: null;
+    // parent_id: null;
+  };
 }
 export interface SteamPaymentExecuteRes {}
 export interface SteamPaymentStatusRes {}

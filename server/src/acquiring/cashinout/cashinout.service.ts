@@ -1,10 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CashinoutApiService } from './cashinout-api.service';
 import { AcquiringCreatePayRes } from '../acquiring.interface';
-import {
-  CashinoutCreateOneTimeInvoiceReq,
-  CashinoutCurrencyCodes,
-} from './cashonout.interface';
+import { CashinoutCreateOneTimeInvoiceReq } from './cashonout.interface';
 import { InvoiceDocument } from '../invoice.schema';
 
 @Injectable()
@@ -16,18 +13,15 @@ export class CashinoutService {
   ): Promise<AcquiringCreatePayRes> {
     const body: CashinoutCreateOneTimeInvoiceReq = {
       amount: invoice.amount.toString(), // сумма в валюте currency, USDT если currency не указана
-      currency:
-        invoice.currency === 'RUB'
-          ? 'WUD'
-          : (invoice.currency as CashinoutCurrencyCodes),
+      currency: 0,
       allowInternalPaymentSystem: true,
     };
 
     const response = await this.cashinoutApiService.createOneTimeInvoice(body);
 
     return {
-      paymentLink: `https://cashinout.io/pay/${response}?lang=ru`,
-      transactionId: response,
+      paymentLink: `https://cashinout.io/pay/${response.data}?lang=ru`,
+      transactionId: response.data,
     };
   }
 }
