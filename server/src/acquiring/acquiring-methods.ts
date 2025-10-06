@@ -7,5 +7,6 @@ export const AcquiringMethods: AcquiringMethod[] = [
     relativeProviderCommission: 2,
     relativeCommission: 0,
     isCommissionIncluded: true,
+    icon: '/methods/cashinout.svg',
   },
 ];

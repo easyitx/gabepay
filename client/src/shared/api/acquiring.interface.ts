@@ -1,5 +1,3 @@
-import { IsString } from 'class-validator';
-
 export enum AcquiringProvider {
   cashinout = 'cashinout',
 }
@@ -13,18 +11,12 @@ export interface AcquiringMethod {
   icon: string;
 }
 
-export class AcquiringCreatePayReq {
-  @IsString()
+export interface AcquiringCreatePayReq {
   amount: string;
-  @IsString()
   currency: string;
-  @IsString()
   account: string;
-  @IsString()
   code: string;
-  @IsString()
   methodCode: string;
-  @IsString()
   email: string;
 }
 
