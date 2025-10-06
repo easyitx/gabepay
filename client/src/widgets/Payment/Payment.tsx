@@ -16,7 +16,7 @@ const Payment = () => {
   const [cunnrentSum, setCurrentSum] = useState<number>(0);
 
   return (
-    <div className="w-full p-6 card gap-6 flex flex-col">
+    <div className="w-full p-6 card gap-5 flex flex-col">
       <div className="flex justify-between items-center">
         <Typography color="accent" variant="h3">
           Будет зачислено
@@ -43,7 +43,7 @@ const Payment = () => {
           <Typography
             color="accent"
             variant="h3"
-            className="w-max max-w-1/2 overflow-hidden text-ellipsis"
+            className="w-max overflow-hidden"
           >
             {currency.symbol}
             {cunnrentSum}

@@ -19,22 +19,22 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
   return (
     <div
       className={cn(
-        "card rounded-3xl  p-12 flex flex-col items-center justify-center gap-4",
+        "card rounded-3xl p-6 flex flex-col items-center justify-center gap-2",
         className
       )}
     >
-      <div className="w-16 h-16 bg-accent rounded-xl flex items-center justify-center">
-        <Icon name={icon as any} className="text-primary w-10 h-10" />
+      <div className="w-10 h-10 bg-accent rounded-xl flex items-center justify-center">
+        <Icon name={icon as any} className="text-primary" size={24} />
       </div>
       <div className="flex flex-col gap-2  text:lg">
         <Typography
           color="accent"
-          variant="body"
-          className=" text-center text-[25px]"
+          variant="body-sm"
+          className=" text-center text-[20px]"
         >
           {title}
         </Typography>
-        {description && <Typography variant="body">{description}</Typography>}
+        {description && <Typography className='text-center' variant="body" >{description}</Typography>}
       </div>
     </div>
   );

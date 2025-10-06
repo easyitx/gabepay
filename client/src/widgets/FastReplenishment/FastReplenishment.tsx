@@ -10,7 +10,7 @@ export const FastReplenishment = ({
   currency: Currency;
   setCurrentSum: (sum: number) => void;
 }) => (
-  <div className="flex gap-2 w-full pb-2 overflow-x-auto overflow-y-hidden">
+  <div className="flex gap-2 w-full overflow-x-auto overflow-y-hidden">
     {fastReplenishment.map((item) => (
       <Button
         key={item}

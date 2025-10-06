@@ -19,9 +19,9 @@ const baseClass =
   "inline-flex cursor-pointer items-center hover:bg-primary text-accent justify-center rounded-md font-medium transition-colors duration-200 disabled:opacity-50 disabled:pointer-events-none select-none";
 
 const sizeClasses: Record<ButtonSize, string> = {
-  sm: "h-9 px-3 text-[14px] gap-2",
-  md: "h-10 px-4 text-[16px] gap-2",
-  lg: "h-12 px-5 text-[18px] gap-3",
+  sm: "h-9 px-3 text-[12px] gap-2",
+  md: "h-10 px-4 text-[14px] gap-2",
+  lg: "h-12 px-5 text-[16px] gap-3",
 };
 
 const variantClasses: Record<ButtonVariant, string> = {

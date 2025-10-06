@@ -9,7 +9,9 @@ const Footer = ({ className }: { className?: string }) => {
   return (
     <div className={cn("w-full py-12 bg-background", className)}>
       <div className="flex flex-col items-center gap-8">
-        <Logo />
+        <div className='w-[140px]'>
+            <Logo />
+        </div>
 
         <Navigation />
 

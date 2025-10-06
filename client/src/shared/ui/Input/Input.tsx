@@ -20,7 +20,7 @@ const baseClass =
 const sizeClasses: Record<InputSize, string> = {
   sm: "h-9 px-3 text-sm",
   md: "h-10 px-4 text-base",
-  lg: "h-14 px-5 text-lg",
+  lg: "h-14 px-5 text-base",
 };
 
 const variantClasses: Record<InputVariant, string> = {
