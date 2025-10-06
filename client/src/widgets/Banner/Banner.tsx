@@ -114,23 +114,24 @@ export const Banner: React.FC<BannerProps> = ({
         src={bannerDesktop}
         alt={""}
         priority={priority}
-        sizes={sizes}
         quality={100}
         placeholder="blur"
-        width={2000}
-        className="rounded-[3rem]  min-h-65"
-        height={2000}
+        unoptimized
+        sizes="(min-width: 1024px) 100vw, 100vw"
+        className="rounded-[3rem] object-cover w-full  min-h-65"
       />
       <div className="absolute top-0 left-0 w-full h-full">
-        <div className="absolute top-0 right-0 flex w-full p-2 custom-xl:p-10 flex-col h-full justify-between overflow-hidden">
-          <div className="flex flex-col md:gap-4 sm:gap-4">
-            <BannerHeader />
-            <div className="flex justify-start">
-              <BannerCTA />
+        <div className="absolute top-0 right-0 flex w-full p-2 custom-xl:p-10 flex-col h-full justify-center items-start overflow-hidden">
+          <div className="w-full sm:max-w-[90%] md:max-w-none">
+            <div className="flex flex-col md:gap-4 sm:gap-4">
+              <BannerHeader />
+              <div className="flex justify-start">
+                <BannerCTA />
+              </div>
             </div>
           </div>
 
-          <div className="hidden custom-xl:block">
+          <div className="hidden custom-xl:block w-full mt-auto pb-4 custom-xl:pb-10">
             <BannerFeatures />
           </div>
         </div>

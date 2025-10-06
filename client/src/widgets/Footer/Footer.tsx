@@ -24,7 +24,7 @@ const Footer = ({ className }: { className?: string }) => {
         </div>
 
         {/* Legal Links */}
-        <div className="flex gap-2 flex-col">
+        <div className="flex  flex-col">
           <Button variant="ghost" className="underline">
             Политика конфиденциальности
           </Button>

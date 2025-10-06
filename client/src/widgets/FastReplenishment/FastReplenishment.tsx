@@ -10,12 +10,13 @@ export const FastReplenishment = ({
   currency: Currency;
   setCurrentSum: (sum: number) => void;
 }) => (
-  <div className="flex gap-2">
+  <div className="flex gap-2 w-full pb-2 overflow-x-auto overflow-y-hidden">
     {fastReplenishment.map((item) => (
       <Button
         key={item}
-        variant="primary"
-        size="sm"
+        variant="card"
+        size="lg"
+        className="border border-secondary hover:border-primary hover:bg-foreground hover:text-accent whitespace-nowrap"
         onClick={() => setCurrentSum(item)}
       >
         {item} {currency.symbol}

@@ -6,6 +6,7 @@ import {
   DiscountCircleIcon,
   EmptyStarIcon,
   FilledStarIcon,
+  MenuIcon,
   ArrowDownIcon,
   ArrowUpIcon,
   Flash2Icon,
@@ -20,6 +21,7 @@ import {
   TicketCircleIcon,
   TicketIcon,
   VkIcon,
+  CloseIcon,
 } from "./model/Icons";
 
 interface IconProps
@@ -33,6 +35,7 @@ const iconComponents: Record<IconName, unknown> = {
   "discount-circle": DiscountCircleIcon,
   "empty-star": EmptyStarIcon,
   "filled-star": FilledStarIcon,
+  menu: MenuIcon,
   "arrow-down": ArrowDownIcon,
   "arrow-up": ArrowUpIcon,
   "flash-2": Flash2Icon,
@@ -47,6 +50,7 @@ const iconComponents: Record<IconName, unknown> = {
   "tick-circle": TicketCircleIcon,
   "vk-icon": VkIcon,
   ticket: TicketIcon,
+  close: CloseIcon,
 };
 
 export const Icon: React.FC<IconProps> = ({

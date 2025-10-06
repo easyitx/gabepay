@@ -24,13 +24,13 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
       )}
     >
       <div className="w-16 h-16 bg-accent rounded-xl flex items-center justify-center">
-        <Icon name={icon as any} className="text-primary" />
+        <Icon name={icon as any} className="text-primary w-10 h-10" />
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2  text:lg">
         <Typography
           color="accent"
-          variant="h4"
-          className="font-medium text-center text:base xl:text-xl"
+          variant="body"
+          className=" text-center text-[25px]"
         >
           {title}
         </Typography>

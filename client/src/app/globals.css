@@ -20,12 +20,12 @@
     --background: rgba(26, 26, 26, 1);
 
     --background-card: rgba(46, 46, 46, 1);
-    --background-card-hover: rgba(26, 26, 26, 1);
+    --background-card-hover: rgba(70, 69, 69, 1);
 
     --secondary: rgba(40, 40, 40, 1);
     --foreground-secondary: rgb(70, 69, 69);
     --primary: rgba(112, 87, 255, 1);
-    --foreground: rgba(126, 126, 126, 1);
+    --foreground: rgba(155, 155, 155, 1);
     --accent: rgba(255, 255, 255, 1);
     --success: rgba(95, 255, 87, 1);
     --purple: rgba(112, 87, 255, 0.2);
@@ -121,6 +121,18 @@ body {
     max-width: var(--container);
   }
 
+  .border-primary {
+    border-color: var(--primary);
+  }
+  .border-secondary {
+    border-color: var(--secondary);
+  }
+  .border-accent {
+    border-color: var(--accent);
+  }
+  .border-success {
+    border-color: var(--success);
+  }
   .text-sm {
     font-size: var(--text-sm);
   }
@@ -172,5 +184,36 @@ body {
   }
   .animate-accordion-up {
     animation: accordion-up 0.2s ease-out;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--secondary);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 4px;
+    transition: background 0.2s ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(112, 87, 255, 0.8);
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: var(--secondary);
+  }
+
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) var(--secondary);
   }
 }

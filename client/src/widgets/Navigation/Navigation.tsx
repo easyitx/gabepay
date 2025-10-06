@@ -2,6 +2,7 @@
 
 import Button from "@/shared/ui/Button/Button";
 import { Typography } from "@/shared/ui/Typography";
+import { cn } from "@/shared/lib/utils";
 
 export const navigationConfig = [
   { label: "Пополнить Steam", href: "#replenishment" },
@@ -19,14 +20,35 @@ const scrollToSection = (href: string) => {
   }
 };
 
-export default function Navigation() {
+interface NavigationProps {
+  className?: string;
+  isMobile?: boolean;
+  onItemClick?: () => void;
+}
+
+export default function Navigation({
+  className,
+  isMobile = false,
+  onItemClick,
+}: NavigationProps) {
   return (
-    <nav aria-label="Main navigation">
-      <ul className="flex items-center gap-8">
+    <nav
+      aria-label="Main navigation"
+      className={cn(
+        isMobile ? "block md:hidden" : "hidden md:block",
+        className
+      )}
+    >
+      <ul
+        className={cn("flex items-center gap-4", isMobile && "flex-col gap-6")}
+      >
         {navigationConfig.map((item) => (
           <li key={item.href}>
             <Button
-              onClick={() => scrollToSection(item.href)}
+              onClick={() => {
+                onItemClick?.();
+                setTimeout(() => scrollToSection(item.href), 0);
+              }}
               className="text-accent hover:text-accent/80 transition-colors cursor-pointer"
               variant="ghost"
             >

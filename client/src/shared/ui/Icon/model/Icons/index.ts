@@ -2,7 +2,7 @@ import { SphereIcon } from "@/shared/assets/icons/SphereIcon";
 import { DiscountCircleIcon } from "@/shared/assets/icons/DiscountCircleIcon";
 import { EmptyStarIcon } from "@/shared/assets/icons/EmptyStarIcon";
 import { FilledStarIcon } from "@/shared/assets/icons/FilledStarIcon";
-
+import { MenuIcon } from "@/shared/assets/icons/Menu";
 import { ArrowDownIcon } from "@/shared/assets/icons/ArrowDownIcon";
 import { ArrowUpIcon } from "@/shared/assets/icons/ArrowUpIcon";
 import { Flash2Icon } from "@/shared/assets/icons/Flash2Icon";
@@ -17,11 +17,13 @@ import { TelegramIcon } from "@/shared/assets/icons/TelegramIcon";
 import { TicketCircleIcon } from "@/shared/assets/icons/TicketCircleIcon";
 import { TicketIcon } from "@/shared/assets/icons/TicketIcon";
 import { VkIcon } from "@/shared/assets/icons/VkIcon";
+import { CloseIcon } from "@/shared/assets/icons/Close";
 export {
   SphereIcon,
   DiscountCircleIcon,
   EmptyStarIcon,
   FilledStarIcon,
+  MenuIcon,
   ArrowDownIcon,
   ArrowUpIcon,
   Flash2Icon,
@@ -36,4 +38,5 @@ export {
   TicketCircleIcon,
   TicketIcon,
   VkIcon,
+  CloseIcon,
 };

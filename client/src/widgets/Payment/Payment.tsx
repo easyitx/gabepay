@@ -25,7 +25,7 @@ const Payment = () => {
           Сумма к оплате
         </Typography>
       </div>
-      <div className="flex  items-center gap-4">
+      <div className="flex  items-center gap-4 not-sm:flex-wrap not-sm:w-full">
         <Input
           variant="primary"
           size="lg"
@@ -34,19 +34,22 @@ const Payment = () => {
           iconAfterText={currency.symbol}
           type="number"
           onChange={(e) => setCurrentSum(+e.target.value)}
+          className="not-sm:w-full"
         />
-        <Typography color="accent" variant="h3">
-          ≈
-        </Typography>
-        <Typography
-          color="accent"
-          variant="h3"
-          className="w-max max-w-1/2 overflow-hidden text-ellipsis"
-        >
-          {currency.symbol}
-          {cunnrentSum}
-        </Typography>
-        <Icon name="message-question" className=" cursor-help" />
+        <div className="flex items-center w-max gap-2 not-sm:w-full ">
+          <Typography color="accent" variant="h3">
+            ≈
+          </Typography>
+          <Typography
+            color="accent"
+            variant="h3"
+            className="w-max max-w-1/2 overflow-hidden text-ellipsis"
+          >
+            {currency.symbol}
+            {cunnrentSum}
+          </Typography>
+          <Icon name="message-question" className=" cursor-help" />
+        </div>
       </div>
       <FastReplenishment currency={currency} setCurrentSum={setCurrentSum} />
       <Typography>Минимальная сумма пополнения 10 валютных единиц.</Typography>
