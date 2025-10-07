@@ -49,17 +49,11 @@ export const FAQ: React.FC<{ className?: string }> = ({ className }) => {
       </Typography>
 
       <div className="w-full">
-        <Accordion type="single" collapsible className="w-full">
+        <Accordion type="multiple" className="w-full ">
           {faqData.map((item) => (
             <AccordionItem className="py-6" key={item.id} value={item.id}>
-              <AccordionTrigger className="text-left">
-                <Typography
-                  color="accent"
-                  variant="h3"
-                  className="font-medium text-lg text-accent"
-                >
-                  {item.question}
-                </Typography>
+              <AccordionTrigger className="text-left data-[state=open]:text-accent text-lg">
+                {item.question}
               </AccordionTrigger>
               <AccordionContent>
                 <Typography variant="body">{item.answer}</Typography>

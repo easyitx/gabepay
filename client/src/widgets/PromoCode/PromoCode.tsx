@@ -5,7 +5,7 @@ import PromoCodeInput from "../PromoCodeInput/PromoCodeInput";
 const PromoCode = () => {
   return (
     <div className="w-full card flex flex-col gap-4 p-6">
-      <Typography color="accent" variant="h3">
+      <Typography color="accent" variant="h3" className="font-bold text-lg">
         Промокод
       </Typography>
       <PromoCodeInput />

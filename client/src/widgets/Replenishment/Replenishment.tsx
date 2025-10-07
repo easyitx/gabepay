@@ -1,15 +1,12 @@
 "use client";
 
-import { Typography } from "@/shared/ui/Typography";
 import SteamLogin from "../SteamLogin/SteamLogin";
 
-import PromoCodeInput from "../PromoCodeInput/PromoCodeInput";
 import PromoCode from "../PromoCode/PromoCode";
-import { Input } from "@/shared/ui/Input";
+
 import { useState } from "react";
-import { Currency, CurrencyCard } from "@/entities/currency";
-import { Icon } from "@/shared/ui/Icon/Icon";
-import Button from "@/shared/ui/Button/Button";
+import { type Currency } from "@/entities/currency";
+
 import Payment from "../Payment/Payment";
 import { PaymentInfo } from "../PaymentInfo/PaymentInfo";
 import { CurrencyList } from "../CurrencyList/CurrencyList";
@@ -21,7 +18,13 @@ const Replenishment = ({ className }: { className?: string }) => {
   );
 
   const mockCurrencies: Currency[] = [
-    { id: "1", name: "CASHINOUT", symbol: "СБП", icon: "/methods/cashinout.svg", percentage: 0 },
+    {
+      id: "1",
+      name: "CASHINOUT",
+      symbol: "СБП",
+      icon: "/methods/cashinout.svg",
+      percentage: 0,
+    },
   ];
 
   const handleSelectCurrency = (currency: Currency) => {

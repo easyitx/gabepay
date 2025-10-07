@@ -42,7 +42,7 @@ export const CurrencyCard: React.FC<CurrencyCardProps> = ({
         </div>
 
         <div className="flex justify-center mb-2">
-          <div className="w-[50px] h-[50px] rounded-full flex items-center justify-center overflow-hidden">
+          <div className="max-w-12 max-h-12 w-full h-full rounded-full flex items-center justify-center overflow-hidden">
             {currency.icon ? (
               <Image
                 src={

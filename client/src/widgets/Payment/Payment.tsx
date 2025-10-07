@@ -18,10 +18,10 @@ const Payment = () => {
   return (
     <div className="w-full p-6 card gap-5 flex flex-col">
       <div className="flex justify-between items-center">
-        <Typography color="accent" variant="h3">
+        <Typography color="accent" variant="h3" className="font-bold text-lg">
           Будет зачислено
         </Typography>
-        <Typography color="accent" variant="h3">
+        <Typography color="accent" variant="h3" className="font-bold text-lg">
           Сумма к оплате
         </Typography>
       </div>
@@ -37,13 +37,17 @@ const Payment = () => {
           className="not-sm:w-full"
         />
         <div className="flex items-center w-max gap-2 not-sm:w-full ">
-          <Typography color="accent" variant="h3">
+          <Typography
+            color="accent"
+            variant="body"
+            className="font-medium text-lg"
+          >
             ≈
           </Typography>
           <Typography
             color="accent"
             variant="h3"
-            className="w-max overflow-hidden"
+            className="w-max overflow-hidden font-medium text-lg"
           >
             {currency.symbol}
             {cunnrentSum}
@@ -52,7 +56,9 @@ const Payment = () => {
         </div>
       </div>
       <FastReplenishment currency={currency} setCurrentSum={setCurrentSum} />
-      <Typography>Минимальная сумма пополнения 10 валютных единиц.</Typography>
+      <Typography className="text-sm">
+        Минимальная сумма пополнения 10 валютных единиц.
+      </Typography>
     </div>
   );
 };

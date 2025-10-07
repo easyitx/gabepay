@@ -27,21 +27,12 @@ interface NavigationProps {
 }
 
 export default function Navigation({
-  className,
-  isMobile = false,
   onItemClick,
+  className,
 }: NavigationProps) {
   return (
-    <nav
-      aria-label="Main navigation"
-      className={cn(
-        isMobile ? "block md:hidden" : "hidden md:block",
-        className
-      )}
-    >
-      <ul
-        className={cn("flex items-center gap-2", isMobile && "flex-col gap-6")}
-      >
+    <nav aria-label="Main navigation">
+      <ul className={cn("flex items-center gap-2", className)}>
         {navigationConfig.map((item) => (
           <li key={item.href}>
             <Button

@@ -57,7 +57,7 @@ const colorClasses: Record<TypographyColor, string> = {
   white: "text-white",
   foreground: "text-foreground",
   black: "text-black",
-  green: "text-green-500",
+  green: "text-success",
   red: "text-red-500",
 };
 

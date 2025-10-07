@@ -1,6 +1,6 @@
 import React from "react";
 import { cn } from "@/shared/lib/utils";
-import { Typography } from "@/shared/ui/Typography";
+
 import Button from "@/shared/ui/Button/Button";
 import { Currency, CurrencyCard } from "@/entities/currency";
 

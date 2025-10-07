@@ -13,7 +13,7 @@ const SteamLogin = () => {
   return (
     <div className=" w-full flex p-6 flex-col gap-4 card">
       <div className="w-full flex justify-between items-center">
-        <Typography color="accent" variant="h3">
+        <Typography color="accent" variant="h3" className="font-bold text-lg">
           Пополнение Steam
         </Typography>
         <Button variant="ghost" className="underline">
