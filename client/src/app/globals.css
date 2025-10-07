@@ -146,8 +146,6 @@ body {
     font-size: var(--text-xl);
   }
 
-  /* Accordion data-state animations */
-
   /* Custom scrollbar */
   ::-webkit-scrollbar {
     width: 8px;
