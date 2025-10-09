@@ -10,7 +10,7 @@ import { ApiError } from "@/shared/api";
 interface UseCreateInvoiceReturn {
   createInvoice: (
     data: AcquiringCreatePayReq
-  ) => Promise<AcquiringCreatePayRes>;
+  ) => Promise<AcquiringCreatePayRes | null>;
   isCreating: boolean;
   result: AcquiringCreatePayRes | null;
   error: string | null;
@@ -23,7 +23,9 @@ export const useCreateInvoice = (): UseCreateInvoiceReturn => {
   const [error, setError] = useState<string | null>(null);
 
   const createInvoice = useCallback(
-    async (data: AcquiringCreatePayReq): Promise<AcquiringCreatePayRes> => {
+    async (
+      data: AcquiringCreatePayReq
+    ): Promise<AcquiringCreatePayRes | null> => {
       setIsCreating(true);
       setError(null);
 
@@ -36,7 +38,8 @@ export const useCreateInvoice = (): UseCreateInvoiceReturn => {
         if (err instanceof ApiError) {
           toast.error(err.message);
         }
-        throw err;
+
+        return null;
       } finally {
         setIsCreating(false);
       }

@@ -1,7 +1,5 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-:root {
-}
 
 @theme inline {
   --color-background: var(--background);
@@ -190,7 +188,7 @@ body {
   .card {
     background-color: var(--background-card);
     color: var(--foreground);
-    @apply rounded-3xl;
+    border-radius: 24px;
   }
 
   .app-container {
@@ -217,4 +215,94 @@ body {
   to {
     height: 0;
   }
+}
+
+/* Sonner Toast Styles */
+[data-sonner-toaster] {
+  --normal-bg: var(--background-card) !important;
+  --normal-text: var(--foreground) !important;
+  --normal-border: var(--secondary) !important;
+  --success-bg: var(--background-card) !important;
+  --success-text: var(--success) !important;
+  --success-border: var(--success) !important;
+  --error-bg: var(--background-card) !important;
+  --error-text: #ef4444 !important;
+  --error-border: #ef4444 !important;
+  --warning-bg: var(--background-card) !important;
+  --warning-text: #f59e0b !important;
+  --warning-border: #f59e0b !important;
+  --info-bg: var(--background-card) !important;
+  --info-text: var(--primary) !important;
+  --info-border: var(--primary) !important;
+}
+
+[data-sonner-toast] {
+  background: var(--background-card) !important;
+  border: 1px solid var(--secondary) !important;
+  color: var(--accent) !important;
+  border-radius: 12px !important;
+  font-size: var(--text-base) !important;
+  font-family: var(--font-intertight), Arial, Helvetica, sans-serif !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+[data-sonner-toast][data-type="success"] {
+  border-color: var(--success) !important;
+}
+
+[data-sonner-toast][data-type="error"] {
+  background: red !important;
+}
+
+[data-sonner-toast][data-type="warning"] {
+  border-color: #f59e0b !important;
+}
+
+[data-sonner-toast][data-type="info"] {
+  border-color: var(--primary) !important;
+}
+
+[data-sonner-toast] [data-title] {
+  font-weight: 500 !important;
+}
+
+[data-sonner-toast] [data-description] {
+  color: var(--foreground-secondary) !important;
+}
+
+[data-sonner-toast] [data-close-button] {
+  color: var(--foreground-secondary) !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+[data-sonner-toast] [data-close-button]:hover {
+  color: var(--foreground) !important;
+  background: var(--secondary) !important;
+  border-radius: 8px !important;
+}
+
+[data-sonner-toast] [data-action-button] {
+  background: var(--primary) !important;
+  color: var(--accent) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  font-weight: 500 !important;
+}
+
+[data-sonner-toast] [data-action-button]:hover {
+  background: rgba(112, 87, 255, 0.9) !important;
+}
+
+[data-sonner-toast] [data-cancel-button] {
+  background: var(--secondary) !important;
+  color: var(--foreground) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  font-weight: 500 !important;
+}
+
+[data-sonner-toast] [data-cancel-button]:hover {
+  background: var(--foreground-secondary) !important;
 }
