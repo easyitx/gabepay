@@ -13,7 +13,6 @@ interface AcquiringMethodCardProps {
 
 export const AcquiringMethodCard: React.FC<AcquiringMethodCardProps> = ({
   acquiringMethod,
-
   onClick,
   isSelected,
   className,

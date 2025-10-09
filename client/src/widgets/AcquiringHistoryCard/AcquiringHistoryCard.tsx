@@ -2,15 +2,15 @@ import React from "react";
 import { cn } from "@/shared/lib/utils";
 import { Typography } from "@/shared/ui/Typography";
 import { Avatar } from "@/shared/ui/Avatar/Avatar";
-import { UserReplenishment } from "@/entities/user";
+import { IAcquiring } from "@/entities/acquiring/model/types";
 
-interface UserReplenishmentCardProps {
-  replenishment: UserReplenishment;
+interface AcquiringHistoryCardProps {
+  acquiring: IAcquiring;
   className?: string;
 }
 
-export const UserReplenishmentCard: React.FC<UserReplenishmentCardProps> = ({
-  replenishment,
+export const AcquiringHistoryCard: React.FC<AcquiringHistoryCardProps> = ({
+  acquiring,
   className,
 }) => {
   const formatAmount = (
@@ -30,32 +30,24 @@ export const UserReplenishmentCard: React.FC<UserReplenishmentCardProps> = ({
       )}
     >
       <Avatar
-        src={replenishment.avatar}
-        alt={replenishment.username}
+        src={""}
+        alt={acquiring.email}
         size="lg"
         className="rounded-full"
-        fallback={replenishment.username.charAt(0).toUpperCase()}
+        fallback={acquiring.account.charAt(0).toUpperCase()}
       />
 
       <div className="flex-1 flex flex-col gap-1">
         <Typography color="accent" variant="body" className="font-medium">
-          {replenishment.username}
+          {acquiring.account}
         </Typography>
-        <Typography className="text-foreground" variant="caption">
-          {replenishment.timestamp}
-        </Typography>
+        {/* <Typography className="text-foreground" variant="caption">
+          {acquiring.timestamp}
+        </Typography> */}
       </div>
 
-      <Typography
-        color={replenishment.isPositive ? "green" : "red"}
-        variant="body"
-        className="font-medium"
-      >
-        {formatAmount(
-          replenishment.amount,
-          replenishment.currency,
-          replenishment.isPositive
-        )}
+      <Typography color="green" variant="body" className="font-medium">
+        {formatAmount(+acquiring.paidAmount, acquiring.currency, true)}
       </Typography>
     </div>
   );

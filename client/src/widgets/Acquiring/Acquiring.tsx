@@ -22,13 +22,13 @@ const Replenishment = ({
   acquiringMethods: AcquiringMethod[];
 }) => {
   const [selectedAcquiringMethodId, setSelectedAcquiringMethodId] =
-    useState<string>(acquiringMethods[0].code);
+    useState<string>(acquiringMethods[0].provider);
 
   const [username, setUsername] = useState("");
   const [emailInput, setEmailInput] = useState("");
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [currentSum, setCurrentSum] = useState<number>(0);
-  const router = useRouter();
+
   const {
     validateSteamAccount,
     isLoading,
@@ -55,7 +55,7 @@ const Replenishment = ({
   );
 
   const handleSelectAcquiringMethod = (acquiringMethod: AcquiringMethod) => {
-    setSelectedAcquiringMethodId(acquiringMethod.code);
+    setSelectedAcquiringMethodId(acquiringMethod.provider);
   };
 
   const paymentIsAvailable =
@@ -89,15 +89,16 @@ const Replenishment = ({
   const { createInvoice, isCreating } = useCreateInvoice();
 
   const handlePayment = useCallback(async () => {
-    const { paymentLink, transactionId } = await createInvoice({
+    const data = await createInvoice({
       amount: fullPaymentAmount.toString(),
       currency: "RUB",
       account: username,
       methodCode: selectedAcquiringMethodId, // todo: тут передаем cashinout_method
       email: emailInput,
     });
-
-    window.open(paymentLink, "_blank", "noopener,noreferrer");
+    if (data) {
+      window.open(data.paymentLink, "_blank", "noopener,noreferrer");
+    }
   }, [
     createInvoice,
     fullPaymentAmount,

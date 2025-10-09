@@ -4,11 +4,13 @@ import {
   AcquiringCreatePayReq,
   AcquiringCreatePayRes,
 } from "@/entities/acquiringMethod";
+import { toast } from "sonner";
+import { ApiError } from "@/shared/api";
 
 interface UseCreateInvoiceReturn {
   createInvoice: (
     data: AcquiringCreatePayReq
-  ) => Promise<AcquiringCreatePayRes>;
+  ) => Promise<AcquiringCreatePayRes | null>;
   isCreating: boolean;
   result: AcquiringCreatePayRes | null;
   error: string | null;
@@ -21,7 +23,9 @@ export const useCreateInvoice = (): UseCreateInvoiceReturn => {
   const [error, setError] = useState<string | null>(null);
 
   const createInvoice = useCallback(
-    async (data: AcquiringCreatePayReq): Promise<AcquiringCreatePayRes> => {
+    async (
+      data: AcquiringCreatePayReq
+    ): Promise<AcquiringCreatePayRes | null> => {
       setIsCreating(true);
       setError(null);
 
@@ -31,8 +35,11 @@ export const useCreateInvoice = (): UseCreateInvoiceReturn => {
         setResult(response);
         return response;
       } catch (err) {
-        console.error(err);
-        throw err;
+        if (err instanceof ApiError) {
+          toast.error(err.message);
+        }
+
+        return null;
       } finally {
         setIsCreating(false);
       }
