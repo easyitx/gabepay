@@ -25,10 +25,10 @@ export class SteamAcquiringApiService {
    * Получение всех курсов валют
    */
   async getAllCurrencies(): Promise<SteamCurrencyRateRes[]> {
-    const response: AxiosResponse<SteamCurrencyRateRes[]> =
+    const response: AxiosResponse<{ data: SteamCurrencyRateRes[] }> =
       await this.client.get('/currencies');
 
-    return response.data;
+    return response.data.data;
   }
 
   /**
@@ -39,12 +39,12 @@ export class SteamAcquiringApiService {
     toCurrency: SteamCurrency,
     amount: number | string,
   ): Promise<SteamConvertCurrencyRes> {
-    const response: AxiosResponse<SteamConvertCurrencyRes> =
+    const response: AxiosResponse<{ data: SteamConvertCurrencyRes }> =
       await this.client.get(
         `/currencies/${fromCurrency}:${toCurrency}/${amount}`,
       );
 
-    return response.data;
+    return response.data.data;
   }
 
   /**

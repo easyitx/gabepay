@@ -24,9 +24,13 @@ export class AcquiringController {
     return this.acquiringService.getPayMethods();
   }
 
-  // @Get('/history')
-  // @UseInterceptors(new QueryValidationInterceptor(PaymentsHistoryListReq))
-  // async getPaymentsHistory(@Query() query: PaymentsHistoryListReq) {
-  //   return await this.paymentService.getPayments(query);
-  // }
+  @Get('history')
+  async getPaymentsHistory() {
+    return await this.acquiringService.getPaymentsHistory();
+  }
+
+  @Get('currencies')
+  async getAllCurrencies() {
+    return this.acquiringService.getAllCurrencies();
+  }
 }

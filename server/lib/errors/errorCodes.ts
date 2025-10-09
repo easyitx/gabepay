@@ -5,6 +5,7 @@ export enum ErrorCode {
   NOT_FOUND = 'NOT_FOUND',
   UNAUTHORIZED = 'UNAUTHORIZED',
   B2B_VERIFICATION_FAILED = 'B2B_VERIFICATION_FAILED',
+  B2B_EXECUTE_FAILED = 'B2B_EXECUTE_FAILED',
 }
 
 export interface ErrorMessage {
@@ -33,5 +34,9 @@ export const ERROR_MESSAGES: Record<ErrorCode, ErrorMessage> = {
   [ErrorCode.B2B_VERIFICATION_FAILED]: {
     en: 'Verification failed',
     ru: 'Ошибка верификации',
+  },
+  [ErrorCode.B2B_EXECUTE_FAILED]: {
+    en: 'Execute payout to steam failed',
+    ru: 'Ошибка выплаты на steam',
   },
 };

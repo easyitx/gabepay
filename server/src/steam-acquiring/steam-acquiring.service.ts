@@ -1,15 +1,37 @@
 import { Injectable } from '@nestjs/common';
 import { SteamAcquiringApiService } from './steam-acquiring-api.service';
-import { generateId } from '../../lib/database';
+import { generateId, generateShortId } from '../../lib/database';
 import { AcquiringCreatePayReq } from '../acquiring/acquiring.interface';
-import { SteamCurrency, SteamStatusCode } from './steam-acquiring.interface';
+import {
+  SteamCurrency,
+  SteamCurrencyRateRes,
+  SteamStatusCode,
+} from './steam-acquiring.interface';
 import { AppException } from '../../lib/errors/appException';
+import { InvoiceDocument } from '../acquiring/invoice.schema';
 
 @Injectable()
 export class SteamAcquiringService {
   constructor(
     private readonly steamAcquiringApiService: SteamAcquiringApiService,
   ) {}
+
+  async paymentExecute(invoice: InvoiceDocument) {
+    const response = await this.steamAcquiringApiService.paymentExecute(
+      invoice.code,
+    );
+
+    if (response.data.status_code === SteamStatusCode.PAYMENT_SUCCESS) {
+      return true;
+    }
+
+    const reason = this.steamAcquiringApiService.getErrorMessageByStatusCode(
+      response.data.status_code,
+    );
+
+    console.error(reason);
+    return false;
+  }
 
   async paymentVerify(data: AcquiringCreatePayReq) {
     const code = generateId();
@@ -36,5 +58,27 @@ export class SteamAcquiringService {
       data.account,
       reason,
     );
+  }
+
+  async getAllCurrencies() {
+    const currencies: SteamCurrency[] = ['USD', 'KZT', 'RUB'];
+    const result: SteamCurrencyRateRes[] = [];
+
+    for (const currency of currencies) {
+      const data = await this.steamAcquiringApiService.convertCurrency(
+        'RUB',
+        currency,
+        1,
+      );
+
+      result.push({
+        id: Math.random(),
+        currency: currency,
+        source: 'steam',
+        rate: data.converted_amount,
+      });
+    }
+
+    return result;
   }
 }
