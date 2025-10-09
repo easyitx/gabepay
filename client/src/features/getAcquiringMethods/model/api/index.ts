@@ -1,5 +1,6 @@
 import { BaseApiService } from "@/shared/api/base-api.service";
-import { AcquiringMethod } from "@/shared/api/acquiring.interface";
+import {AcquiringMethod} from "@/entities/acquiringMethod";
+
 
 export class AcquiringMethodsApi extends BaseApiService<
   void,
