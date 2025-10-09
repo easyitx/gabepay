@@ -4,12 +4,30 @@ import { generateId } from '../../lib/database';
 import { AcquiringCreatePayReq } from '../acquiring/acquiring.interface';
 import { SteamCurrency, SteamStatusCode } from './steam-acquiring.interface';
 import { AppException } from '../../lib/errors/appException';
+import { InvoiceDocument } from '../acquiring/invoice.schema';
 
 @Injectable()
 export class SteamAcquiringService {
   constructor(
     private readonly steamAcquiringApiService: SteamAcquiringApiService,
   ) {}
+
+  async paymentExecute(invoice: InvoiceDocument) {
+    const response = await this.steamAcquiringApiService.paymentExecute(
+      invoice.code,
+    );
+
+    if (response.data.status_code === SteamStatusCode.PAYMENT_SUCCESS) {
+      return true;
+    }
+
+    const reason = this.steamAcquiringApiService.getErrorMessageByStatusCode(
+      response.data.status_code,
+    );
+
+    console.error(reason);
+    return false;
+  }
 
   async paymentVerify(data: AcquiringCreatePayReq) {
     const code = generateId();
@@ -36,5 +54,9 @@ export class SteamAcquiringService {
       data.account,
       reason,
     );
+  }
+
+  async getAllCurrencies() {
+    return await this.steamAcquiringApiService.getAllCurrencies();
   }
 }

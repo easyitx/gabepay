@@ -84,6 +84,19 @@ export class AppException extends HttpException {
     });
   }
 
+  static b2bExecuteFailed(
+    statusCode: string,
+    reason: string,
+    language: 'en' | 'ru' = 'en',
+  ) {
+    return new AppException({
+      code: ErrorCode.B2B_EXECUTE_FAILED,
+      statusCode: HttpStatus.BAD_REQUEST,
+      details: { b2bStatusCode: statusCode, reason },
+      language,
+    });
+  }
+
   // Метод для получения сообщения на определенном языке
   getMessage(language: 'en' | 'ru'): string {
     return ERROR_MESSAGES[this.code][language];

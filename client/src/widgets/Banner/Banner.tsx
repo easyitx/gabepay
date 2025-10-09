@@ -5,6 +5,7 @@ import Button from "@/shared/ui/Button/Button";
 import bannerDesktop from "@/shared/assets/images/banner-desktop.webp";
 import { Icon } from "@/shared/ui/Icon/Icon";
 import { Typography } from "@/shared/ui/Typography";
+import Link from "next/link";
 
 interface BannerProps {
   alt?: string;
@@ -27,27 +28,29 @@ export const Banner: React.FC<BannerProps> = ({
         className="text-lg md:max-w-3/4"
         variant="body"
       >
-        Комиссия <b>0%</b> при пополнении<br/> через Telegram bot
+        Комиссия всего <b>2%</b> при пополнении<br/> через кошелек
       </Typography>
     </div>
   );
 
   const BannerCTA = () => (
-    <Button
-      variant="banner"
-      size="lg"
-      className="rounded-full max-w-fit text-accent flex pl-1 gap-2 items-center"
-    >
+    <Link href="https://t.me/Cashinout_bot?start=194805" target="_blank">
+        <Button
+            variant="banner"
+            size="lg"
+            className="rounded-full max-w-fit text-accent flex pl-1 gap-2 items-center"
+        >
       <span className="flex flex-row gap-2 items-center">
         <Icon
-          name="sphere"
-          className="group-hover:rotate-12 bg-primary h-full p-2 w-auto rounded-full transition-transform duration-300"
+            name="sphere"
+            className="group-hover:rotate-12 bg-primary h-full p-2 w-auto rounded-full transition-transform duration-300"
         />
         <Typography color="accent" variant="caption">
           ПОПОЛНИТЬ СЕЙЧАС
         </Typography>
       </span>
-    </Button>
+        </Button>
+    </Link>
   );
 
   const FeatureCard = ({
@@ -87,7 +90,7 @@ export const Banner: React.FC<BannerProps> = ({
       <FeatureCard
         icon="security-card"
         title="Полное сохранение средств"
-        description="0% комиссии — вы платите ровно столько, сколько пополняете"
+        description="2% комиссии — вы пополняете максимально выгодно"
         className="border-r pr-5"
       />
       <FeatureCard
