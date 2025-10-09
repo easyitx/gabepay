@@ -7,6 +7,7 @@ import { SteamAcquiringModule } from './steam-acquiring/steam-acquiring.module';
 import { SteamValidateModule } from './steam-validate/steam-validate.module';
 import { DatabaseModule } from '../lib/database';
 import { ScheduleModule } from '@nestjs/schedule';
+import { TelegramModule } from './telegram/telegram.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     AcquiringModule,
     SteamAcquiringModule,
     SteamValidateModule,
+    TelegramModule
   ],
   controllers: [AppController],
   providers: [AppService],
