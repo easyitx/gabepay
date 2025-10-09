@@ -45,7 +45,7 @@ const Replenishment = ({
     <div className={cn("flex gap-3 not-md:flex-wrap", className)}>
       <div className="w-1/2 not-md:w-full gap-6 flex flex-col">
         <SteamLogin />
-        <PromoCode />
+        {/*<PromoCode />*/}
         <Payment />
       </div>
 
