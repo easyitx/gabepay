@@ -6,6 +6,9 @@ import { DatabaseModule } from '../../lib/database';
 import { Invoice, InvoiceSchema } from './invoice.schema';
 import { SteamAcquiringModule } from '../steam-acquiring/steam-acquiring.module';
 import { AcquiringCroneService } from './acquiring-crone.service';
+import { AcquiringWebhookController } from './webhook/acquiring.webhook.controller';
+import { WebhookService } from './webhook/webhook.service';
+import { WebhookHandlerFactory } from './webhook/webhook-handler-factory';
 
 @Module({
   imports: [
@@ -13,7 +16,12 @@ import { AcquiringCroneService } from './acquiring-crone.service';
     CashinoutModule,
     SteamAcquiringModule,
   ],
-  controllers: [AcquiringController],
-  providers: [AcquiringService, AcquiringCroneService],
+  controllers: [AcquiringController, AcquiringWebhookController],
+  providers: [
+    AcquiringService,
+    AcquiringCroneService,
+    WebhookService,
+    WebhookHandlerFactory,
+  ],
 })
 export class AcquiringModule {}
