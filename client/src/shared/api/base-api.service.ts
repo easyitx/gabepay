@@ -16,8 +16,12 @@ export abstract class BaseApiService<TRequest = void, TResponse = any> {
       | "put"
       | "delete"
       | "patch";
-    const response = await $api[method]<TResponse>(this.endpoint, data);
-    return response.data;
+    try {
+      const response = await $api[method]<TResponse>(this.endpoint, data);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   }
 
   protected async makeRequestWithParams<TParams = Record<string, any>>(

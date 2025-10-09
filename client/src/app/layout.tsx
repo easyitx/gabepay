@@ -12,6 +12,7 @@ import ReplenishmentsList from "@/widgets/ReplenishmentsList/ReplenishmentsList"
 import { FAQ } from "@/widgets/FAQ/FAQ";
 import { WhyChooseUs } from "@/widgets/WhyChooseUs/WhyChooseUs";
 import { AppProvider } from "./providers";
+import { AcquiringMethodsApi } from "@/features/getAcquiringMethods";
 
 const interTight = localFont({
   src: [
@@ -35,21 +36,30 @@ export const metadata: Metadata = {
   description: "Donate with Gabepay",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const acquiringMethodsApi = new AcquiringMethodsApi();
+  const acquiringMethods = (await acquiringMethodsApi.getMethods()) || [];
+
   return (
     <html lang="en">
-      <body className={cn("min-h-screen pt-6 m-0", interTight.variable)}>
+      <body
+        className={cn("min-h-screen pt-6 m-0", interTight.variable)}
+        suppressHydrationWarning
+      >
         <AppProvider>
           <Header className="app-container h-15" />
           <Spacing size="lg" direction="vertical" />
           <Banner className="app-container " />
           <Spacing size="lg" direction="vertical" />
           <div id="replenishment">
-            <Replenishment className="app-container " />
+            <Replenishment
+              className="app-container"
+              acquiringMethods={acquiringMethods}
+            />
           </div>
           <Spacing size="2xl" direction="vertical" />
 

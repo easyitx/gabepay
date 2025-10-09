@@ -1,5 +1,5 @@
 export enum AcquiringProvider {
-  cashinout = 'cashinout',
+  cashinout = "cashinout",
 }
 
 export interface AcquiringMethod {
@@ -13,7 +13,7 @@ export interface AcquiringMethod {
 
 export interface AcquiringCreatePayReq {
   amount: string;
-  currency: string; // Поддерживает только 'RUB'
+  currency: string | "RUB"; // Поддерживает только 'RUB'
   account: string;
   methodCode: string;
   email: string;

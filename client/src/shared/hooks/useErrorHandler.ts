@@ -95,7 +95,6 @@ export const useErrorHandler = (
         });
       }
 
-      // Логирование ошибки
       console.error("API Error:", {
         code: apiError.code,
         message: apiError.message,
@@ -103,7 +102,6 @@ export const useErrorHandler = (
         timestamp: new Date().toISOString(),
       });
 
-      // Вызов колбэков в зависимости от типа ошибки
       onError?.(apiError);
 
       switch (apiError.code) {

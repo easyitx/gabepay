@@ -5,21 +5,50 @@ import { Input } from "@/shared/ui/Input";
 export const SteamLoginInput: React.FC<{
   value: string;
   onChange: (value: string) => void;
+  onBlur?: () => void;
   className?: string;
   isFinded?: boolean;
-}> = ({ value, onChange, className, isFinded }) => {
+  isLoading?: boolean;
+  hasError?: boolean;
+}> = ({
+  value,
+  onChange,
+  onBlur,
+  className,
+  isFinded,
+  isLoading,
+  hasError,
+}) => {
   const FoundIcon = () => (
     <div className="flex items-center gap-2 bg-purple rounded-full px-2 py-1">
       <Icon name="tick-circle" className="text-accent" size={12} />
       <span className="text-accent text-xs font-medium">Аккаунт найден</span>
     </div>
   );
+
   const NotFoundIcon = () => (
-    <div className="flex items-center gap-2 bg-red-500 rounded-full px-2 py-1">
-      <Icon name="tick-circle" className="text-accent" size={12} />
-      <span className="text-accent text-xs font-medium">Аккаунт не найден</span>
+    <div className="flex items-center gap-2 bg-red-500/20 rounded-full px-2 py-1">
+      <Icon name="close" className="text-red-500" size={12} />
+      <span className="text-red-500 text-xs font-medium">
+        Аккаунт не найден
+      </span>
     </div>
   );
+
+  const LoadingIcon = () => (
+    <div className="flex items-center gap-2 bg-purple/20 rounded-full px-2 py-1">
+      <div className="w-3 h-3 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+      <span className="text-primary text-xs font-medium">Проверка...</span>
+    </div>
+  );
+
+  const getIconRight = () => {
+    if (!value) return null;
+    if (isLoading) return <LoadingIcon />;
+    if (hasError || !isFinded) return <NotFoundIcon />;
+    if (isFinded) return <FoundIcon />;
+    return null;
+  };
 
   return (
     <Input
@@ -28,7 +57,8 @@ export const SteamLoginInput: React.FC<{
       placeholder="Введите логин Steam"
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      iconRight={value && isFinded ? <FoundIcon /> : <NotFoundIcon />}
+      onBlur={onBlur}
+      iconRight={getIconRight()}
       className={cn("w-full", className)}
     />
   );

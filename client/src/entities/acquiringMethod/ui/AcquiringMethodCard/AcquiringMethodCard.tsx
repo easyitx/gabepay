@@ -2,21 +2,24 @@ import React from "react";
 import Image from "next/image";
 import { cn } from "@/shared/lib/utils";
 import { Typography } from "@/shared/ui/Typography";
-import { Currency } from "../../model/types/Currency";
+import { AcquiringMethod } from "../../model/types/AcquiringMethod";
 
-interface CurrencyCardProps {
-  currency: Currency;
-  onClick?: (currency: Currency) => void;
+interface AcquiringMethodCardProps {
+  acquiringMethod: AcquiringMethod;
+  onClick?: (currency: AcquiringMethod) => void;
   className?: string;
+  isSelected?: boolean;
 }
 
-export const CurrencyCard: React.FC<CurrencyCardProps> = ({
-  currency,
+export const AcquiringMethodCard: React.FC<AcquiringMethodCardProps> = ({
+  acquiringMethod,
+
   onClick,
+  isSelected,
   className,
 }) => {
   const handleClick = () => {
-    onClick?.(currency);
+    onClick?.(acquiringMethod);
   };
 
   return (
@@ -28,7 +31,7 @@ export const CurrencyCard: React.FC<CurrencyCardProps> = ({
           "hover:border-primary hover:bg-foreground",
           "border border-secondary",
           "flex flex-col justify-center items-center",
-          currency.isSelected && "border-primary ring-2 ring-primary/20"
+          isSelected && "border-primary ring-2 ring-primary/20"
         )}
       >
         <div className="absolute top-2 right-2 bg-purple rounded-full px-3 py-1 flex items-center justify-center">
@@ -37,20 +40,20 @@ export const CurrencyCard: React.FC<CurrencyCardProps> = ({
             variant="caption"
             className="text-xs font-medium"
           >
-            {currency.percentage}%
+            {acquiringMethod.relativeProviderCommission}%
           </Typography>
         </div>
 
         <div className="flex justify-center mb-2">
           <div className="max-w-12 max-h-12 w-full h-full rounded-full flex items-center justify-center overflow-hidden">
-            {currency.icon ? (
+            {acquiringMethod.icon ? (
               <Image
                 src={
-                  currency.icon.startsWith("/")
-                    ? currency.icon
-                    : `/${currency.icon}`
+                  acquiringMethod.icon.startsWith("/")
+                    ? acquiringMethod.icon
+                    : `/${acquiringMethod.icon}`
                 }
-                alt={currency.name}
+                alt={acquiringMethod.provider}
                 width={42}
                 height={42}
                 className="w-full h-full object-contain"
@@ -61,7 +64,7 @@ export const CurrencyCard: React.FC<CurrencyCardProps> = ({
                 variant="body"
                 className="font-bold text-sm"
               >
-                {currency.symbol}
+                {acquiringMethod.provider}
               </Typography>
             )}
           </div>
@@ -73,7 +76,7 @@ export const CurrencyCard: React.FC<CurrencyCardProps> = ({
             variant="body"
             className="font-medium text-sm"
           >
-            {currency.name}
+            {acquiringMethod.provider}
           </Typography>
         </div>
       </div>

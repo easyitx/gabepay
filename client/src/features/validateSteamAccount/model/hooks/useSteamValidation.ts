@@ -1,48 +1,43 @@
-import { useState, useCallback } from 'react';
-import { ApiService } from '@/shared/api/api.service';
-import { SteamValidateAccountRes } from '@/shared/api/steam-validate.interface';
+"use client";
+import { useState } from "react";
+import { SteamValidateAccountRes } from "../types";
+import { ApiError } from "@/shared/api";
+import { ValidateSteamAccountApi } from "../api";
 
-interface UseSteamValidationReturn {
-  validateAccount: (account: string) => Promise<SteamValidateAccountRes>;
-  isValidating: boolean;
-  result: SteamValidateAccountRes | null;
-  error: string | null;
-  reset: () => void;
-}
+export const useSteamValidation = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<ApiError | null>(null);
+  const [data, setData] = useState<SteamValidateAccountRes | null>(null);
 
-export const useSteamValidation = (): UseSteamValidationReturn => {
-  const [isValidating, setIsValidating] = useState(false);
-  const [result, setResult] = useState<SteamValidateAccountRes | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  const validateAccount = useCallback(async (account: string): Promise<SteamValidateAccountRes> => {
-    setIsValidating(true);
+  const validateSteamAccount = async (account: string) => {
+    setIsLoading(true);
     setError(null);
-    
+
     try {
-      const response = await ApiService.steamValidate.validateAccount(account);
-      setResult(response);
-      return response;
+      const api = new ValidateSteamAccountApi();
+      const result = await api.validateAccount(account);
+
+      setData(result);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Ошибка валидации аккаунта';
-      setError(errorMessage);
+      if (err instanceof ApiError) {
+        setError(err);
+      }
       throw err;
     } finally {
-      setIsValidating(false);
+      setIsLoading(false);
     }
-  }, []);
+  };
 
-  const reset = useCallback(() => {
-    setResult(null);
+  const reset = () => {
+    setData(null);
     setError(null);
-    setIsValidating(false);
-  }, []);
+  };
 
   return {
-    validateAccount,
-    isValidating,
-    result,
+    validateSteamAccount,
+    isLoading,
     error,
+    data,
     reset,
   };
 };
