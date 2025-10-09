@@ -26,7 +26,7 @@ export class AcquiringController {
   }
 
   @Get('history')
-  async getPaymentsHistory(): Promise<AcquiringHistoryRes[]> {
+  async getPaymentsHistory() {
     return await this.acquiringService.getPaymentsHistory();
   }
 }
