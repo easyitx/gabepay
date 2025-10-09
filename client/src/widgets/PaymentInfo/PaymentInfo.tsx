@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { Typography } from "@/shared/ui/Typography";
 import { AcquiringMethod } from "@/entities/acquiringMethod";
 import { useRatedSteamCurrencies } from "@/features/getRatedSteamCurrencies";

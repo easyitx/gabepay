@@ -1,9 +1,9 @@
 import { Input } from "@/shared/ui/Input";
 import { Typography } from "@/shared/ui/Typography";
-import React, { useState } from "react";
-import { FastReplenishment } from "../FastReplenishment/FastReplenishment";
+
+import { FastAcquiring } from "../FastAcquiring/FastAcquiring";
 import { Icon } from "@/shared/ui/Icon/Icon";
-import { AcquiringMethod, AcquiringProvider } from "@/entities/acquiringMethod";
+import { AcquiringMethod } from "@/entities/acquiringMethod";
 
 const Payment = ({
   acquiringMethod,
@@ -53,7 +53,7 @@ const Payment = ({
           <Icon name="message-question" className=" cursor-help" />
         </div>
       </div>
-      <FastReplenishment
+      <FastAcquiring
         acquiringMethod={acquiringMethod}
         setCurrentSum={setCurrentSum}
       />

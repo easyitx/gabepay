@@ -6,13 +6,18 @@ import Header from "@/widgets/Header/Header";
 import Footer from "@/widgets/Footer/Footer";
 import { Banner } from "@/widgets/Banner/Banner";
 import { Spacing } from "@/shared/ui/Spacing";
-import Replenishment from "@/widgets/Replenishment/Replenishment";
+import Acquiring from "@/widgets/Acquiring/Acquiring";
 import { cn } from "@/shared/lib/utils";
-import ReplenishmentsList from "@/widgets/ReplenishmentsList/ReplenishmentsList";
+import AcquiringHistoryList, {
+  mockAcquiringList,
+} from "@/widgets/AcquiringHistoryList/AcquiringHistoryList";
 import { FAQ } from "@/widgets/FAQ/FAQ";
 import { WhyChooseUs } from "@/widgets/WhyChooseUs/WhyChooseUs";
 import { AppProvider } from "./providers";
 import { AcquiringMethodsApi } from "@/features/getAcquiringMethods";
+import { AcquiringHistoryApi } from "@/features/getAcquiringHistory/model/api";
+import { ApiError } from "@/shared/api";
+import { type IAcquiring } from "@/entities/acquiring/model/types";
 
 const interTight = localFont({
   src: [
@@ -43,9 +48,17 @@ export default async function RootLayout({
 }>) {
   const acquiringMethodsApi = new AcquiringMethodsApi();
   const acquiringMethods = (await acquiringMethodsApi.getMethods()) || [];
-
+  let acquiringHistory: IAcquiring[] = mockAcquiringList;
+  try {
+    const acquiringHistoryApi = new AcquiringHistoryApi();
+    acquiringHistory = await acquiringHistoryApi.getAcquiringHistory();
+  } catch (error) {
+    if (error instanceof ApiError) {
+      console.error(error);
+    }
+  }
   return (
-    <html lang="en">
+    <html lang="ru">
       <body
         className={cn("min-h-screen pt-6 m-0", interTight.variable)}
         suppressHydrationWarning
@@ -56,14 +69,14 @@ export default async function RootLayout({
           <Banner className="app-container " />
           <Spacing size="lg" direction="vertical" />
           <div id="replenishment">
-            <Replenishment
+            <Acquiring
               className="app-container"
               acquiringMethods={acquiringMethods}
             />
           </div>
           <Spacing size="2xl" direction="vertical" />
 
-          <ReplenishmentsList />
+          <AcquiringHistoryList acquiringHistory={acquiringHistory} />
           <Spacing size="2xl" direction="vertical" />
           <div id="faq">
             <FAQ className="app-container" />
@@ -72,7 +85,6 @@ export default async function RootLayout({
           <div id="guide">
             <WhyChooseUs className="app-container" />
           </div>
-          <main className="flex-1 app-container">{children}</main>
           <Spacing size="2xl" direction="vertical" />
           <Footer />
         </AppProvider>

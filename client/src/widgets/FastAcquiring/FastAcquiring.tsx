@@ -4,7 +4,7 @@ import Button from "@/shared/ui/Button/Button";
 
 const fastReplenishment = [100, 200, 500, 1000, 5000];
 
-export const FastReplenishment = ({
+export const FastAcquiring = ({
   acquiringMethod,
   setCurrentSum,
 }: {
