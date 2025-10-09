@@ -4,10 +4,7 @@ interface TelegramIconProps extends React.SVGProps<SVGSVGElement> {
   size?: number;
 }
 
-export const TelegramIcon: React.FC<TelegramIconProps> = ({
-  size = 24,
-  ...props
-}) => {
+export const TelegramIcon: React.FC<TelegramIconProps> = ({ ...props }) => {
   return (
     <svg
       width="15"

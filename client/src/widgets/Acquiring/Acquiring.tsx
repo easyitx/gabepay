@@ -12,7 +12,6 @@ import { cn } from "@/shared/lib/utils";
 import Button from "@/shared/ui/Button/Button";
 import { useSteamValidation } from "@/features/validateSteamAccount/model/hooks/useSteamValidation";
 import { useCreateInvoice } from "@/features/createInvoice/model/hooks/useCreateInvoice";
-import { useRouter } from "next/navigation";
 
 const Replenishment = ({
   className,
@@ -28,6 +27,8 @@ const Replenishment = ({
   const [emailInput, setEmailInput] = useState("");
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [currentSum, setCurrentSum] = useState<number>(0);
+  const [emailError, setEmailError] = useState<string>("");
+  const [isEmailFocused, setIsEmailFocused] = useState<boolean>(false);
 
   const {
     validateSteamAccount,
@@ -54,6 +55,34 @@ const Replenishment = ({
     [steamData, error, reset]
   );
 
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setEmailError("Введите корректный email адрес");
+      return false;
+    }
+    setEmailError("");
+    return true;
+  };
+
+  const handleEmailChange = (value: string) => {
+    setEmailInput(value);
+    if (emailError) {
+      setEmailError("");
+    }
+  };
+
+  const handleEmailFocus = () => {
+    setIsEmailFocused(true);
+  };
+
+  const handleEmailBlur = () => {
+    setIsEmailFocused(false);
+    if (emailInput.trim()) {
+      validateEmail(emailInput.trim());
+    }
+  };
+
   const handleSelectAcquiringMethod = (acquiringMethod: AcquiringMethod) => {
     setSelectedAcquiringMethodId(acquiringMethod.provider);
   };
@@ -62,6 +91,7 @@ const Replenishment = ({
     username &&
     steamData?.valid &&
     emailInput &&
+    !emailError &&
     isConfirmed &&
     currentSum > 0 &&
     selectedAcquiringMethodId;
@@ -117,20 +147,16 @@ const Replenishment = ({
           isLoading={isLoading}
           data={steamData}
           emailInput={emailInput}
-          setEmailInput={setEmailInput}
+          setEmailInput={handleEmailChange}
           isConfirmed={isConfirmed}
           setIsConfirmed={setIsConfirmed}
+          emailError={emailError}
+          isEmailFocused={isEmailFocused}
+          onEmailFocus={handleEmailFocus}
+          onEmailBlur={handleEmailBlur}
         />
 
-        <Payment
-          acquiringMethod={
-            acquiringMethods.find(
-              (method) => method.provider === selectedAcquiringMethodId
-            ) || acquiringMethods[0]
-          }
-          currentSum={currentSum}
-          setCurrentSum={setCurrentSum}
-        />
+        <Payment currentSum={currentSum} setCurrentSum={setCurrentSum} />
       </div>
 
       <div className="w-1/2 not-md:w-full flex flex-col gap-4">

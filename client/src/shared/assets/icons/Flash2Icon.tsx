@@ -4,10 +4,7 @@ interface Flash2IconProps extends React.SVGProps<SVGSVGElement> {
   size?: number;
 }
 
-export const Flash2Icon: React.FC<Flash2IconProps> = ({
-  size = 24,
-  ...props
-}) => {
+export const Flash2Icon: React.FC<Flash2IconProps> = ({ ...props }) => {
   return (
     <svg
       width="24"

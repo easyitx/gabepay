@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { RatedSteamCurrency } from "@/entities/ratedSteamCurrency/model/type/ratedSteamCurrency";
 import { AcquiringMethodsApi } from "../api";
 import { ApiError } from "@/shared/api";
+import { toast } from "sonner";
 
 interface UseRatedSteamCurrenciesOptions {
   autoLoad?: boolean;
@@ -14,7 +15,7 @@ interface UseRatedSteamCurrenciesOptions {
 interface UseRatedSteamCurrenciesReturn {
   currencies: RatedSteamCurrency[];
   loading: boolean;
-  error: Error | null;
+  error: string | null;
   loadCurrencies: () => void;
   refetch: () => Promise<void>;
   clearError: () => void;
@@ -23,11 +24,11 @@ interface UseRatedSteamCurrenciesReturn {
 export const useRatedSteamCurrencies = (
   options: UseRatedSteamCurrenciesOptions = {}
 ): UseRatedSteamCurrenciesReturn => {
-  const { autoLoad = true, onError, onSuccess } = options;
+  const { autoLoad = true, onSuccess } = options;
 
   const [currencies, setCurrencies] = useState<RatedSteamCurrency[]>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const loadCurrencies = useCallback(async () => {
     setLoading(true);
@@ -40,7 +41,12 @@ export const useRatedSteamCurrencies = (
       onSuccess?.(data);
       return data;
     } catch (err) {
-      setError(error);
+      if (err instanceof ApiError) {
+        setError(err.message);
+        toast.error("Ошибка при получении списка валют");
+      } else {
+        setError("Unknown error");
+      }
     } finally {
       setLoading(false);
     }
@@ -49,7 +55,9 @@ export const useRatedSteamCurrencies = (
   const refetch = useCallback(async () => {
     try {
       await loadCurrencies();
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   }, [loadCurrencies]);
 
   const clearError = useCallback(() => {
@@ -60,7 +68,7 @@ export const useRatedSteamCurrencies = (
     if (autoLoad) {
       loadCurrencies();
     }
-  }, [autoLoad]);
+  }, [autoLoad, loadCurrencies]);
 
   return {
     currencies,

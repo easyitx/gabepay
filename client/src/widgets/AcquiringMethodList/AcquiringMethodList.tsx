@@ -1,7 +1,6 @@
 import React from "react";
 import { cn } from "@/shared/lib/utils";
 
-import Button from "@/shared/ui/Button/Button";
 import {
   AcquiringMethod,
   AcquiringMethodCard,

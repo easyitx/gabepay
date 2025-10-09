@@ -5,7 +5,6 @@ interface MessageQuestionIconProps extends React.SVGProps<SVGSVGElement> {
 }
 
 export const MessageQuestionIcon: React.FC<MessageQuestionIconProps> = ({
-  size = 24,
   ...props
 }) => {
   return (

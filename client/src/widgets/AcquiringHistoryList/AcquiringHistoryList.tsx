@@ -4,8 +4,6 @@ import { Typography } from "@/shared/ui/Typography";
 
 import { IAcquiring } from "@/entities/acquiring/model/types";
 import { AcquiringHistoryCard } from "../AcquiringHistoryCard/AcquiringHistoryCard";
-import { AcquiringHistoryApi } from "@/features/getAcquiringHistory/model/api";
-import { ApiError } from "@/shared/api";
 
 export const mockAcquiringList: IAcquiring[] = [
   {

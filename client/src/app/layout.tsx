@@ -18,7 +18,7 @@ import { AcquiringMethodsApi } from "@/features/getAcquiringMethods";
 import { AcquiringHistoryApi } from "@/features/getAcquiringHistory/model/api";
 import { ApiError } from "@/shared/api";
 import { IAcquiring } from "@/entities/acquiring/model/types";
-import { toast, Toaster } from "sonner";
+import { Toaster } from "sonner";
 import { AcquiringMethod } from "@/entities/acquiringMethod";
 
 const interTight = localFont({
@@ -101,23 +101,23 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  name: "GabePay - Пополнение Steam",
-  description: "Сервис пополнения баланса Steam с минимальной комиссией",
-  provider: {
-    "@type": "Organization",
-    name: "GabePay",
-    url: "https://gabepay.ru",
-  },
-  areaServed: "Worldwide",
-  serviceType: "Digital payment processing",
-  offers: {
-    "@type": "Offer",
-    description: "Пополнение Steam с комиссией от 2%",
-  },
-};
+// const structuredData = {
+//   "@context": "https://schema.org",
+//   "@type": "Service",
+//   name: "GabePay - Пополнение Steam",
+//   description: "Сервис пополнения баланса Steam с минимальной комиссией",
+//   provider: {
+//     "@type": "Organization",
+//     name: "GabePay",
+//     url: "https://gabepay.ru",
+//   },
+//   areaServed: "Worldwide",
+//   serviceType: "Digital payment processing",
+//   offers: {
+//     "@type": "Offer",
+//     description: "Пополнение Steam с комиссией от 2%",
+//   },
+// };
 
 export default async function RootLayout({
   children,

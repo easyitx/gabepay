@@ -4,10 +4,7 @@ interface TicketIconProps extends React.SVGProps<SVGSVGElement> {
   size?: number;
 }
 
-export const TicketIcon: React.FC<TicketIconProps> = ({
-  size = 24,
-  ...props
-}) => {
+export const TicketIcon: React.FC<TicketIconProps> = ({ ...props }) => {
   return (
     <svg
       width="24"

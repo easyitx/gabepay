@@ -4,10 +4,7 @@ interface StrongBoxIconProps extends React.SVGProps<SVGSVGElement> {
   size?: number;
 }
 
-export const StrongBoxIcon: React.FC<StrongBoxIconProps> = ({
-  size = 24,
-  ...props
-}) => {
+export const StrongBoxIcon: React.FC<StrongBoxIconProps> = ({ ...props }) => {
   return (
     <svg
       width="24"

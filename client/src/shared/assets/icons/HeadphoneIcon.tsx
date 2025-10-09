@@ -4,10 +4,7 @@ interface HeadphoneIconProps extends React.SVGProps<SVGSVGElement> {
   size?: number;
 }
 
-export const HeadphoneIcon: React.FC<HeadphoneIconProps> = ({
-  size = 24,
-  ...props
-}) => {
+export const HeadphoneIcon: React.FC<HeadphoneIconProps> = ({ ...props }) => {
   return (
     <svg
       width="25"

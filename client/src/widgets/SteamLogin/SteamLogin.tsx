@@ -9,6 +9,7 @@ import Link from "next/link";
 import { SteamValidateAccountRes } from "@/shared/api";
 import { Checkbox } from "@/shared/ui/Checkbox";
 import { memo } from "react";
+import { Icon } from "@/shared/ui/Icon/Icon";
 
 const SteamLogin = memo(
   ({
@@ -22,6 +23,10 @@ const SteamLogin = memo(
     isConfirmed,
     setIsConfirmed,
     isLoading,
+    emailError,
+    isEmailFocused,
+    onEmailFocus,
+    onEmailBlur,
   }: {
     username: string;
     handleUsernameChange: (value: string) => void;
@@ -33,6 +38,10 @@ const SteamLogin = memo(
     setEmailInput: (value: string) => void;
     isConfirmed: boolean;
     setIsConfirmed: (value: boolean) => void;
+    emailError: string;
+    isEmailFocused: boolean;
+    onEmailFocus: () => void;
+    onEmailBlur: () => void;
   }) => {
     return (
       <div className="w-full flex p-6 flex-col gap-4 card">
@@ -55,14 +64,41 @@ const SteamLogin = memo(
           isLoading={!data || isLoading}
         />
 
-        <Input
-          variant="primary"
-          size="lg"
-          type="email"
-          placeholder="Введите почту"
-          value={emailInput}
-          onChange={(e) => setEmailInput(e.target.value)}
-        />
+        <div className="w-full">
+          <Input
+            variant="primary"
+            size="lg"
+            type="email"
+            placeholder="Введите почту"
+            value={emailInput}
+            onChange={(e) => setEmailInput(e.target.value)}
+            onFocus={onEmailFocus}
+            onBlur={onEmailBlur}
+            iconRight={
+              !isEmailFocused && emailInput && !emailError ? (
+                <div className="flex items-center gap-2 bg-green-500/20 rounded-full px-2 py-1">
+                  <Icon
+                    name="tick-circle"
+                    className="text-green-500"
+                    size={12}
+                  />
+                  <span className="text-green-500 text-xs font-medium">
+                    Корректный email
+                  </span>
+                </div>
+              ) : null
+            }
+          />
+          {!isEmailFocused && emailError && (
+            <Typography
+              color="red"
+              variant="caption"
+              className="text-red-500 text-xs mt-1"
+            >
+              {emailError}
+            </Typography>
+          )}
+        </div>
 
         <Checkbox checked={isConfirmed} onCheckedChange={setIsConfirmed}>
           Я подтверждаю, что указал верный логин Steam и понимаю, что средства
@@ -72,5 +108,7 @@ const SteamLogin = memo(
     );
   }
 );
+
+SteamLogin.displayName = "SteamLogin";
 
 export default SteamLogin;

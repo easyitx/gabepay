@@ -5,7 +5,6 @@ interface SecurityUserIconProps extends React.SVGProps<SVGSVGElement> {
 }
 
 export const SecurityUserIcon: React.FC<SecurityUserIconProps> = ({
-  size = 24,
   ...props
 }) => {
   return (
