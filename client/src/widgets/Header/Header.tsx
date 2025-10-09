@@ -8,6 +8,7 @@ import { Icon } from "@/shared/ui/Icon/Icon";
 import { useModalActions } from "@/app/providers/ModalProvider/useModalActions";
 import { cn } from "@/shared/lib/utils";
 import { MobileMenuContent } from "../MobileMenuContent/MobileMenuContent";
+import Link from "next/link";
 
 const Header = ({ className }: { className?: string }) => {
   const { openModal, showError, showSuccess } = useModalActions();
@@ -32,13 +33,15 @@ const Header = ({ className }: { className?: string }) => {
       </div>
 
       <div className="hidden sm:flex gap-2 ">
-        <Button variant="icon" size="md">
-          <Icon
-            name="telegram"
-            className="text-foreground mr-[2px]"
-            size={16}
-          />
-        </Button>
+          <Link href="https://t.me/gabepay_bot">
+              <Button variant="icon" size="md">
+                  <Icon
+                      name="telegram"
+                      className="text-foreground mr-[2px]"
+                      size={16}
+                  />
+              </Button>
+          </Link>
         <Button variant="icon" size="md">
           <Icon name="vk-icon" className="text-foreground" size={16} />
         </Button>
