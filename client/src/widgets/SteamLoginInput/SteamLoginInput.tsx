@@ -1,6 +1,7 @@
 import { cn } from "@/shared/lib/utils";
 import { Icon } from "@/shared/ui/Icon/Icon";
 import { Input } from "@/shared/ui/Input";
+import { memo } from "react";
 
 export const SteamLoginInput: React.FC<{
   value: string;
@@ -9,16 +10,7 @@ export const SteamLoginInput: React.FC<{
   className?: string;
   isFinded?: boolean;
   isLoading?: boolean;
-  hasError?: boolean;
-}> = ({
-  value,
-  onChange,
-  onBlur,
-  className,
-  isFinded,
-  isLoading,
-  hasError,
-}) => {
+}> = memo(({ value, onChange, onBlur, className, isFinded, isLoading }) => {
   const FoundIcon = () => (
     <div className="flex items-center gap-2 bg-purple rounded-full px-2 py-1">
       <Icon name="tick-circle" className="text-accent" size={12} />
@@ -45,7 +37,7 @@ export const SteamLoginInput: React.FC<{
   const getIconRight = () => {
     if (!value) return null;
     if (isLoading) return <LoadingIcon />;
-    if (hasError || !isFinded) return <NotFoundIcon />;
+    if (!isFinded) return <NotFoundIcon />;
     if (isFinded) return <FoundIcon />;
     return null;
   };
@@ -62,4 +54,4 @@ export const SteamLoginInput: React.FC<{
       className={cn("w-full", className)}
     />
   );
-};
+});

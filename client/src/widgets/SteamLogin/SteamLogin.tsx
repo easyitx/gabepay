@@ -1,78 +1,76 @@
 "use client";
 import Button from "@/shared/ui/Button/Button";
 import { Typography } from "@/shared/ui/Typography";
-import React, { useState } from "react";
+
 import { SteamLoginInput } from "../SteamLoginInput/SteamLoginInput";
 import { Input } from "@/shared/ui/Input";
+
+import Link from "next/link";
+import { SteamValidateAccountRes } from "@/shared/api";
 import { Checkbox } from "@/shared/ui/Checkbox";
-import { useSteamValidation } from "@/features/validateSteamAccount/model/hooks/useSteamValidation";
+import { memo } from "react";
 
-const SteamLogin = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [isConfirmed, setIsConfirmed] = useState(false);
-  const { validateSteamAccount, isLoading, error, data, reset } =
-    useSteamValidation();
+const SteamLogin = memo(
+  ({
+    username,
+    handleUsernameChange,
+    handleBlur,
+    data,
 
-  const handleValidateSteamAccount = async () => {
-    if (!username.trim()) {
-      return;
-    }
-    await validateSteamAccount(username);
-    console.log(data);
-    console.log(error);
-  };
+    emailInput,
+    setEmailInput,
+    isConfirmed,
+    setIsConfirmed,
+    isLoading,
+  }: {
+    username: string;
+    handleUsernameChange: (value: string) => void;
+    handleBlur: () => void;
+    isLoading: boolean;
+    data: SteamValidateAccountRes | null;
 
-  const handleBlur = () => {
-    if (username.trim()) {
-      handleValidateSteamAccount();
-    }
-  };
+    emailInput: string;
+    setEmailInput: (value: string) => void;
+    isConfirmed: boolean;
+    setIsConfirmed: (value: boolean) => void;
+  }) => {
+    return (
+      <div className="w-full flex p-6 flex-col gap-4 card">
+        <div className="w-full flex justify-between items-center">
+          <Typography color="accent" variant="h3" className="font-bold text-lg">
+            Пополнение Steam
+          </Typography>
+          <Link href="https://store.steampowered.com/account" target="_blank">
+            <Button variant="ghost" className="underline">
+              Как узнать логин?
+            </Button>
+          </Link>
+        </div>
 
-  const handleUsernameChange = (value: string) => {
-    setUsername(value);
+        <SteamLoginInput
+          value={username}
+          onChange={handleUsernameChange}
+          onBlur={handleBlur}
+          isFinded={data?.valid}
+          isLoading={!data || isLoading}
+        />
 
-    if (data || error) {
-      reset();
-    }
-  };
+        <Input
+          variant="primary"
+          size="lg"
+          type="email"
+          placeholder="Введите почту"
+          value={emailInput}
+          onChange={(e) => setEmailInput(e.target.value)}
+        />
 
-  return (
-    <div className="w-full flex p-6 flex-col gap-4 card">
-      <div className="w-full flex justify-between items-center">
-        <Typography color="accent" variant="h3" className="font-bold text-lg">
-          Пополнение Steam
-        </Typography>
-        <Button variant="ghost" className="underline">
-          Как узнать логин?
-        </Button>
+        <Checkbox checked={isConfirmed} onCheckedChange={setIsConfirmed}>
+          Я подтверждаю, что указал верный логин Steam и понимаю, что средства
+          будут начислены на указанный аккаунт
+        </Checkbox>
       </div>
-
-      <SteamLoginInput
-        value={username}
-        onChange={handleUsernameChange}
-        onBlur={handleBlur}
-        isFinded={!!data}
-        isLoading={isLoading}
-        hasError={!!error}
-      />
-
-      {error && <div className="text-sm text-red-500">{error.message}</div>}
-
-      <Input
-        variant="primary"
-        size="lg"
-        placeholder="Введите почту"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-
-      <Checkbox checked={isConfirmed} onCheckedChange={setIsConfirmed}>
-        Я подтверждаю, что указал верный логин Steam и понимаю, что средства
-        будут начислены на указанный аккаунт
-      </Checkbox>
-    </div>
-  );
-};
+    );
+  }
+);
 
 export default SteamLogin;

@@ -1,9 +1,9 @@
 import { useState, useCallback } from "react";
-import { ApiService } from "@/shared/api/api.service";
+import { CreateInvoiceApi } from "../api";
 import {
   AcquiringCreatePayReq,
   AcquiringCreatePayRes,
-} from "@/shared/api/acquiring.interface";
+} from "@/entities/acquiringMethod";
 
 interface UseCreateInvoiceReturn {
   createInvoice: (
@@ -26,13 +26,12 @@ export const useCreateInvoice = (): UseCreateInvoiceReturn => {
       setError(null);
 
       try {
-        const response = await ApiService.createInvoice.createInvoice(data);
+        const createInvoiceApi = new CreateInvoiceApi();
+        const response = await createInvoiceApi.createInvoice(data);
         setResult(response);
         return response;
       } catch (err) {
-        const errorMessage =
-          err instanceof Error ? err.message : "Ошибка создания инвойса";
-        setError(errorMessage);
+        console.error(err);
         throw err;
       } finally {
         setIsCreating(false);

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { SteamValidateAccountRes } from "../types";
 import { ApiError } from "@/shared/api";
 import { ValidateSteamAccountApi } from "../api";
@@ -9,29 +9,33 @@ export const useSteamValidation = () => {
   const [error, setError] = useState<ApiError | null>(null);
   const [data, setData] = useState<SteamValidateAccountRes | null>(null);
 
-  const validateSteamAccount = async (account: string) => {
-    setIsLoading(true);
-    setError(null);
+  const validateSteamAccount = useCallback(
+    async (account: string) => {
+      if (account.trim() === "") return;
+      setIsLoading(true);
+      setError(null);
 
-    try {
-      const api = new ValidateSteamAccountApi();
-      const result = await api.validateAccount(account);
+      try {
+        const api = new ValidateSteamAccountApi();
+        const result = await api.validateAccount(account);
 
-      setData(result);
-    } catch (err) {
-      if (err instanceof ApiError) {
-        setError(err);
+        setData(result);
+      } catch (err) {
+        if (err instanceof ApiError) {
+          setError(err);
+        }
+        throw err;
+      } finally {
+        setIsLoading(false);
       }
-      throw err;
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    },
+    [data, error]
+  );
 
-  const reset = () => {
+  const reset = useCallback(() => {
     setData(null);
     setError(null);
-  };
+  }, []);
 
   return {
     validateSteamAccount,

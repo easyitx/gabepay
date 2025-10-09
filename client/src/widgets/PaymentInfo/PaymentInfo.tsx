@@ -1,11 +1,15 @@
+"use client";
+
 import React from "react";
 import { Typography } from "@/shared/ui/Typography";
+import { AcquiringMethod } from "@/entities/acquiringMethod";
+import { useRatedSteamCurrencies } from "@/features/getRatedSteamCurrencies";
 
 interface PaymentInfoProps {
   amountToPay: number;
   amountToReceive: number;
   commission: number;
-  currency?: string;
+  acquiringMethod?: AcquiringMethod;
   className?: string;
 }
 
@@ -13,11 +17,21 @@ export const PaymentInfo: React.FC<PaymentInfoProps> = ({
   amountToPay,
   amountToReceive,
   commission,
-  currency = "₽",
   className,
 }) => {
-  const formatAmount = (amount: number) => {
-    return `${amount.toFixed(2)}${currency}`;
+  const { currencies, loading } = useRatedSteamCurrencies();
+
+  const formatCurrencyList = (amount: number) => {
+    if (loading || currencies.length === 0) {
+      return `${amount.toFixed(2)} ₽`;
+    }
+
+    return currencies
+      .map((currency) => {
+        const convertedAmount = amount / currency.rate;
+        return `${convertedAmount.toFixed(2)} ${currency.currency}`;
+      })
+      .join(" • ");
   };
 
   return (
@@ -26,11 +40,11 @@ export const PaymentInfo: React.FC<PaymentInfoProps> = ({
     >
       <div className="flex items-center justify-between">
         <Typography color="foreground" variant="body">
-          Заплатите:
+          Сумма к оплате:
         </Typography>
         <div className="flex-1 mx-4 border-b border-dashed border-foreground-secondary"></div>
         <Typography color="foreground" variant="body">
-          {formatAmount(amountToPay)}
+          {amountToPay.toFixed(2)} ₽
         </Typography>
       </div>
 
@@ -40,17 +54,17 @@ export const PaymentInfo: React.FC<PaymentInfoProps> = ({
         </Typography>
         <div className="flex-1 mx-4 border-b border-dashed border-foreground-secondary"></div>
         <Typography color="foreground" variant="body">
-          {formatAmount(amountToReceive)}
+          {formatCurrencyList(amountToReceive)}
         </Typography>
       </div>
 
       <div className="flex items-center justify-between">
         <Typography color="foreground" variant="body">
-          Комиссия на конвертации:
+          Комиссия:
         </Typography>
         <div className="flex-1 mx-4 border-b border-dashed border-foreground-secondary"></div>
         <Typography color="foreground" variant="body">
-          {formatAmount(commission)}
+          {commission.toFixed(2)} ₽
         </Typography>
       </div>
     </div>

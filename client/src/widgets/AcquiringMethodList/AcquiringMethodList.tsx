@@ -32,9 +32,6 @@ export const AcquiringMethodList: React.FC<AcquiringMethodListProps> = ({
           />
         ))}
       </div>
-      <Button variant="primary" size="lg" className="w-full">
-        Пополнить баланс
-      </Button>
     </div>
   );
 };
