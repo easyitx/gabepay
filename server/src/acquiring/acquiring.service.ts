@@ -64,6 +64,7 @@ export class AcquiringService {
     const activeInvoices = await this.invoiceModel.countDocuments({
       email: data.email,
       amount: amount,
+      currency: data.currency,
       provider: method.provider,
       status: InvoiceStatus.pending,
       createdAt: { $gte: twentyThreeHoursAgo }, // только счета созданные в последние 23 часа
@@ -76,6 +77,7 @@ export class AcquiringService {
         .findOne({
           email: data.email,
           amount: amount,
+          currency: data.currency,
           provider: method.provider,
           status: InvoiceStatus.pending,
           createdAt: { $gte: twentyThreeHoursAgo },
@@ -126,7 +128,36 @@ export class AcquiringService {
     return AcquiringMethods;
   }
 
-  async processWebhookInvoice(data: WebhookProcessingResult) {}
+  async processWebhookInvoice(data: WebhookProcessingResult) {
+    return await mongooseTransaction(this.connection, async (session) => {
+      const invoice = await this.invoiceModel.findOne(
+        {
+          _id: data.invoiceId,
+        },
+        {},
+        { session },
+      );
+
+      if (!invoice) {
+        return AppException.notFound(`Invoice ${data.invoiceId} not found`);
+      }
+
+      if (data.success) {
+        // Отправляем деньги на стим
+        const isSuccess =
+          await this.steamAcquiringService.paymentExecute(invoice);
+        if (isSuccess) {
+          invoice.status = InvoiceStatus.completed;
+        } else {
+          invoice.status = InvoiceStatus.received;
+        }
+
+        await invoice.save({ session });
+      }
+
+      return true;
+    });
+  }
 
   private getAcquiringProviderService(provider: AcquiringProvider) {
     switch (provider) {

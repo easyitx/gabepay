@@ -16,7 +16,19 @@ export interface SteamPaymentVerifyRes {
     // parent_id: null;
   };
 }
-export interface SteamPaymentExecuteRes {}
+export interface SteamPaymentExecuteRes {
+  success: boolean;
+  message: string;
+  data: {
+    currency: SteamCurrency;
+    steam_login: string;
+    amount: number;
+    amount_usd: number;
+    cashback: number;
+    status_code: SteamStatusCode;
+    user_login: string;
+  };
+}
 export interface SteamPaymentStatusRes {}
 
 export enum SteamStatusCode {

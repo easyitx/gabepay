@@ -8,7 +8,9 @@ export type InvoiceDocument = HydratedDocument<Invoice>;
 
 export enum InvoiceStatus {
   pending = 'pending', // Ожидается оплата от клиента
-  expired = 'expired', // Ожидается оплата от клиента
+  expired = 'expired', // Платеж просрочен
+  received = 'received', // Инвойс получен на счет
+  completed = 'completed', // Инвойс оплачен и выплачен на стим
 }
 
 @Schema({
