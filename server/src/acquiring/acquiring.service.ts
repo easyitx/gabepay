@@ -159,6 +159,14 @@ export class AcquiringService {
     });
   }
 
+  async getPaymentsHistory() {
+    return this.invoiceModel
+      .find({ status: InvoiceStatus.completed })
+      .limit(30)
+      .select(['_id', 'email', 'currency', 'paidAmount', 'account'])
+      .exec();
+  }
+
   private getAcquiringProviderService(provider: AcquiringProvider) {
     switch (provider) {
       case AcquiringProvider.cashinout:
