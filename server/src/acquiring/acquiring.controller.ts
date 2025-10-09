@@ -3,7 +3,6 @@ import { AcquiringService } from './acquiring.service';
 import {
   AcquiringCreatePayReq,
   AcquiringCreatePayRes,
-  AcquiringHistoryRes,
   AcquiringMethod,
 } from './acquiring.interface';
 import { BodyValidationInterceptor } from '../../lib/validation/validation.interceptor';
