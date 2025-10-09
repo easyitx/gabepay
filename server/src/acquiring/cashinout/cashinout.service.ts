@@ -20,7 +20,7 @@ export class CashinoutService {
     const response = await this.cashinoutApiService.createOneTimeInvoice(body);
 
     return {
-      paymentLink: `https://cashinout.io/pay/${response.data}?lang=ru`,
+      paymentLink: `https://cashinout.io/pay/${response.data}?lang=ru&refererId=194805`,
       transactionId: response.data,
     };
   }

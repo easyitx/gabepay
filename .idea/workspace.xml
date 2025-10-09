@@ -6,10 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="84c57886-a591-4d86-aaab-a9dcbeaa8ecb" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/acquiring/acquiring.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/acquiring/acquiring.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/acquiring/acquiring.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/acquiring/acquiring.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/steam-acquiring/steam-acquiring.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/steam-acquiring/steam-acquiring.interface.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/steam-acquiring/steam-acquiring.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/steam-acquiring/steam-acquiring.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/widgets/Banner/Banner.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/widgets/Banner/Banner.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/acquiring/cashinout/cashinout.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/acquiring/cashinout/cashinout.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +94,7 @@
       <workItem from="1759945820389" duration="4906000" />
       <workItem from="1759987582493" duration="26000" />
       <workItem from="1759988688991" duration="27000" />
-      <workItem from="1759998050971" duration="3542000" />
+      <workItem from="1759998050971" duration="7358000" />
     </task>
     <servers />
   </component>
