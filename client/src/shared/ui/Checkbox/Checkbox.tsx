@@ -1,6 +1,8 @@
+"use client";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import { cn } from "@/shared/lib/utils";
 import { Icon } from "@/shared/ui/Icon/Icon";
+import { useRef } from "react";
 
 interface CheckboxProps {
   id?: string;
@@ -19,12 +21,25 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   className,
   children,
 }) => {
+  const checkboxRef = useRef<HTMLButtonElement>(null);
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      if (!disabled) {
+        onCheckedChange?.(!checked);
+      }
+    }
+  };
+
   return (
     <div className={cn("flex items-center gap-3", className)}>
       <CheckboxPrimitive.Root
+        ref={checkboxRef}
         id={id}
         checked={checked}
         onCheckedChange={onCheckedChange}
+        onKeyDown={handleKeyDown}
         disabled={disabled}
         className={cn(
           "peer h-6 w-6 shrink-0 rounded-sm border border-foreground",
