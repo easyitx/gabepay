@@ -55,4 +55,8 @@ export class SteamAcquiringService {
       reason,
     );
   }
+
+  async getAllCurrencies() {
+    return await this.steamAcquiringApiService.getAllCurrencies();
+  }
 }

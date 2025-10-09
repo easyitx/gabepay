@@ -1,4 +1,11 @@
-export interface SteamCurrencyRateRes {}
+export interface SteamCurrencyRateRes {
+  id: number;
+  currency: string;
+  source: string;
+  rate: number;
+  updated_at: string;
+}
+
 export interface SteamConvertCurrencyRes {}
 
 export interface SteamPaymentVerifyRes {

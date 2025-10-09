@@ -167,6 +167,10 @@ export class AcquiringService {
       .exec();
   }
 
+  async getAllCurrencies() {
+    return this.steamAcquiringService.getAllCurrencies();
+  }
+
   private getAcquiringProviderService(provider: AcquiringProvider) {
     switch (provider) {
       case AcquiringProvider.cashinout:

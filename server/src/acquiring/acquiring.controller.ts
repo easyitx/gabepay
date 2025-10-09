@@ -28,4 +28,9 @@ export class AcquiringController {
   async getPaymentsHistory() {
     return await this.acquiringService.getPaymentsHistory();
   }
+
+  @Get('currencies')
+  async getAllCurrencies() {
+    return this.acquiringService.getAllCurrencies();
+  }
 }
