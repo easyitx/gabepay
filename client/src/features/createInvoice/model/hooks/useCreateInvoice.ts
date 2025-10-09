@@ -4,6 +4,8 @@ import {
   AcquiringCreatePayReq,
   AcquiringCreatePayRes,
 } from "@/entities/acquiringMethod";
+import { toast } from "sonner";
+import { ApiError } from "@/shared/api";
 
 interface UseCreateInvoiceReturn {
   createInvoice: (
@@ -31,7 +33,9 @@ export const useCreateInvoice = (): UseCreateInvoiceReturn => {
         setResult(response);
         return response;
       } catch (err) {
-        console.error(err);
+        if (err instanceof ApiError) {
+          toast.error(err.message);
+        }
         throw err;
       } finally {
         setIsCreating(false);

@@ -89,7 +89,7 @@ const Replenishment = ({
   const { createInvoice, isCreating } = useCreateInvoice();
 
   const handlePayment = useCallback(async () => {
-    const { paymentLink, transactionId } = await createInvoice({
+    const { paymentLink } = await createInvoice({
       amount: fullPaymentAmount.toString(),
       currency: "RUB",
       account: username,

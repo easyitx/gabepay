@@ -18,6 +18,8 @@ import { AcquiringMethodsApi } from "@/features/getAcquiringMethods";
 import { AcquiringHistoryApi } from "@/features/getAcquiringHistory/model/api";
 import { ApiError } from "@/shared/api";
 import { IAcquiring } from "@/entities/acquiring/model/types";
+import { toast, Toaster } from "sonner";
+import { AcquiringMethod } from "@/entities/acquiringMethod";
 
 const interTight = localFont({
   src: [
@@ -122,17 +124,25 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const acquiringMethodsApi = new AcquiringMethodsApi();
-  const acquiringMethods = (await acquiringMethodsApi.getMethods()) || [];
+  let acquiringMethods: AcquiringMethod[] = [];
   let acquiringHistory: IAcquiring[] = mockAcquiringList;
+  try {
+    const acquiringMethodsApi = new AcquiringMethodsApi();
+    acquiringMethods = await acquiringMethodsApi.getMethods();
+  } catch (error) {
+    if (error instanceof ApiError) {
+      console.log(error);
+    }
+  }
   try {
     const acquiringHistoryApi = new AcquiringHistoryApi();
     acquiringHistory = await acquiringHistoryApi.getAcquiringHistory();
   } catch (error) {
     if (error instanceof ApiError) {
-      console.error(error);
+      console.log(error);
     }
   }
+
   return (
     <html lang="ru">
       <body
@@ -176,6 +186,7 @@ export default async function RootLayout({
           </main>
           <Spacing size="2xl" direction="vertical" />
           <Footer />
+          <Toaster />
         </AppProvider>
       </body>
     </html>
