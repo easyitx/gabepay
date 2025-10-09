@@ -11,6 +11,8 @@ import { cn } from "@/shared/lib/utils";
 import ReplenishmentsList from "@/widgets/ReplenishmentsList/ReplenishmentsList";
 import { FAQ } from "@/widgets/FAQ/FAQ";
 import { WhyChooseUs } from "@/widgets/WhyChooseUs/WhyChooseUs";
+import { AppProvider } from "./providers";
+import { AcquiringMethodsApi } from "@/features/getAcquiringMethods";
 
 const interTight = localFont({
   src: [
@@ -34,35 +36,46 @@ export const metadata: Metadata = {
   description: "Donate with Gabepay",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const acquiringMethodsApi = new AcquiringMethodsApi();
+  const acquiringMethods = (await acquiringMethodsApi.getMethods()) || [];
+
   return (
     <html lang="en">
-      <body className={cn("min-h-screen pt-6 m-0", interTight.variable)}>
-        <Header className="app-container h-[55px]" />
-        <Spacing size="lg" direction="vertical" />
-        <Banner className="app-container " />
-        <Spacing size="lg" direction="vertical" />
-        <div id="replenishment">
-          <Replenishment className="app-container " />
-        </div>
-        <Spacing size="2xl" direction="vertical" />
+      <body
+        className={cn("min-h-screen pt-6 m-0", interTight.variable)}
+        suppressHydrationWarning
+      >
+        <AppProvider>
+          <Header className="app-container h-15" />
+          <Spacing size="lg" direction="vertical" />
+          <Banner className="app-container " />
+          <Spacing size="lg" direction="vertical" />
+          <div id="replenishment">
+            <Replenishment
+              className="app-container"
+              acquiringMethods={acquiringMethods}
+            />
+          </div>
+          <Spacing size="2xl" direction="vertical" />
 
-        <ReplenishmentsList />
-        <Spacing size="2xl" direction="vertical" />
-        <div id="faq">
-          <FAQ className="app-container" />
-        </div>
-        <Spacing size="2xl" direction="vertical" />
-        <div id="guide">
-          <WhyChooseUs className="app-container" />
-        </div>
-        <main className="flex-1 app-container">{children}</main>
-        <Spacing size="2xl" direction="vertical" />
-        <Footer />
+          <ReplenishmentsList />
+          <Spacing size="2xl" direction="vertical" />
+          <div id="faq">
+            <FAQ className="app-container" />
+          </div>
+          <Spacing size="2xl" direction="vertical" />
+          <div id="guide">
+            <WhyChooseUs className="app-container" />
+          </div>
+          <main className="flex-1 app-container">{children}</main>
+          <Spacing size="2xl" direction="vertical" />
+          <Footer />
+        </AppProvider>
       </body>
     </html>
   );

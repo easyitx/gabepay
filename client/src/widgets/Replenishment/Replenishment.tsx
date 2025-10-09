@@ -1,31 +1,44 @@
 "use client";
 
-import { Typography } from "@/shared/ui/Typography";
 import SteamLogin from "../SteamLogin/SteamLogin";
 
-import PromoCodeInput from "../PromoCodeInput/PromoCodeInput";
 import PromoCode from "../PromoCode/PromoCode";
-import { Input } from "@/shared/ui/Input";
+
 import { useState } from "react";
-import { Currency, CurrencyCard } from "@/entities/currency";
-import { Icon } from "@/shared/ui/Icon/Icon";
-import Button from "@/shared/ui/Button/Button";
+import {
+  AcquiringProvider,
+  type AcquiringMethod,
+} from "@/entities/acquiringMethod";
+
 import Payment from "../Payment/Payment";
 import { PaymentInfo } from "../PaymentInfo/PaymentInfo";
-import { CurrencyList } from "../CurrencyList/CurrencyList";
+import { AcquiringMethodList } from "../AcquiringMethodList/AcquiringMethodList";
 import { cn } from "@/shared/lib/utils";
 
-const Replenishment = ({ className }: { className?: string }) => {
-  const [selectedCurrencyId, setSelectedCurrencyId] = useState<string | null>(
-    "1"
-  );
+const Replenishment = ({
+  className,
+  acquiringMethods,
+}: {
+  className?: string;
+  acquiringMethods: AcquiringMethod[];
+}) => {
+  const [selectedAcquiringMethodId, setSelectedAcquiringMethodId] = useState<
+    string | null
+  >(null);
 
-  const mockCurrencies: Currency[] = [
-    { id: "1", name: "CASHINOUT", symbol: "СБП", icon: "/methods/cashinout.svg", percentage: 0 },
+  const mockAcquiringMethods: AcquiringMethod[] = [
+    {
+      provider: AcquiringProvider.cashinout,
+      code: "cashinout_method",
+      relativeProviderCommission: 0,
+      relativeCommission: 0,
+      isCommissionIncluded: true,
+      icon: "/methods/cashinout.svg",
+    },
   ];
 
-  const handleSelectCurrency = (currency: Currency) => {
-    setSelectedCurrencyId(currency.id);
+  const handleSelectAcquiringMethod = (acquiringMethod: AcquiringMethod) => {
+    setSelectedAcquiringMethodId(acquiringMethod.provider);
   };
 
   return (
@@ -43,10 +56,10 @@ const Replenishment = ({ className }: { className?: string }) => {
           commission={0}
           currency="₽"
         />
-        <CurrencyList
-          currencies={mockCurrencies}
-          onSelectCurrency={handleSelectCurrency}
-          selectedCurrencyId={selectedCurrencyId}
+        <AcquiringMethodList
+          acquiringMethods={acquiringMethods}
+          onSelectAcquiringMethod={handleSelectAcquiringMethod}
+          selectedAcquiringMethodId={selectedAcquiringMethodId}
         />
       </div>
     </div>

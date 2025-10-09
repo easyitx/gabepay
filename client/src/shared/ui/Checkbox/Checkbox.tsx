@@ -41,9 +41,12 @@ export const Checkbox: React.FC<CheckboxProps> = ({
           <Icon name="tick-circle" className="h-5 w-5 text-accent" />
         </CheckboxPrimitive.Indicator>
       </CheckboxPrimitive.Root>
-
       {children && (
         <label
+          onClick={() => {
+            if (disabled) return;
+            onCheckedChange?.(!checked);
+          }}
           htmlFor={id}
           className="text-foreground text-sm leading-relaxed cursor-pointer"
         >

@@ -41,7 +41,7 @@ export const UserReplenishmentCard: React.FC<UserReplenishmentCardProps> = ({
         <Typography color="accent" variant="body" className="font-medium">
           {replenishment.username}
         </Typography>
-        <Typography className="text-foreground-secondary" variant="caption">
+        <Typography className="text-foreground" variant="caption">
           {replenishment.timestamp}
         </Typography>
       </div>
