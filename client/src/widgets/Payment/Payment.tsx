@@ -1,20 +1,19 @@
-import { Currency } from "@/entities/currency";
 import { Input } from "@/shared/ui/Input";
 import { Typography } from "@/shared/ui/Typography";
 import React, { useState } from "react";
 import { FastReplenishment } from "../FastReplenishment/FastReplenishment";
 import { Icon } from "@/shared/ui/Icon/Icon";
+import { AcquiringMethod, AcquiringProvider } from "@/entities/acquiringMethod";
 
-const Payment = () => {
-  const [currency, setCurrency] = useState<Currency>({
-    id: "1",
-    name: "RUB",
-    symbol: "₽",
-    icon: "RUB",
-    percentage: 0,
-  });
-  const [cunnrentSum, setCurrentSum] = useState<number>(0);
-
+const Payment = ({
+  acquiringMethod,
+  currentSum,
+  setCurrentSum,
+}: {
+  acquiringMethod: AcquiringMethod;
+  currentSum: number;
+  setCurrentSum: (value: number) => void;
+}) => {
   return (
     <div className="w-full p-6 card gap-5 flex flex-col">
       <div className="flex justify-between items-center">
@@ -30,8 +29,8 @@ const Payment = () => {
           variant="primary"
           size="lg"
           placeholder="Введите сумму"
-          value={cunnrentSum}
-          iconAfterText={currency.symbol}
+          value={currentSum}
+          iconAfterText={"₽"}
           type="number"
           onChange={(e) => setCurrentSum(+e.target.value)}
           className="not-sm:w-full"
@@ -49,13 +48,15 @@ const Payment = () => {
             variant="h3"
             className="w-max overflow-hidden font-medium text-lg"
           >
-            {currency.symbol}
-            {cunnrentSum}
+            ₽{currentSum}
           </Typography>
           <Icon name="message-question" className=" cursor-help" />
         </div>
       </div>
-      <FastReplenishment currency={currency} setCurrentSum={setCurrentSum} />
+      <FastReplenishment
+        acquiringMethod={acquiringMethod}
+        setCurrentSum={setCurrentSum}
+      />
       <Typography className="text-sm">
         Минимальная сумма пополнения 10 валютных единиц.
       </Typography>

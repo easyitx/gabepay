@@ -1,13 +1,14 @@
-import { Currency } from "@/entities/currency";
+import { AcquiringMethod } from "@/entities/acquiringMethod";
+
 import Button from "@/shared/ui/Button/Button";
 
 const fastReplenishment = [100, 200, 500, 1000, 5000];
 
 export const FastReplenishment = ({
-  currency,
+  acquiringMethod,
   setCurrentSum,
 }: {
-  currency: Currency;
+  acquiringMethod: AcquiringMethod;
   setCurrentSum: (sum: number) => void;
 }) => (
   <div className="flex gap-2 w-full overflow-x-auto overflow-y-hidden">
@@ -19,7 +20,7 @@ export const FastReplenishment = ({
         className="border border-secondary hover:border-primary hover:bg-foreground hover:text-accent whitespace-nowrap"
         onClick={() => setCurrentSum(item)}
       >
-        {item} {currency.symbol}
+        {item} ₽
       </Button>
     ))}
   </div>

@@ -2,7 +2,7 @@ import { BaseApiService } from "@/shared/api/base-api.service";
 import {
   AcquiringCreatePayReq,
   AcquiringCreatePayRes,
-} from "@/shared/api/acquiring.interface";
+} from "@/entities/acquiringMethod";
 
 export class CreateInvoiceApi extends BaseApiService<
   AcquiringCreatePayReq,

@@ -1,8 +1,5 @@
 import { BaseApiService } from "@/shared/api/base-api.service";
-import {
-  SteamValidateAccountReq,
-  SteamValidateAccountRes,
-} from "@/shared/api/steam-validate.interface";
+import { SteamValidateAccountReq, SteamValidateAccountRes } from "../types";
 
 export class ValidateSteamAccountApi extends BaseApiService<
   SteamValidateAccountReq,
