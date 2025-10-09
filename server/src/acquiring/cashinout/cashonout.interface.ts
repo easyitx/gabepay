@@ -80,3 +80,20 @@ export type CashinoutCreateOneTimeInvoiceRes = {
   ok: boolean;
   data: string;
 };
+
+export interface CashinoutWebhookReq {
+  type: 'payment' | 'status';
+  invoiceId: string;
+  sessionId: string;
+  currency: string;
+  amount: string;
+  amountWithFee: string;
+  paymentId: string;
+  amountUsdt: string;
+  amountUsdtWithFee: string;
+  externalText?: string;
+  timestampSeconds: string;
+  signature: string;
+
+  status: string; // при type status
+}

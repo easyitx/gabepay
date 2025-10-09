@@ -14,6 +14,7 @@ import { AppException } from '../../lib/errors/appException';
 import { CashinoutService } from './cashinout/cashinout.service';
 import { SteamAcquiringService } from '../steam-acquiring/steam-acquiring.service';
 import { mongooseTransaction } from '../../lib/database';
+import { WebhookProcessingResult } from './webhook/webhook.types';
 
 @Injectable()
 export class AcquiringService {
@@ -124,6 +125,8 @@ export class AcquiringService {
   getPayMethods(): AcquiringMethod[] {
     return AcquiringMethods;
   }
+
+  async processWebhookInvoice(data: WebhookProcessingResult) {}
 
   private getAcquiringProviderService(provider: AcquiringProvider) {
     switch (provider) {
