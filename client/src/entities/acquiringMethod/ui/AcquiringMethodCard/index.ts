@@ -1,1 +1,1 @@
-export { CurrencyCard } from "./AcquiringMethodCard";
+
