@@ -5,7 +5,7 @@ import Decimal from 'decimal.js';
 import { AcquiringMethods } from './acquiring-methods';
 import {
   AcquiringCreatePayReq,
-  AcquiringCreatePayRes,
+  AcquiringCreatePayRes, AcquiringHistoryRes,
   AcquiringMethod,
   AcquiringProvider,
 } from './acquiring.interface';

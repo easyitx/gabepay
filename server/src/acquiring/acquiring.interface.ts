@@ -30,3 +30,11 @@ export interface AcquiringCreatePayRes {
   paymentLink: string;
   transactionId: string;
 }
+
+export interface AcquiringHistoryRes {
+  _id: string;
+  email: string;
+  currency: string;
+  paidAmount: string;
+  account: string;
+}

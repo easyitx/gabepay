@@ -3,6 +3,7 @@ import { AcquiringService } from './acquiring.service';
 import {
   AcquiringCreatePayReq,
   AcquiringCreatePayRes,
+  AcquiringHistoryRes,
   AcquiringMethod,
 } from './acquiring.interface';
 import { BodyValidationInterceptor } from '../../lib/validation/validation.interceptor';
@@ -25,7 +26,7 @@ export class AcquiringController {
   }
 
   @Get('history')
-  async getPaymentsHistory() {
+  async getPaymentsHistory(): Promise<AcquiringHistoryRes[]> {
     return await this.acquiringService.getPaymentsHistory();
   }
 }
