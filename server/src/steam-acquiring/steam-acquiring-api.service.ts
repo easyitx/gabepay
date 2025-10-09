@@ -39,12 +39,12 @@ export class SteamAcquiringApiService {
     toCurrency: SteamCurrency,
     amount: number | string,
   ): Promise<SteamConvertCurrencyRes> {
-    const response: AxiosResponse<SteamConvertCurrencyRes> =
+    const response: AxiosResponse<{ data: SteamConvertCurrencyRes }> =
       await this.client.get(
         `/currencies/${fromCurrency}:${toCurrency}/${amount}`,
       );
 
-    return response.data;
+    return response.data.data;
   }
 
   /**

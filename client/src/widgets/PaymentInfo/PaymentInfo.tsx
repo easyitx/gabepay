@@ -4,6 +4,7 @@ import React from "react";
 import { Typography } from "@/shared/ui/Typography";
 import { AcquiringMethod } from "@/entities/acquiringMethod";
 import { useRatedSteamCurrencies } from "@/features/getRatedSteamCurrencies";
+import {RatedSteamCurrency} from "@/entities/ratedSteamCurrency/model/type/ratedSteamCurrency";
 
 interface PaymentInfoProps {
   amountToPay: number;
@@ -20,20 +21,19 @@ export const PaymentInfo: React.FC<PaymentInfoProps> = ({
   className,
 }) => {
   const { currencies, loading } = useRatedSteamCurrencies();
-  console.log(currencies);
 
-  const formatCurrencyList = (amount: number) => {
-    if (loading || currencies.length === 0) {
-      return `${amount.toFixed(2)} ₽`;
-    }
+    const formatCurrencyList = (amount: number) => {
+        if (loading || currencies.length === 0) {
+            return `${amount.toFixed(2)} ₽`;
+        }
 
-    return currencies
-      .map((currency) => {
-        const convertedAmount = amount / currency.rate;
-        return `${convertedAmount.toFixed(2)} ${currency.currency}`;
-      })
-      .join(" • ");
-  };
+        return currencies
+            .map((currency) => {
+                const convertedAmount = amount * currency.rate;
+                return `${convertedAmount.toFixed(2)} ${currency.currency}`;
+            })
+            .join(" • ");
+    };
 
   return (
     <div

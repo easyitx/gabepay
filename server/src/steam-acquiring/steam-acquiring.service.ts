@@ -1,8 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { SteamAcquiringApiService } from './steam-acquiring-api.service';
-import { generateId } from '../../lib/database';
+import { generateId, generateShortId } from '../../lib/database';
 import { AcquiringCreatePayReq } from '../acquiring/acquiring.interface';
-import { SteamCurrency, SteamStatusCode } from './steam-acquiring.interface';
+import {
+  SteamCurrency,
+  SteamCurrencyRateRes,
+  SteamStatusCode,
+} from './steam-acquiring.interface';
 import { AppException } from '../../lib/errors/appException';
 import { InvoiceDocument } from '../acquiring/invoice.schema';
 
@@ -57,6 +61,24 @@ export class SteamAcquiringService {
   }
 
   async getAllCurrencies() {
-    return await this.steamAcquiringApiService.getAllCurrencies();
+    const currencies: SteamCurrency[] = ['USD', 'KZT', 'RUB'];
+    const result: SteamCurrencyRateRes[] = [];
+
+    for (const currency of currencies) {
+      const data = await this.steamAcquiringApiService.convertCurrency(
+        'RUB',
+        currency,
+        1,
+      );
+
+      result.push({
+        id: Math.random(),
+        currency: currency,
+        source: 'steam',
+        rate: data.converted_amount,
+      });
+    }
+
+    return result;
   }
 }

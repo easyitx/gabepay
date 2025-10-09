@@ -3,10 +3,15 @@ export interface SteamCurrencyRateRes {
   currency: string;
   source: string;
   rate: number;
-  updated_at: string;
+  updated_at?: string;
 }
 
-export interface SteamConvertCurrencyRes {}
+export interface SteamConvertCurrencyRes {
+  from_currency: SteamCurrency;
+  to_currency: SteamCurrency;
+  amount: number;
+  converted_amount: number;
+}
 
 export interface SteamPaymentVerifyRes {
   success: boolean;
