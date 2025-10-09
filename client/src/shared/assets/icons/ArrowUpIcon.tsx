@@ -4,10 +4,7 @@ interface ArrowUpIconProps extends React.SVGProps<SVGSVGElement> {
   size?: number;
 }
 
-export const ArrowUpIcon: React.FC<ArrowUpIconProps> = ({
-  size = 24,
-  ...props
-}) => {
+export const ArrowUpIcon: React.FC<ArrowUpIconProps> = ({ ...props }) => {
   return (
     <svg
       width="24"

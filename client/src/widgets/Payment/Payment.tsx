@@ -3,14 +3,11 @@ import { Typography } from "@/shared/ui/Typography";
 
 import { FastAcquiring } from "../FastAcquiring/FastAcquiring";
 import { Icon } from "@/shared/ui/Icon/Icon";
-import { AcquiringMethod } from "@/entities/acquiringMethod";
 
 const Payment = ({
-  acquiringMethod,
   currentSum,
   setCurrentSum,
 }: {
-  acquiringMethod: AcquiringMethod;
   currentSum: number;
   setCurrentSum: (value: number) => void;
 }) => {
@@ -53,10 +50,7 @@ const Payment = ({
           <Icon name="message-question" className=" cursor-help" />
         </div>
       </div>
-      <FastAcquiring
-        acquiringMethod={acquiringMethod}
-        setCurrentSum={setCurrentSum}
-      />
+      <FastAcquiring setCurrentSum={setCurrentSum} />
       <Typography className="text-sm">
         Минимальная сумма пополнения 10 валютных единиц.
       </Typography>

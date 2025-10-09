@@ -1,1 +1,1 @@
-
+export { AcquiringMethodCard } from "./AcquiringMethodCard";

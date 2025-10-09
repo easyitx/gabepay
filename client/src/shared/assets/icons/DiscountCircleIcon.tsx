@@ -5,7 +5,6 @@ interface DiscountCircleIconProps extends React.SVGProps<SVGSVGElement> {
 }
 
 export const DiscountCircleIcon: React.FC<DiscountCircleIconProps> = ({
-  size = 24,
   ...props
 }) => {
   return (

@@ -4,10 +4,7 @@ interface CloseIconProps extends React.SVGProps<SVGSVGElement> {
   size?: number;
 }
 
-export const CloseIcon: React.FC<CloseIconProps> = ({
-  size = 24,
-  ...props
-}) => {
+export const CloseIcon: React.FC<CloseIconProps> = ({ ...props }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

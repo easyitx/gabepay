@@ -4,10 +4,7 @@ interface SphereIconProps extends React.SVGProps<SVGSVGElement> {
   size?: number;
 }
 
-export const SphereIcon: React.FC<SphereIconProps> = ({
-  size = 24,
-  ...props
-}) => {
+export const SphereIcon: React.FC<SphereIconProps> = ({ ...props }) => {
   return (
     <svg
       width="21"

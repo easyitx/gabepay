@@ -4,7 +4,7 @@ interface MenuIconProps extends React.SVGProps<SVGSVGElement> {
   size?: number;
 }
 
-export const MenuIcon: React.FC<MenuIconProps> = ({ size = 24, ...props }) => {
+export const MenuIcon: React.FC<MenuIconProps> = ({ ...props }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

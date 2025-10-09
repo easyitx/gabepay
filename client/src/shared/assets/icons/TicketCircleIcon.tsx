@@ -5,7 +5,6 @@ interface TicketCircleIconProps extends React.SVGProps<SVGSVGElement> {
 }
 
 export const TicketCircleIcon: React.FC<TicketCircleIconProps> = ({
-  size = 24,
   ...props
 }) => {
   return (

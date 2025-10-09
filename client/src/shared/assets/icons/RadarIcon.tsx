@@ -4,10 +4,7 @@ interface RadarIconProps extends React.SVGProps<SVGSVGElement> {
   size?: number;
 }
 
-export const RadarIcon: React.FC<RadarIconProps> = ({
-  size = 24,
-  ...props
-}) => {
+export const RadarIcon: React.FC<RadarIconProps> = ({ ...props }) => {
   return (
     <svg
       width="20"

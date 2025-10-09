@@ -4,7 +4,7 @@ interface VkIconProps extends React.SVGProps<SVGSVGElement> {
   size?: number;
 }
 
-export const VkIcon: React.FC<VkIconProps> = ({ size = 24, ...props }) => {
+export const VkIcon: React.FC<VkIconProps> = ({ ...props }) => {
   return (
     <svg
       width="18"

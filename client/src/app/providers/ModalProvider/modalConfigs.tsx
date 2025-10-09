@@ -15,13 +15,12 @@ export const ConfirmationModal: React.FC<{
   modalId?: string;
   onClose?: () => void;
 }> = ({
-  title = "Подтверждение",
   message,
   onConfirm,
   onCancel,
   confirmText = "Подтвердить",
   cancelText = "Отмена",
-  variant = "default",
+
   onClose,
 }) => {
   const handleConfirm = () => {

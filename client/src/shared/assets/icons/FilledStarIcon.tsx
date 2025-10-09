@@ -4,10 +4,7 @@ interface FilledStarIconProps extends React.SVGProps<SVGSVGElement> {
   size?: number;
 }
 
-export const FilledStarIcon: React.FC<FilledStarIconProps> = ({
-  size = 24,
-  ...props
-}) => {
+export const FilledStarIcon: React.FC<FilledStarIconProps> = ({ ...props }) => {
   return (
     <svg
       width="24"
