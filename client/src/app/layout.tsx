@@ -31,7 +31,6 @@ const interTight = localFont({
     display: "swap",
 });
 
-// Генерация метаданных с SEO-оптимизацией
 export async function generateMetadata(): Promise<Metadata> {
     const title = "Пополнение Steam с комиссией от 2% | GabePay — Быстро и безопасно";
     const description = "Пополняйте баланс Steam с минимальной комиссией от 2%. Любой регион, любые способы оплаты. Гарантия сделки и мгновенное зачисление. GabePay — надежный сервис для пополнения Steam кошелька.";
@@ -92,7 +91,6 @@ export async function generateMetadata(): Promise<Metadata> {
     };
 }
 
-// Структурированные данные для SEO
 const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'Service',
@@ -143,7 +141,6 @@ export default async function RootLayout({
             itemType="https://schema.org/WebPage"
         >
         <AppProvider>
-            {/* Основной контент страницы */}
             <Header className="app-container h-15" />
             <Spacing size="lg" direction="vertical" />
 

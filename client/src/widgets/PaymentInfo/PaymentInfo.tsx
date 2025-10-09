@@ -20,6 +20,7 @@ export const PaymentInfo: React.FC<PaymentInfoProps> = ({
   className,
 }) => {
   const { currencies, loading } = useRatedSteamCurrencies();
+  console.log(currencies);
 
   const formatCurrencyList = (amount: number) => {
     if (loading || currencies.length === 0) {
