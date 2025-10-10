@@ -24,7 +24,7 @@ const Header = ({ className }: { className?: string }) => {
 
   return (
     <header className={cn("flex items-center justify-between  ", className)}>
-      <div className="h-full">
+      <div className="h-full flex items-center">
         <Logo />
       </div>
 
