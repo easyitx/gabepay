@@ -17,7 +17,11 @@ const Payment = ({
         <Typography color="accent" variant="h3" className="font-bold text-lg">
           Будет зачислено
         </Typography>
-        <Typography color="accent" variant="h3" className="font-bold text-lg">
+        <Typography
+          color="accent"
+          variant="h3"
+          className="not-sm:hidden font-bold text-lg"
+        >
           Сумма к оплате
         </Typography>
       </div>
@@ -33,6 +37,13 @@ const Payment = ({
           className="not-sm:w-full"
         />
         <div className="flex items-center w-max gap-2 not-sm:w-full ">
+          <Typography
+            color="accent"
+            variant="h3"
+            className="sm:hidden font-bold text-lg"
+          >
+            Сумма к оплате
+          </Typography>
           <Typography
             color="accent"
             variant="body"

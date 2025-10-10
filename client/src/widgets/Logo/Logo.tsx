@@ -7,7 +7,7 @@ export default function Logo() {
       alt="Gabepay logo mark"
       width={175}
       height={34}
-      className="w-full h-full object-contain select-none"
+      className="w-full h-full not-sm:h-[70%] object-contain select-none"
       priority
       draggable={false}
     />
