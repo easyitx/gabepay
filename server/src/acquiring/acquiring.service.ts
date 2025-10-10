@@ -111,11 +111,11 @@ export class AcquiringService {
       const newInvoice = createdInvoice[0];
 
       const verifyData = await this.steamAcquiringService.paymentVerify(data);
-      payData.code = verifyData.code;
 
       // Создаем платеж у провайдера
       const details = await acquiringProvider.createInvoice(newInvoice);
 
+      newInvoice.code = verifyData.code;
       newInvoice.paymentLink = details.paymentLink;
       newInvoice.invoiceId = details.transactionId;
       await newInvoice.save({ session });
@@ -132,7 +132,7 @@ export class AcquiringService {
     return await mongooseTransaction(this.connection, async (session) => {
       const invoice = await this.invoiceModel.findOne(
         {
-          _id: data.invoiceId,
+          invoiceId: data.invoiceId,
         },
         {},
         { session },
