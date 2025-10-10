@@ -18,10 +18,10 @@ export const MobileMenuContent: React.FC<{ onClose: () => void }> = ({
 
       <div className="flex gap-4">
         <Button variant="icon" size="lg">
-          <Icon name="telegram" className="text-foreground" size={24} />
+          <Icon name="telegram" size={24} />
         </Button>
         <Button variant="icon" size="lg">
-          <Icon name="vk-icon" className="text-foreground" size={24} />
+          <Icon name="vk-icon" size={24} />
         </Button>
       </div>
     </div>

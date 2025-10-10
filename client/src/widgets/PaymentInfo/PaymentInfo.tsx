@@ -3,6 +3,7 @@
 import { Typography } from "@/shared/ui/Typography";
 import { useRatedSteamCurrencies } from "@/features/getRatedSteamCurrencies";
 import { AcquiringMethod } from "@/entities/acquiringMethod";
+import { useIsMobile } from "@/shared/hooks/useMobile";
 
 interface PaymentInfoProps {
   amountToPay: number;
@@ -19,8 +20,8 @@ export const PaymentInfo: React.FC<PaymentInfoProps> = ({
   className,
 }) => {
   const { currencies, loading } = useRatedSteamCurrencies();
-
-  const formatCurrencyList = (amount: number) => {
+  const isMobile = useIsMobile();
+  const formatCurrencyList = (amount: number, isMobile: boolean) => {
     if (loading || currencies.length === 0) {
       return `${amount.toFixed(2)} ₽`;
     }
@@ -28,7 +29,9 @@ export const PaymentInfo: React.FC<PaymentInfoProps> = ({
     return currencies
       .map((currency) => {
         const convertedAmount = amount * currency.rate;
-        return `${convertedAmount.toFixed(2)} ${currency.currency}`;
+        return `${convertedAmount.toFixed(2)} ${
+          isMobile ? currency.source : currency.currency
+        }`;
       })
       .join(" • ");
   };
@@ -53,7 +56,7 @@ export const PaymentInfo: React.FC<PaymentInfoProps> = ({
         </Typography>
         <div className="flex-1 mx-4 border-b border-dashed border-foreground-secondary"></div>
         <Typography color="foreground" variant="body">
-          {formatCurrencyList(amountToReceive)}
+          {formatCurrencyList(amountToReceive, isMobile)}
         </Typography>
       </div>
 

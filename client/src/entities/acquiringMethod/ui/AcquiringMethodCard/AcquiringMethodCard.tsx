@@ -30,7 +30,7 @@ export const AcquiringMethodCard: React.FC<AcquiringMethodCardProps> = ({
       <div
         className={cn(
           "absolute inset-0 bg-secondary rounded-3xl p-4 cursor-pointer transition-all duration-200",
-          "hover:border-primary hover:bg-foreground",
+          "hover:border-primary hover:bg-button-hover",
           "border border-secondary",
           "flex flex-col justify-center items-center",
           isSelected && "border-primary ring-2 ring-primary/20"

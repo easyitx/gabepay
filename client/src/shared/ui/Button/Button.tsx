@@ -16,7 +16,7 @@ function cn(...inputs: Array<string | undefined | false>) {
 }
 
 const baseClass =
-  "inline-flex cursor-pointer items-center hover:bg-primary text-accent justify-center rounded-md font-medium transition-colors duration-200 disabled:opacity-50 disabled:pointer-events-none select-none";
+  "inline-flex cursor-pointer items-center  text-accent justify-center rounded-md font-medium transition-colors duration-200 disabled:opacity-50 disabled:pointer-events-none select-none";
 
 const sizeClasses: Record<ButtonSize, string> = {
   sm: "h-9 px-3 text-[12px] gap-2",
@@ -27,8 +27,8 @@ const sizeClasses: Record<ButtonSize, string> = {
 const variantClasses: Record<ButtonVariant, string> = {
   primary: "bg-primary text-accent hover:opacity-90 shadow-sm rounded-xl",
   ghost: "bg-transparent text-foreground hover:bg-[rgba(255,255,255,0.06)]",
-  card: "bg-secondary text-foreground hover:bg-secodary  hover:border-primary",
-  icon: "rounded-full card  p-0 text-foreground hover:bg-primary text-accent",
+  card: "bg-secondary text-foreground  hover:bg-button-hover hover:border-primary",
+  icon: "rounded-full card  p-0 text-foreground hover:bg-primary hover:text-accent",
   banner:
     "text-accent font-medium shadow-lg hover:shadow-2xl hover:scale-105 hover:brightness-110 transition-all duration-300 group relative overflow-hidden",
 };

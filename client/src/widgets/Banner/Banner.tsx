@@ -20,7 +20,7 @@ export const Banner: React.FC<BannerProps> = ({
 }) => {
   const BannerHeader = () => (
     <div className="w-full custom-xl:w-1/2  flex flex-col md:gap-3 gap-2 xl:gap-4">
-      <Typography color="accent" className="text-lg md:text-sm" variant="h3">
+      <Typography color="accent" className="text-lgx  text-accent" variant="h3">
         Пополняйте с выгодой
         <br /> вместе с cashinout.io
       </Typography>
@@ -111,7 +111,7 @@ export const Banner: React.FC<BannerProps> = ({
   );
 
   return (
-    <div className={cn("relative", className)}>
+    <div className={cn("relative  app-container ", className)}>
       <Image
         src={bannerDesktop}
         alt={""}
@@ -120,22 +120,20 @@ export const Banner: React.FC<BannerProps> = ({
         placeholder="blur"
         unoptimized
         sizes="(min-width: 1024px) 100vw, 100vw"
-        className="rounded-[4rem] object-cover w-full  min-h-65"
+        className="rounded-[2rem] md:rounded-[4rem] object-cover w-full  min-h-65 "
       />
-      <div className="absolute top-0 left-0 w-full h-full">
-        <div className="absolute top-0 right-0 flex w-full p-2 custom-xl:p-10 flex-col h-full justify-center items-start overflow-hidden">
-          <div className="w-full sm:max-w-[90%] md:max-w-none ">
-            <div className="flex flex-col gap-3 md:gap-4 sm:gap-4 p-4">
-              <BannerHeader />
-              <div className="flex justify-start">
-                <BannerCTA />
-              </div>
+      <div className="absolute top-0 right-0 flex w-full p-7  md:p-15  flex-col h-full justify-center items-start overflow-hidden">
+        <div className="w-full  h-full  ">
+          <div className="flex flex-col gap-3 md:gap-4 sm:gap-4 py-6">
+            <BannerHeader />
+            <div className="flex justify-start">
+              <BannerCTA />
             </div>
           </div>
+        </div>
 
-          <div className="hidden custom-xl:block w-full mt-auto">
-            <BannerFeatures />
-          </div>
+        <div className="hidden custom-xl:block w-full mt-auto">
+          <BannerFeatures />
         </div>
       </div>
     </div>
