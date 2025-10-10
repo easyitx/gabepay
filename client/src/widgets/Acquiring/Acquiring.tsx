@@ -120,10 +120,10 @@ const Replenishment = ({
 
   const handlePayment = useCallback(async () => {
     const data = await createInvoice({
-      amount: fullPaymentAmount.toString(),
+      amount: currentSum.toString(),
       currency: "RUB",
       account: username,
-      methodCode: selectedAcquiringMethodId, // todo: тут передаем cashinout_method
+      methodCode: selectedAcquiringMethodId,
       email: emailInput,
     });
     if (data) {

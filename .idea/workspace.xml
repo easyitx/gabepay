@@ -6,11 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="84c57886-a591-4d86-aaab-a9dcbeaa8ecb" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/yarn.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/acquiring/acquiring.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/acquiring/acquiring.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/acquiring/cashinout/cashinout-handler.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/acquiring/cashinout/cashinout-handler.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/steam-acquiring/steam-acquiring.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/steam-acquiring/steam-acquiring.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/widgets/Acquiring/Acquiring.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/widgets/Acquiring/Acquiring.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,29 +32,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "/home/x/X/gabepay",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.standard": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.standard": "",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "prettierjs.PrettierConfiguration.Package": "/home/x/X/gabepay/server/node_modules/prettier",
-    "settings.editor.selected.configurable": "settings.javascript.linters.eslint",
-    "to.speed.mode.migration.done": "true",
-    "ts.external.directory.path": "/home/x/X/gabepay/server/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/x/X/gabepay&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/home/x/X/gabepay/server/node_modules/prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.linters.eslint&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/home/x/X/gabepay/server/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/server/src/telegram" />
@@ -107,7 +103,8 @@
       <workItem from="1760094037098" duration="122000" />
       <workItem from="1760094467868" duration="448000" />
       <workItem from="1760103482424" duration="260000" />
-      <workItem from="1760119435326" duration="879000" />
+      <workItem from="1760119435326" duration="1537000" />
+      <workItem from="1760122503484" duration="67000" />
     </task>
     <servers />
   </component>
