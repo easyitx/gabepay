@@ -47,7 +47,6 @@ const Payment = ({
           >
             ₽{currentSum}
           </Typography>
-          <Icon name="message-question" className=" cursor-help" />
         </div>
       </div>
       <FastAcquiring setCurrentSum={setCurrentSum} />

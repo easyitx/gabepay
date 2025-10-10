@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "tw-animate-css";
+@import "tailwind-animate";
 
 @theme inline {
   --color-background: var(--background);
@@ -11,6 +11,7 @@
   --color-secondary: var(--secondary);
   --color-accent: var(--accent);
   --color-success: var(--success);
+  --color-button-hover: var(--button-hover);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,6 +23,7 @@
 
     --secondary: rgba(40, 40, 40, 1);
     --foreground-secondary: rgb(70, 69, 69);
+    --button-hover: rgb(70, 69, 69);
     --primary: rgba(112, 87, 255, 1);
     --foreground: rgba(155, 155, 155, 1);
     --accent: rgba(255, 255, 255, 1);
@@ -30,6 +32,7 @@
     --text-sm: clamp(12px, 1.8vw, 14px);
     --text-base: clamp(13px, 2vw, 16px);
     --text-lg: clamp(16px, 2.5vw, 20px);
+    --text-lgx: clamp(20px, 2vw, 24px);
     --text-xl: clamp(28px, 5vw, 40px);
 
     --container: 1240px;
@@ -81,6 +84,9 @@ body {
   }
   .bg-success {
     background-color: var(--success);
+  }
+  .bg-button-hover {
+    background-color: var(--button-hover);
   }
   .bg-foreground-secondary {
     background-color: var(--foreground-secondary);
@@ -143,7 +149,9 @@ body {
   .text-xl {
     font-size: var(--text-xl);
   }
-
+  .text-lgx {
+    font-size: var(--text-lgx);
+  }
   /* Custom scrollbar */
   ::-webkit-scrollbar {
     width: 8px;
@@ -173,6 +181,29 @@ body {
   * {
     scrollbar-width: thin;
     scrollbar-color: var(--primary) var(--secondary);
+  }
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+  .animate-accordion-down {
+    animation: accordion-down 0.2s ease-out;
+  }
+  .animate-accordion-up {
+    animation: accordion-up 0.2s ease-out;
   }
 }
 

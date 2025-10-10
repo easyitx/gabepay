@@ -40,7 +40,7 @@ export default function Navigation({
                 onItemClick?.();
                 setTimeout(() => scrollToSection(item.href), 0);
               }}
-              className="text-accent hover:text-accent/80 transition-colors cursor-pointer"
+              className="text-accent hover:text-accent transition-colors cursor-pointer"
               variant="ghost"
             >
               <Typography variant="body">{item.label}</Typography>

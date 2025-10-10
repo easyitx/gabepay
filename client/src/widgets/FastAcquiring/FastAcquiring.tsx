@@ -7,13 +7,13 @@ export const FastAcquiring = ({
 }: {
   setCurrentSum: (sum: number) => void;
 }) => (
-  <div className="flex gap-2 w-full overflow-x-auto overflow-y-hidden">
+  <div className="flex gap-2 w-full overflow-x-auto pb-1 overflow-y-hidden">
     {fastAcquiringList.map((item) => (
       <Button
         key={item}
         variant="card"
         size="lg"
-        className="border border-secondary hover:border-primary hover:bg-foreground hover:text-accent whitespace-nowrap"
+        className="border not-sm:p-1  border-secondary   hover:text-accent whitespace-nowrap"
         onClick={() => setCurrentSum(item)}
       >
         {item} ₽

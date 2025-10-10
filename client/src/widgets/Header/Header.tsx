@@ -35,15 +35,11 @@ const Header = ({ className }: { className?: string }) => {
       <div className="hidden sm:flex gap-2 ">
         <Link href="https://t.me/gabepay_bot">
           <Button variant="icon" size="md">
-            <Icon
-              name="telegram"
-              className="text-foreground mr-[2px]"
-              size={16}
-            />
+            <Icon name="telegram" className=" mr-[2px]" size={16} />
           </Button>
         </Link>
         <Button variant="icon" size="md">
-          <Icon name="vk-icon" className="text-foreground" size={16} />
+          <Icon name="vk-icon" size={16} />
         </Button>
       </div>
 
@@ -54,7 +50,7 @@ const Header = ({ className }: { className?: string }) => {
         className="sm:hidden"
         aria-label="Toggle mobile menu"
       >
-        <Icon name="menu" className="text-foreground" size={24} />
+        <Icon name="menu" size={24} />
       </Button>
     </header>
   );
