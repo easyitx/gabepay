@@ -24,10 +24,10 @@ export const AcquiringMethodList: React.FC<AcquiringMethodListProps> = ({
       <div className="grid max-h-133 overflow-x-hidden  overflow-auto  grid-cols-4 gap-4">
         {acquiringMethods.map((acquiringMethod) => (
           <AcquiringMethodCard
-            key={acquiringMethod.provider}
+            key={acquiringMethod.code}
             acquiringMethod={acquiringMethod}
             onClick={onSelectAcquiringMethod}
-            isSelected={selectedAcquiringMethodId === acquiringMethod.provider}
+            isSelected={selectedAcquiringMethodId === acquiringMethod.code}
           />
         ))}
       </div>

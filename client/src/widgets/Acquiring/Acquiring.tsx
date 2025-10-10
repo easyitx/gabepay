@@ -21,7 +21,7 @@ const Replenishment = ({
   acquiringMethods: AcquiringMethod[];
 }) => {
   const [selectedAcquiringMethodId, setSelectedAcquiringMethodId] =
-    useState<string>(acquiringMethods[0].provider);
+    useState<string>(acquiringMethods[0].code);
 
   const [username, setUsername] = useState("");
   const [emailInput, setEmailInput] = useState("");
@@ -84,7 +84,7 @@ const Replenishment = ({
   };
 
   const handleSelectAcquiringMethod = (acquiringMethod: AcquiringMethod) => {
-    setSelectedAcquiringMethodId(acquiringMethod.provider);
+    setSelectedAcquiringMethodId(acquiringMethod.code);
   };
 
   const paymentIsAvailable =
@@ -97,7 +97,7 @@ const Replenishment = ({
     selectedAcquiringMethodId;
 
   const selectedMethod = acquiringMethods.find(
-    (method) => method.provider === selectedAcquiringMethodId
+    (method) => method.code === selectedAcquiringMethodId
   );
 
   const fullPaymentAmount = selectedMethod
