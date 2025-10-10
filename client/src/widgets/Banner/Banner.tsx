@@ -19,37 +19,39 @@ export const Banner: React.FC<BannerProps> = ({
   priority = false,
 }) => {
   const BannerHeader = () => (
-    <div className="w-full custom-xl:w-1/2  flex flex-col md:gap-2 gap-1 xl:gap-2">
-      <Typography color="accent" className="text-xl md:text-sm" variant="h3">
-        Пополняйте с выгодой<br/> вместе с cashinout.io
+    <div className="w-full custom-xl:w-1/2  flex flex-col md:gap-3 gap-2 xl:gap-4">
+      <Typography color="accent" className="text-lg md:text-sm" variant="h3">
+        Пополняйте с выгодой
+        <br /> вместе с cashinout.io
       </Typography>
       <Typography
         color="foreground"
-        className="text-lg md:max-w-3/4"
+        className="text-base md:max-w-3/4"
         variant="body"
       >
-        Комиссия всего <b>2%</b> при пополнении<br/> через кошелек
+        Комиссия всего <b>2%</b> при пополнении
+        <br /> через кошелек
       </Typography>
     </div>
   );
 
   const BannerCTA = () => (
     <Link href="https://t.me/Cashinout_bot?start=194805" target="_blank">
-        <Button
-            variant="banner"
-            size="lg"
-            className="rounded-full max-w-fit text-accent flex pl-1 gap-2 items-center"
-        >
-      <span className="flex flex-row gap-2 items-center">
-        <Icon
+      <Button
+        variant="banner"
+        size="lg"
+        className="rounded-full max-w-fit text-accent flex pl-1 gap-2 items-center"
+      >
+        <span className="flex flex-row gap-2 items-center">
+          <Icon
             name="sphere"
             className="group-hover:rotate-12 bg-primary h-full p-2 w-auto rounded-full transition-transform duration-300"
-        />
-        <Typography color="accent" variant="caption">
-          ПОПОЛНИТЬ СЕЙЧАС
-        </Typography>
-      </span>
-        </Button>
+          />
+          <Typography color="accent" variant="caption">
+            ПОПОЛНИТЬ СЕЙЧАС
+          </Typography>
+        </span>
+      </Button>
     </Link>
   );
 
@@ -122,8 +124,8 @@ export const Banner: React.FC<BannerProps> = ({
       />
       <div className="absolute top-0 left-0 w-full h-full">
         <div className="absolute top-0 right-0 flex w-full p-2 custom-xl:p-10 flex-col h-full justify-center items-start overflow-hidden">
-          <div className="w-full sm:max-w-[90%] md:max-w-none">
-            <div className="flex flex-col md:gap-4 sm:gap-4">
+          <div className="w-full sm:max-w-[90%] md:max-w-none ">
+            <div className="flex flex-col gap-3 md:gap-4 sm:gap-4 p-4">
               <BannerHeader />
               <div className="flex justify-start">
                 <BannerCTA />

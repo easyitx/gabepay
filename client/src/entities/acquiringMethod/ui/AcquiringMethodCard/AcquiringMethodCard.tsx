@@ -22,8 +22,11 @@ export const AcquiringMethodCard: React.FC<AcquiringMethodCardProps> = ({
   };
 
   return (
-    <div className={cn("relative w-full", className)} onClick={handleClick}>
-      <div className="pb-[100%]" />
+    <div
+      className={cn("relative w-30 h-30 md:w-full md:h-auto", className)}
+      onClick={handleClick}
+    >
+      <div className="hidden md:block pb-[100%]" />
       <div
         className={cn(
           "absolute inset-0 bg-secondary rounded-3xl p-4 cursor-pointer transition-all duration-200",
