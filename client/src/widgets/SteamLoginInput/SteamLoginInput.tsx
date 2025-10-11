@@ -14,14 +14,16 @@ export const SteamLoginInput: React.FC<{
   const FoundIcon = () => (
     <div className="flex items-center gap-2 bg-purple rounded-full px-2 py-1">
       <Icon name="tick-circle" className="text-accent" size={12} />
-      <span className="text-accent text-xs font-medium">Аккаунт найден</span>
+      <span className="text-accent not-sm:hidden text-xs font-medium">
+        Аккаунт найден
+      </span>
     </div>
   );
 
   const NotFoundIcon = () => (
     <div className="flex items-center gap-2 bg-red-500/20 rounded-full px-2 py-1">
       <Icon name="close" className="text-red-500" size={12} />
-      <span className="text-red-500 text-xs font-medium">
+      <span className="text-red-500 not-sm:hidden text-xs font-medium">
         Аккаунт не найден
       </span>
     </div>
@@ -30,7 +32,9 @@ export const SteamLoginInput: React.FC<{
   const LoadingIcon = () => (
     <div className="flex items-center gap-2 bg-purple/20 rounded-full px-2 py-1">
       <div className="w-3 h-3 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-      <span className="text-primary text-xs font-medium">Проверка...</span>
+      <span className="text-primary not-sm:hidden text-xs font-medium">
+        Проверка...
+      </span>
     </div>
   );
 

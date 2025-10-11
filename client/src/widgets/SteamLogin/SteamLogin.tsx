@@ -82,7 +82,7 @@ const SteamLogin = memo(
                     className="text-green-500"
                     size={12}
                   />
-                  <span className="text-green-500 text-xs font-medium">
+                  <span className="text-green-500 not-sm:hidden text-xs font-medium">
                     Корректный email
                   </span>
                 </div>
