@@ -33,10 +33,11 @@ export const useCreateInvoice = (): UseCreateInvoiceReturn => {
         const createInvoiceApi = new CreateInvoiceApi();
         const response = await createInvoiceApi.createInvoice(data);
         setResult(response);
+
         return response;
       } catch (err) {
         if (err instanceof ApiError) {
-          toast.error(err.message);
+          toast.error(err.errorData);
         }
 
         return null;

@@ -24,7 +24,7 @@ export class ApiError extends Error {
   statusCode: number;
   error?: string;
   code?: string; // Добавляем код ошибки в класс
-
+  errorData?: string;
   constructor(params: ErrorParams) {
     super(params.message);
 

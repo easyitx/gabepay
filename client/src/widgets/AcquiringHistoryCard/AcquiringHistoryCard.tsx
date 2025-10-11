@@ -25,7 +25,7 @@ export const AcquiringHistoryCard: React.FC<AcquiringHistoryCardProps> = ({
   return (
     <div
       className={cn(
-        "w-full card rounded-full p-1 pr-5 flex items-center gap-4",
+        "w-full max-w-max card rounded-full p-1 pr-5 flex items-center gap-4",
         className
       )}
     >
