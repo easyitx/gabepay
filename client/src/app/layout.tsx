@@ -9,12 +9,7 @@ import { cn } from "@/shared/lib/utils";
 import { AppProvider } from "./providers";
 import AcquiringHistoryLive from "@/widgets/AcquiringHistoryList/AcquiringHistoryLive";
 
-import { ApiError } from "@/shared/api";
-import { IAcquiring } from "@/entities/acquiring/model/types";
 import { Toaster } from "sonner";
-import { AcquiringMethod } from "@/entities/acquiringMethod";
-import { AcquiringMethodsApi } from "@/features/getAcquiringMethods";
-import { getCachedAcquiringHistory } from "@/features/getAcquiringHistory";
 
 const interTight = localFont({
   src: [
@@ -122,23 +117,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  let acquiringMethods: AcquiringMethod[] = [];
-  let acquiringHistory: IAcquiring[] = mockAcquiringList;
-  try {
-    const acquiringMethodsApi = new AcquiringMethodsApi();
-    acquiringMethods = await acquiringMethodsApi.getMethods();
-  } catch (error) {
-    if (error instanceof ApiError) {
-      console.log(error);
-    }
-  }
-  try {
-    acquiringHistory = await getCachedAcquiringHistory();
-  } catch (error) {
-    if (error instanceof ApiError) {
-      console.log(error);
-    }
-  }
 
   return (
     <html lang="ru">
@@ -150,7 +128,6 @@ export default async function RootLayout({
           <Header className="app-container h-15" />
           <Spacing size="lg" direction="vertical" />
           <main className="flex-1">
-<<<<<<< HEAD
             <Banner className="app-container" />
             <Spacing size="lg" direction="vertical" />
 
@@ -183,8 +160,6 @@ export default async function RootLayout({
               <WhyChooseUs className="app-container" />
             </section>
 
-=======
->>>>>>> 8070a0fb2a77900e6e9296c01adefb3d63d6f93f
             {children}
           </main>
           <Spacing size="2xl" direction="vertical" />

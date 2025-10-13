@@ -6,6 +6,7 @@ import { InvoiceStatus } from '../invoice.schema';
  */
 export interface WebhookProcessingResult {
   success: boolean;
+  amount?: string;
   invoiceId: string;
   message?: string;
   error?: string;

@@ -17,10 +17,10 @@ export const CashInOutInstructionsModal: React.FC<CashInOutInstructionsModalProp
   open,
   onOpenChange,
 }) => {
+    const [currentStep, setCurrentStep] = useState(1);
   if (!open) {
     return null;
   }
-  const [currentStep, setCurrentStep] = useState(1);
 
   const steps = [
     {

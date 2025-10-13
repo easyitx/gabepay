@@ -18,6 +18,7 @@ export class CashinoutHandlerService extends BaseWebhookHandler {
     return {
       success: true,
       invoiceId: data.invoiceId,
+      amount: data.amount,
       message: '',
       error: '',
     };

@@ -143,6 +143,8 @@ export class AcquiringService {
       }
 
       if (data.success) {
+        invoice.paidAmount = invoice.amount;
+
         // Отправляем деньги на стим
         const isSuccess =
           await this.steamAcquiringService.paymentExecute(invoice);
