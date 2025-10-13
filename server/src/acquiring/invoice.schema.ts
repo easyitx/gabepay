@@ -66,14 +66,6 @@ export class Invoice {
       min: 0,
     }),
   )
-  finalAmount: Decimal; // Сумма к зачислению (paidAmount - commission + bonus)
-
-  @Prop(
-    decimalType({
-      default: '0',
-      min: 0,
-    }),
-  )
   bonus: Decimal; // Бонусная сумма
 
   @Prop(

@@ -35,9 +35,11 @@ export abstract class BaseWebhookHandler {
   protected createSuccessResult(
     invoiceId: string,
     message: string,
+    amount: string,
   ): WebhookProcessingResult {
     return {
       success: true,
+      amount: amount,
       invoiceId,
       message: message || 'Webhook processed successfully',
     };

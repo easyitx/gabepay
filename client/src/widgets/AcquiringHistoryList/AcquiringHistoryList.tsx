@@ -5,37 +5,6 @@ import { Typography } from "@/shared/ui/Typography";
 import { IAcquiring } from "@/entities/acquiring/model/types";
 import { AcquiringHistoryCard } from "../AcquiringHistoryCard/AcquiringHistoryCard";
 
-export const mockAcquiringList: IAcquiring[] = [
-  {
-    _id: "1",
-    account: "Royal_Cyber",
-    email: "",
-    paidAmount: "500",
-    currency: "₽",
-  },
-  {
-    _id: "2",
-    account: "GamerPro",
-    email: "",
-    paidAmount: "1200",
-    currency: "₽",
-  },
-  {
-    _id: "3",
-    account: "GamerPro",
-    email: "",
-    paidAmount: "1200",
-    currency: "₽",
-  },
-  {
-    _id: "4",
-    account: "GamerPro",
-    email: "",
-    paidAmount: "1200",
-    currency: "₽",
-  },
-];
-
 const AcquiringHistoryList = async ({
   acquiringHistory,
 }: {
