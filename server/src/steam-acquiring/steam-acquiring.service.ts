@@ -34,7 +34,7 @@ export class SteamAcquiringService {
   }
 
   async paymentVerify(data: AcquiringCreatePayReq) {
-    const code = generateId();
+    const code = await generateId();
     const response = await this.steamAcquiringApiService.paymentVerify(
       code,
       data.account,

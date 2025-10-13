@@ -17,6 +17,7 @@ export interface AcquiringCreatePayReq {
   account: string;
   methodCode: string;
   email: string;
+  promoCode?: string; // Опциональный промокод
 }
 
 export interface AcquiringCreatePayRes {

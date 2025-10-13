@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import Decimal from 'decimal.js';
-import { customAlphabet } from 'nanoid';
 
 export const alphabet =
   '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -10,37 +9,62 @@ const idLength = 16; // for users
 const longIdLength = 24; // for
 const bigIdLength = 32; // for seeds, transactions, rounds, bets, wins (any huge data)
 
-export const generateShortId = customAlphabet(alphabet, shortIdLength);
-export const generateId = customAlphabet(alphabet, idLength);
-export const generateLongId = customAlphabet(alphabet, longIdLength);
-export const generateBigId = customAlphabet(alphabet, bigIdLength);
+// Use dynamic import for nanoid to handle ESM compatibility
+let customAlphabet: any;
+const initNanoid = async () => {
+  if (!customAlphabet) {
+    const { customAlphabet: ca } = await import('nanoid');
+    customAlphabet = ca;
+  }
+  return customAlphabet;
+};
+
+export const generateShortId = async () => {
+  const ca = await initNanoid();
+  return ca(alphabet, shortIdLength)();
+};
+
+export const generateId = async () => {
+  const ca = await initNanoid();
+  return ca(alphabet, idLength)();
+};
+
+export const generateLongId = async () => {
+  const ca = await initNanoid();
+  return ca(alphabet, longIdLength)();
+};
+
+export const generateBigId = async () => {
+  const ca = await initNanoid();
+  return ca(alphabet, bigIdLength)();
+};
 
 export const shortId = {
   type: String,
   unique: true,
   maxlength: shortIdLength,
-  default: () => generateShortId(),
+  default: async () => await generateShortId(),
 };
 
 export const id = {
   type: String,
   unique: true,
   maxlength: idLength,
-  default: () => generateId(),
+  default: async () => await generateId(),
 };
 
 export const longId = {
   type: String,
   unique: true,
   maxlength: longIdLength,
-  default: () => generateLongId(),
+  default: async () => await generateLongId(),
 };
 
 export const bigId = {
   type: String,
   unique: true,
   maxlength: bigIdLength,
-  default: () => generateBigId(),
+  default: async () => await generateBigId(),
 };
 
 export const stringType = function (options?) {
