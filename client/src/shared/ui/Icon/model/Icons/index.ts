@@ -18,6 +18,9 @@ import { TicketCircleIcon } from "@/shared/assets/icons/TicketCircleIcon";
 import { TicketIcon } from "@/shared/assets/icons/TicketIcon";
 import { VkIcon } from "@/shared/assets/icons/VkIcon";
 import { CloseIcon } from "@/shared/assets/icons/Close";
+import { UsdIcon } from "@/shared/assets/icons/UsdIcon";
+import { KztIcon } from "@/shared/assets/icons/KztIcon";
+import { RubIcon } from "@/shared/assets/icons/RubIcon";
 export {
   SphereIcon,
   DiscountCircleIcon,
@@ -39,4 +42,7 @@ export {
   TicketIcon,
   VkIcon,
   CloseIcon,
+  UsdIcon,
+  KztIcon,
+  RubIcon,
 };

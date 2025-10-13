@@ -12,8 +12,8 @@ import { BaseWebhookHandler } from '../webhook/base-webhook-handler';
 @Injectable()
 export class CashinoutHandlerService extends BaseWebhookHandler {
   processWebhook(data: CashinoutWebhookReq): WebhookProcessingResult {
-    console.log('Processing webhook');
-    console.log(data);
+    // console.log('Processing webhook');
+    // console.log(data); // status: "succeeded"
 
     return {
       success: true,

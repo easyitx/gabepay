@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { SteamAcquiringApiService } from './steam-acquiring-api.service';
-import { generateId, generateShortId } from '../../lib/database';
+import { generateId } from '../../lib/database';
 import { AcquiringCreatePayReq } from '../acquiring/acquiring.interface';
 import {
   SteamCurrency,

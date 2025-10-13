@@ -123,7 +123,7 @@ const Replenishment = ({
       amount: currentSum.toString(),
       currency: "RUB",
       account: username,
-      methodCode: selectedAcquiringMethodId, // todo: тут передаем cashinout_method
+      methodCode: selectedAcquiringMethodId,
       email: emailInput,
     });
     if (data) {

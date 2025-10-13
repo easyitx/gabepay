@@ -5,7 +5,7 @@ import { ApiErrorResponse, errorHandler } from "./error";
 import type { AxiosResponse, CreateAxiosDefaults } from "axios";
 
 const BASE_CONFIG: CreateAxiosDefaults = {
-  baseURL: "http://localhost:3021",
+  baseURL: "https://api.gabepay.ru",
   withCredentials: false,
   headers: {
     "Content-Type": "application/json",

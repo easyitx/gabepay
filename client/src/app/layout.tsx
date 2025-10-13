@@ -4,15 +4,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/widgets/Header/Header";
 import Footer from "@/widgets/Footer/Footer";
-import { Banner } from "@/widgets/Banner/Banner";
 import { Spacing } from "@/shared/ui/Spacing";
-import Acquiring from "@/widgets/Acquiring/Acquiring";
 import { cn } from "@/shared/lib/utils";
-import AcquiringHistoryList, {
-  mockAcquiringList,
-} from "@/widgets/AcquiringHistoryList/AcquiringHistoryList";
-import { FAQ } from "@/widgets/FAQ/FAQ";
-import { WhyChooseUs } from "@/widgets/WhyChooseUs/WhyChooseUs";
 import { AppProvider } from "./providers";
 import AcquiringHistoryLive from "@/widgets/AcquiringHistoryList/AcquiringHistoryLive";
 
@@ -100,26 +93,29 @@ export async function generateMetadata(): Promise<Metadata> {
       // google: '',
       // yandex: '',
     },
+    other: {
+      'apple-mobile-web-app-title': 'Gabepay',
+    },
   };
 }
 
-// const structuredData = {
-//   "@context": "https://schema.org",
-//   "@type": "Service",
-//   name: "GabePay - Пополнение Steam",
-//   description: "Сервис пополнения баланса Steam с минимальной комиссией",
-//   provider: {
-//     "@type": "Organization",
-//     name: "GabePay",
-//     url: "https://gabepay.ru",
-//   },
-//   areaServed: "Worldwide",
-//   serviceType: "Digital payment processing",
-//   offers: {
-//     "@type": "Offer",
-//     description: "Пополнение Steam с комиссией от 2%",
-//   },
-// };
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "GabePay - Пополнение Steam",
+  description: "Сервис пополнения баланса Steam с минимальной комиссией",
+  provider: {
+    "@type": "Organization",
+    name: "GabePay",
+    url: "https://gabepay.ru",
+  },
+  areaServed: "Worldwide",
+  serviceType: "Digital payment processing",
+  offers: {
+    "@type": "Offer",
+    description: "Пополнение Steam с комиссией от 2%",
+  },
+};
 
 export default async function RootLayout({
   children,
@@ -154,6 +150,7 @@ export default async function RootLayout({
           <Header className="app-container h-15" />
           <Spacing size="lg" direction="vertical" />
           <main className="flex-1">
+<<<<<<< HEAD
             <Banner className="app-container" />
             <Spacing size="lg" direction="vertical" />
 
@@ -186,6 +183,8 @@ export default async function RootLayout({
               <WhyChooseUs className="app-container" />
             </section>
 
+=======
+>>>>>>> 8070a0fb2a77900e6e9296c01adefb3d63d6f93f
             {children}
           </main>
           <Spacing size="2xl" direction="vertical" />
