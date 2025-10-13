@@ -13,7 +13,6 @@ export const AcquiringHistoryCard: React.FC<AcquiringHistoryCardProps> = ({
   acquiring,
   className,
 }) => {
-  
   const formatAmount = (
     amount: number,
     currency: string,
@@ -41,7 +40,7 @@ export const AcquiringHistoryCard: React.FC<AcquiringHistoryCardProps> = ({
       <div className="flex-1 flex flex-col gap-1">
         <Typography color="accent" variant="body" className="font-medium">
           {acquiring.account.length > 4
-            ? acquiring.account.slice(0, -4) + '***' 
+            ? acquiring.account.slice(0, -4) + "***"
             : acquiring.account}
         </Typography>
         {/* <Typography className="text-foreground" variant="caption">
@@ -49,7 +48,11 @@ export const AcquiringHistoryCard: React.FC<AcquiringHistoryCardProps> = ({
         </Typography> */}
       </div>
 
-      <Typography color="green" variant="body" className="font-medium">
+      <Typography
+        color="green"
+        variant="body"
+        className="font-medium whitespace-nowrap"
+      >
         {formatAmount(+acquiring.paidAmount, acquiring.currency, true)}
       </Typography>
     </div>
