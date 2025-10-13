@@ -35,7 +35,7 @@ export const Banner: React.FC<BannerProps> = ({
   const handleModalClose = (open: boolean) => {
     console.log("handleModalClose called with:", open);
     console.log("Current isModalOpen state:", isModalOpen);
-    
+
     // Принудительно устанавливаем состояние в соответствии с переданным значением
     if (open !== isModalOpen) {
       setIsModalOpen(open);
@@ -44,10 +44,10 @@ export const Banner: React.FC<BannerProps> = ({
       console.log("State already matches, no change needed");
     }
   };
-  
+
   const BannerHeader = () => (
     <div className="w-full custom-xl:w-1/2  flex flex-col md:gap-3 gap-2 xl:gap-4">
-      <Typography color="accent" className="text-lgx  text-accent" variant="h1">
+      <Typography color="accent" variant="h1">
         Пополняйте с выгодой
         <br /> вместе с cashinout.io
       </Typography>
@@ -164,7 +164,7 @@ export const Banner: React.FC<BannerProps> = ({
           </div>
         </div>
       </div>
-      
+
       <CashInOutInstructionsModal
         open={isModalOpen}
         onOpenChange={handleModalClose}
