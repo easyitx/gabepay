@@ -36,7 +36,7 @@ export const Banner: React.FC<BannerProps> = ({
   );
 
   const BannerCTA = () => (
-    <Link href="https://t.me/Cashinout_bot?start=194805" target="_blank">
+    <Link href="https://cashinout.io/?refererId=194805" target="_blank">
       <Button
         variant="banner"
         size="lg"
