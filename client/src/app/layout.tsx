@@ -4,11 +4,23 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/widgets/Header/Header";
 import Footer from "@/widgets/Footer/Footer";
+import { Banner } from "@/widgets/Banner/Banner";
 import { Spacing } from "@/shared/ui/Spacing";
+import Acquiring from "@/widgets/Acquiring/Acquiring";
 import { cn } from "@/shared/lib/utils";
+import AcquiringHistoryList, {
+  mockAcquiringList,
+} from "@/widgets/AcquiringHistoryList/AcquiringHistoryList";
+import { FAQ } from "@/widgets/FAQ/FAQ";
+import { WhyChooseUs } from "@/widgets/WhyChooseUs/WhyChooseUs";
 import { AppProvider } from "./providers";
 
+import { ApiError } from "@/shared/api";
+import { IAcquiring } from "@/entities/acquiring/model/types";
 import { Toaster } from "sonner";
+import { AcquiringMethod } from "@/entities/acquiringMethod";
+import { AcquiringMethodsApi } from "@/features/getAcquiringMethods";
+import { getCachedAcquiringHistory } from "@/features/getAcquiringHistory";
 
 const interTight = localFont({
   src: [
@@ -87,35 +99,49 @@ export async function generateMetadata(): Promise<Metadata> {
       // google: '',
       // yandex: '',
     },
-    other: {
-      'apple-mobile-web-app-title': 'Gabepay',
-    },
   };
 }
 
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  name: "GabePay - Пополнение Steam",
-  description: "Сервис пополнения баланса Steam с минимальной комиссией",
-  provider: {
-    "@type": "Organization",
-    name: "GabePay",
-    url: "https://gabepay.ru",
-  },
-  areaServed: "Worldwide",
-  serviceType: "Digital payment processing",
-  offers: {
-    "@type": "Offer",
-    description: "Пополнение Steam с комиссией от 2%",
-  },
-};
+// const structuredData = {
+//   "@context": "https://schema.org",
+//   "@type": "Service",
+//   name: "GabePay - Пополнение Steam",
+//   description: "Сервис пополнения баланса Steam с минимальной комиссией",
+//   provider: {
+//     "@type": "Organization",
+//     name: "GabePay",
+//     url: "https://gabepay.ru",
+//   },
+//   areaServed: "Worldwide",
+//   serviceType: "Digital payment processing",
+//   offers: {
+//     "@type": "Offer",
+//     description: "Пополнение Steam с комиссией от 2%",
+//   },
+// };
 
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  let acquiringMethods: AcquiringMethod[] = [];
+  let acquiringHistory: IAcquiring[] = mockAcquiringList;
+  try {
+    const acquiringMethodsApi = new AcquiringMethodsApi();
+    acquiringMethods = await acquiringMethodsApi.getMethods();
+  } catch (error) {
+    if (error instanceof ApiError) {
+      console.log(error);
+    }
+  }
+  try {
+    acquiringHistory = await getCachedAcquiringHistory();
+  } catch (error) {
+    if (error instanceof ApiError) {
+      console.log(error);
+    }
+  }
 
   return (
     <html lang="ru">

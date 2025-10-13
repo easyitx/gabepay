@@ -16,6 +16,12 @@ const sizeClasses = {
   lg: "w-16 h-16",
 };
 
+const minWidthClasses = {
+  sm: "min-w-8",
+  md: "min-w-12",
+  lg: "min-w-16",
+};
+
 export const Avatar: React.FC<AvatarProps> = ({
   src,
   alt = "Avatar",
@@ -24,12 +30,14 @@ export const Avatar: React.FC<AvatarProps> = ({
   fallback,
 }) => {
   const sizeClass = sizeClasses[size];
+  const minWClass = minWidthClasses[size];
 
   return (
     <div
       className={cn(
         "relative rounded-full overflow-hidden border border-foreground-secondary",
         sizeClass,
+        minWClass,
         className
       )}
     >
