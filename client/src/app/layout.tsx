@@ -14,7 +14,7 @@ import AcquiringHistoryList, {
 import { FAQ } from "@/widgets/FAQ/FAQ";
 import { WhyChooseUs } from "@/widgets/WhyChooseUs/WhyChooseUs";
 import { AppProvider } from "./providers";
-import { AutoRefresh } from "./providers/AutoRefresh";
+import AcquiringHistoryLive from "@/widgets/AcquiringHistoryList/AcquiringHistoryLive";
 
 import { ApiError } from "@/shared/api";
 import { IAcquiring } from "@/entities/acquiring/model/types";
@@ -151,7 +151,6 @@ export default async function RootLayout({
         suppressHydrationWarning
       >
         <AppProvider>
-          <AutoRefresh intervalMs={10000} />
           <Header className="app-container h-15" />
           <Spacing size="lg" direction="vertical" />
           <main className="flex-1">
@@ -171,7 +170,10 @@ export default async function RootLayout({
 
             <Spacing size="2xl" direction="vertical" />
 
-            <AcquiringHistoryList acquiringHistory={acquiringHistory} />
+            <AcquiringHistoryLive
+              initial={acquiringHistory}
+              intervalMs={10000}
+            />
             <Spacing size="2xl" direction="vertical" />
 
             <section id="faq" itemScope itemType="https://schema.org/FAQPage">

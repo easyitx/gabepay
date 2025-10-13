@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 
 import { Typography } from "@/shared/ui/Typography";
@@ -36,7 +37,7 @@ export const mockAcquiringList: IAcquiring[] = [
   },
 ];
 
-const AcquiringHistoryList = async ({
+const AcquiringHistoryList = ({
   acquiringHistory,
 }: {
   acquiringHistory: IAcquiring[];
