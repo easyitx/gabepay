@@ -21,17 +21,23 @@ const Footer = ({ className }: { className?: string }) => {
             <Icon name="telegram" size={20} />
           </Button>
           <Button variant="icon" size="lg">
-            <Icon name="vk-icon" size={20} />
+            <a href="https://vk.com/gabepayru">
+              <Icon name="vk-icon" size={20} />
+            </a>
           </Button>
         </div>
 
         {/* Legal Links */}
-        <div className="flex  flex-col">
+        <div className="flex flex-col">
           <Button variant="ghost" className="underline">
-            Политика конфиденциальности
+            <a href="/privacy">
+              Политика конфиденциальности
+            </a>
           </Button>
           <Button variant="ghost" className="underline">
-            Пользовательское соглашение
+            <a href="/terms">
+              Пользовательское соглашение
+            </a>
           </Button>
         </div>
       </div>

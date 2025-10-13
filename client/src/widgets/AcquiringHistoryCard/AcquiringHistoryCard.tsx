@@ -13,13 +13,14 @@ export const AcquiringHistoryCard: React.FC<AcquiringHistoryCardProps> = ({
   acquiring,
   className,
 }) => {
+  
   const formatAmount = (
     amount: number,
     currency: string,
     isPositive: boolean
   ) => {
     const sign = isPositive ? "+" : "-";
-    return `${sign}${amount}${currency}`;
+    return `${sign}${amount} ${currency}`;
   };
 
   return (
@@ -39,7 +40,9 @@ export const AcquiringHistoryCard: React.FC<AcquiringHistoryCardProps> = ({
 
       <div className="flex-1 flex flex-col gap-1">
         <Typography color="accent" variant="body" className="font-medium">
-          {acquiring.account}
+          {acquiring.account.length > 4
+            ? acquiring.account.slice(0, -4) + '***' 
+            : acquiring.account}
         </Typography>
         {/* <Typography className="text-foreground" variant="caption">
           {acquiring.timestamp}

@@ -27,6 +27,9 @@ export const Modal = ({
   closeOnOverlayClick = true,
   showCloseButton = true,
 }: ModalProps) => {
+  if (open === false) {
+    return null;
+  }
   const sizeClasses = {
     sm: "max-w-sm",
     md: "max-w-md",
@@ -44,7 +47,9 @@ export const Modal = ({
       <Dialog.Portal>
         <Dialog.Overlay
           className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
-          onClick={closeOnOverlayClick ? undefined : (e) => e.preventDefault()}
+          onClick={closeOnOverlayClick ? () => {
+            onOpenChange?.(false);
+          } : (e) => e.preventDefault()}
         />
 
         <Dialog.Content
