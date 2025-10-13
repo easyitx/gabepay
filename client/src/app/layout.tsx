@@ -7,6 +7,7 @@ import Footer from "@/widgets/Footer/Footer";
 import { Spacing } from "@/shared/ui/Spacing";
 import { cn } from "@/shared/lib/utils";
 import { AppProvider } from "./providers";
+import AcquiringHistoryLive from "@/widgets/AcquiringHistoryList/AcquiringHistoryLive";
 
 import { Toaster } from "sonner";
 
@@ -127,6 +128,38 @@ export default async function RootLayout({
           <Header className="app-container h-15" />
           <Spacing size="lg" direction="vertical" />
           <main className="flex-1">
+            <Banner className="app-container" />
+            <Spacing size="lg" direction="vertical" />
+
+            <section
+              id="replenishment"
+              itemScope
+              itemType="https://schema.org/Service"
+            >
+              <Acquiring
+                className="app-container"
+                acquiringMethods={acquiringMethods}
+              />
+            </section>
+
+            <Spacing size="2xl" direction="vertical" />
+
+            <AcquiringHistoryLive
+              initial={acquiringHistory}
+              intervalMs={10000}
+            />
+            <Spacing size="2xl" direction="vertical" />
+
+            <section id="faq" itemScope itemType="https://schema.org/FAQPage">
+              <FAQ className="app-container" />
+            </section>
+
+            <Spacing size="2xl" direction="vertical" />
+
+            <section id="guide">
+              <WhyChooseUs className="app-container" />
+            </section>
+
             {children}
           </main>
           <Spacing size="2xl" direction="vertical" />
