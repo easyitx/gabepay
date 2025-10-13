@@ -24,8 +24,10 @@ const Header = ({ className }: { className?: string }) => {
 
   return (
     <header className={cn("flex items-center justify-between  ", className)}>
-      <div className="h-full flex items-center">
-        <Logo />
+      <div className="h-full flex items-center w-[130px]">
+        <Link href="/">
+          <Logo />
+        </Link>
       </div>
 
       <div className=" not-sm:hidden">
@@ -38,9 +40,11 @@ const Header = ({ className }: { className?: string }) => {
             <Icon name="telegram" className=" mr-[2px]" size={16} />
           </Button>
         </Link>
-        <Button variant="icon" size="md">
-          <Icon name="vk-icon" size={16} />
-        </Button>
+        <Link href="https://vk.com/gabepayru">
+          <Button variant="icon" size="md">
+            <Icon name="vk-icon" size={16} />
+          </Button>
+        </Link>
       </div>
 
       <Button

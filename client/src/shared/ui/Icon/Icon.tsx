@@ -22,6 +22,9 @@ import {
   TicketIcon,
   VkIcon,
   CloseIcon,
+  UsdIcon,
+  KztIcon,
+  RubIcon,
 } from "./model/Icons";
 
 interface IconProps
@@ -51,6 +54,9 @@ const iconComponents: Record<IconName, unknown> = {
   "vk-icon": VkIcon,
   ticket: TicketIcon,
   close: CloseIcon,
+  usd: UsdIcon,
+  kzt: KztIcon,
+  rub: RubIcon,
 };
 
 export const Icon: React.FC<IconProps> = ({

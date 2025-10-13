@@ -20,8 +20,21 @@ export const PaymentInfo: React.FC<PaymentInfoProps> = ({
   className,
 }) => {
   const { currencies, loading } = useRatedSteamCurrencies();
-  const isMobile = useIsMobile();
-  const formatCurrencyList = (amount: number, isMobile: boolean) => {
+
+  const getCurrencySymbol = (currency: string) => {
+    switch (currency.toUpperCase()) {
+      case 'USD':
+        return '$';
+      case 'KZT':
+        return '₸';
+      case 'RUB':
+        return '₽';
+      default:
+        return currency;
+    }
+  };
+
+  const formatCurrencyList = (amount: number) => {
     if (loading || currencies.length === 0) {
       return `${amount.toFixed(2)} ₽`;
     }
@@ -29,9 +42,8 @@ export const PaymentInfo: React.FC<PaymentInfoProps> = ({
     return currencies
       .map((currency) => {
         const convertedAmount = amount * currency.rate;
-        return `${convertedAmount.toFixed(2)} ${
-          isMobile ? currency.source : currency.currency
-        }`;
+        const symbol = getCurrencySymbol(currency.currency);
+        return `${convertedAmount.toFixed(2)} ${symbol}`;
       })
       .join(" • ");
   };
@@ -52,17 +64,17 @@ export const PaymentInfo: React.FC<PaymentInfoProps> = ({
 
       <div className="flex items-center justify-between">
         <Typography color="foreground" variant="body">
-          Получите на кошелек Steam:
+          Получите на Steam:
         </Typography>
         <div className="flex-1 mx-4 border-b border-dashed border-foreground-secondary"></div>
         <Typography color="foreground" variant="body">
-          {formatCurrencyList(amountToReceive, isMobile)}
+          {formatCurrencyList(amountToReceive)}
         </Typography>
       </div>
 
       <div className="flex items-center justify-between">
         <Typography color="foreground" variant="body">
-          Комиссия:
+          Комиссия gabepay:
         </Typography>
         <div className="flex-1 mx-4 border-b border-dashed border-foreground-secondary"></div>
         <Typography color="foreground" variant="body">

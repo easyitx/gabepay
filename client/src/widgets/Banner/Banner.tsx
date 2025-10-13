@@ -1,11 +1,14 @@
+"use client";
+
 import Image from "next/image";
 import { cn } from "@/shared/lib/utils";
 import Button from "@/shared/ui/Button/Button";
+import { useState, useEffect } from "react";
 
 import bannerDesktop from "@/shared/assets/images/banner-desktop.webp";
 import { Icon } from "@/shared/ui/Icon/Icon";
 import { Typography } from "@/shared/ui/Typography";
-import Link from "next/link";
+import { CashInOutInstructionsModal } from "@/widgets/CashInOutInstructionsModal";
 
 interface BannerProps {
   alt?: string;
@@ -18,9 +21,33 @@ export const Banner: React.FC<BannerProps> = ({
   className,
   priority = false,
 }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    console.log("isModalOpen state changed to:", isModalOpen);
+  }, [isModalOpen]);
+
+  const handleBannerClick = () => {
+    console.log("Opening modal, setting isModalOpen to true");
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = (open: boolean) => {
+    console.log("handleModalClose called with:", open);
+    console.log("Current isModalOpen state:", isModalOpen);
+    
+    // Принудительно устанавливаем состояние в соответствии с переданным значением
+    if (open !== isModalOpen) {
+      setIsModalOpen(open);
+      console.log("Setting isModalOpen to:", open);
+    } else {
+      console.log("State already matches, no change needed");
+    }
+  };
+  
   const BannerHeader = () => (
     <div className="w-full custom-xl:w-1/2  flex flex-col md:gap-3 gap-2 xl:gap-4">
-      <Typography color="accent" className="text-lgx  text-accent" variant="h3">
+      <Typography color="accent" className="text-lgx  text-accent" variant="h1">
         Пополняйте с выгодой
         <br /> вместе с cashinout.io
       </Typography>
@@ -36,23 +63,22 @@ export const Banner: React.FC<BannerProps> = ({
   );
 
   const BannerCTA = () => (
-    <Link href="https://cashinout.io/?refererId=194805" target="_blank">
-      <Button
-        variant="banner"
-        size="lg"
-        className="rounded-full max-w-fit text-accent flex pl-1 gap-2 items-center"
-      >
-        <span className="flex flex-row gap-2 items-center">
-          <Icon
-            name="sphere"
-            className="group-hover:rotate-12 bg-primary h-full p-2 w-auto rounded-full transition-transform duration-300"
-          />
-          <Typography color="accent" variant="caption">
-            ПОПОЛНИТЬ СЕЙЧАС
-          </Typography>
-        </span>
-      </Button>
-    </Link>
+    <Button
+      variant="banner"
+      size="lg"
+      className="rounded-full max-w-fit text-accent flex pl-1 gap-2 items-center cursor-pointer"
+      onClick={handleBannerClick}
+    >
+      <span className="flex flex-row gap-2 items-center">
+        <Icon
+          name="sphere"
+          className="group-hover:rotate-12 bg-primary h-full p-2 w-auto rounded-full transition-transform duration-300"
+        />
+        <Typography color="accent" variant="caption">
+          ПОПОЛНИТЬ ВЫГОДНО
+        </Typography>
+      </span>
+    </Button>
   );
 
   const FeatureCard = ({
@@ -92,7 +118,7 @@ export const Banner: React.FC<BannerProps> = ({
       <FeatureCard
         icon="security-card"
         title="Полное сохранение средств"
-        description="2% комиссии — вы пополняете максимально выгодно"
+        description="от 2% комиссии — вы пополняете максимально выгодно"
         className="border-r pr-5"
       />
       <FeatureCard
@@ -111,31 +137,38 @@ export const Banner: React.FC<BannerProps> = ({
   );
 
   return (
-    <div className={cn("relative  app-container ", className)}>
-      <Image
-        src={bannerDesktop}
-        alt={""}
-        priority={priority}
-        quality={100}
-        placeholder="blur"
-        unoptimized
-        sizes="(min-width: 1024px) 100vw, 100vw"
-        className="rounded-[2rem] md:rounded-[4rem] object-cover w-full  min-h-65 "
-      />
-      <div className="absolute top-0 right-0 flex w-full p-7  md:p-15  flex-col h-full justify-center items-start overflow-hidden">
-        <div className="w-full  h-full  ">
-          <div className="flex flex-col gap-3 md:gap-4 sm:gap-4 py-6">
-            <BannerHeader />
-            <div className="flex justify-start">
-              <BannerCTA />
+    <>
+      <div className={cn("relative  app-container ", className)}>
+        <Image
+          src={bannerDesktop}
+          alt={""}
+          priority={priority}
+          quality={100}
+          placeholder="blur"
+          unoptimized
+          sizes="(min-width: 1024px) 100vw, 100vw"
+          className="rounded-[2rem] md:rounded-[4rem] object-cover w-full  min-h-65 "
+        />
+        <div className="absolute top-0 right-0 flex w-full p-7  md:p-15  flex-col h-full justify-center items-start overflow-hidden">
+          <div className="w-full  h-full  ">
+            <div className="flex flex-col gap-3 md:gap-4 sm:gap-4 py-6">
+              <BannerHeader />
+              <div className="flex justify-start">
+                <BannerCTA />
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="hidden custom-xl:block w-full mt-auto">
-          <BannerFeatures />
+          <div className="hidden custom-xl:block w-full mt-auto">
+            <BannerFeatures />
+          </div>
         </div>
       </div>
-    </div>
+      
+      <CashInOutInstructionsModal
+        open={isModalOpen}
+        onOpenChange={handleModalClose}
+      />
+    </>
   );
 };

@@ -18,6 +18,9 @@ export type SimpleIconName =
   | "ticket"
   | "vk-icon"
   | "menu"
-  | "close";
+  | "close"
+  | "usd"
+  | "kzt"
+  | "rub";
 
 export type IconName = SimpleIconName;

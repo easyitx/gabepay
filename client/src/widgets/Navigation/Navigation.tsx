@@ -3,6 +3,7 @@
 import Button from "@/shared/ui/Button/Button";
 import { Typography } from "@/shared/ui/Typography";
 import { cn } from "@/shared/lib/utils";
+import { useRouter } from "next/navigation";
 
 export const navigationConfig = [
   { label: "Пополнить Steam", href: "#replenishment" },
@@ -30,16 +31,27 @@ export default function Navigation({
   onItemClick,
   className,
 }: NavigationProps) {
+  const router = useRouter();
+
+  const handleItemClick = (item: typeof navigationConfig[number]) => {
+    onItemClick?.();
+    
+    if (item.label === "Пополнить Steam") {
+      // Переход на главную страницу
+      router.push("/");
+    } else {
+      // Скролл к секции для других пунктов
+      setTimeout(() => scrollToSection(item.href), 0);
+    }
+  };
+
   return (
     <nav aria-label="Main navigation">
       <ul className={cn("flex items-center gap-2", className)}>
         {navigationConfig.map((item) => (
           <li key={item.href}>
             <Button
-              onClick={() => {
-                onItemClick?.();
-                setTimeout(() => scrollToSection(item.href), 0);
-              }}
+              onClick={() => handleItemClick(item)}
               className="text-accent hover:text-accent transition-colors cursor-pointer"
               variant="ghost"
             >

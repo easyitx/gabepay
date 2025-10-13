@@ -62,7 +62,7 @@ const Payment = ({
       </div>
       <FastAcquiring setCurrentSum={setCurrentSum} />
       <Typography className="text-sm">
-        Минимальная сумма пополнения 10 валютных единиц.
+        Минимальная сумма пополнения 30 ₽.
       </Typography>
     </div>
   );
