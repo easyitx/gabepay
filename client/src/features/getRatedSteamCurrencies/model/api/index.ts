@@ -1,7 +1,7 @@
 import { RatedSteamCurrency } from "@/entities/ratedSteamCurrency/model/type/ratedSteamCurrency";
 import { BaseApiService } from "@/shared/api/base-api.service";
 
-export class AcquiringMethodsApi extends BaseApiService<
+export class RatedSteamCurrenciesApi extends BaseApiService<
   void,
   RatedSteamCurrency[]
 > {

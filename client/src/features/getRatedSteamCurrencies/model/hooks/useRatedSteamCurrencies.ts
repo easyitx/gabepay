@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { RatedSteamCurrency } from "@/entities/ratedSteamCurrency/model/type/ratedSteamCurrency";
-import { AcquiringMethodsApi } from "../api";
+import { RatedSteamCurrenciesApi } from "../api";
 import { ApiError } from "@/shared/api";
 import { toast } from "sonner";
 
@@ -35,7 +35,7 @@ export const useRatedSteamCurrencies = (
     setError(null);
 
     try {
-      const api = new AcquiringMethodsApi();
+      const api = new RatedSteamCurrenciesApi();
       const data = await api.getRatedSteamCurrencies();
       setCurrencies(data);
       onSuccess?.(data);

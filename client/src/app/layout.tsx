@@ -14,12 +14,14 @@ import AcquiringHistoryList, {
 import { FAQ } from "@/widgets/FAQ/FAQ";
 import { WhyChooseUs } from "@/widgets/WhyChooseUs/WhyChooseUs";
 import { AppProvider } from "./providers";
-import { AcquiringMethodsApi } from "@/features/getAcquiringMethods";
-import { AcquiringHistoryApi } from "@/features/getAcquiringHistory/model/api";
+import { AutoRefresh } from "./providers/AutoRefresh";
+
 import { ApiError } from "@/shared/api";
 import { IAcquiring } from "@/entities/acquiring/model/types";
 import { Toaster } from "sonner";
 import { AcquiringMethod } from "@/entities/acquiringMethod";
+import { AcquiringMethodsApi } from "@/features/getAcquiringMethods";
+import { getCachedAcquiringHistory } from "@/features/getAcquiringHistory";
 
 const interTight = localFont({
   src: [
@@ -135,8 +137,7 @@ export default async function RootLayout({
     }
   }
   try {
-    const acquiringHistoryApi = new AcquiringHistoryApi();
-    acquiringHistory = await acquiringHistoryApi.getAcquiringHistory();
+    acquiringHistory = await getCachedAcquiringHistory();
   } catch (error) {
     if (error instanceof ApiError) {
       console.log(error);
@@ -150,6 +151,7 @@ export default async function RootLayout({
         suppressHydrationWarning
       >
         <AppProvider>
+          <AutoRefresh intervalMs={10000} />
           <Header className="app-container h-15" />
           <Spacing size="lg" direction="vertical" />
           <main className="flex-1">
