@@ -7,7 +7,14 @@ import Footer from "@/widgets/Footer/Footer";
 import { Spacing } from "@/shared/ui/Spacing";
 import { cn } from "@/shared/lib/utils";
 import { AppProvider } from "./providers";
+import { AutoRefresh } from "./providers/AutoRefresh";
+
+import { ApiError } from "@/shared/api";
+import { IAcquiring } from "@/entities/acquiring/model/types";
 import { Toaster } from "sonner";
+import { AcquiringMethod } from "@/entities/acquiringMethod";
+import { AcquiringMethodsApi } from "@/features/getAcquiringMethods";
+import { getCachedAcquiringHistory } from "@/features/getAcquiringHistory";
 
 const interTight = localFont({
   src: [
@@ -115,6 +122,24 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  let acquiringMethods: AcquiringMethod[] = [];
+  let acquiringHistory: IAcquiring[] = mockAcquiringList;
+  try {
+    const acquiringMethodsApi = new AcquiringMethodsApi();
+    acquiringMethods = await acquiringMethodsApi.getMethods();
+  } catch (error) {
+    if (error instanceof ApiError) {
+      console.log(error);
+    }
+  }
+  try {
+    acquiringHistory = await getCachedAcquiringHistory();
+  } catch (error) {
+    if (error instanceof ApiError) {
+      console.log(error);
+    }
+  }
+
   return (
     <html lang="ru">
       <body
@@ -122,6 +147,7 @@ export default async function RootLayout({
         suppressHydrationWarning
       >
         <AppProvider>
+          <AutoRefresh intervalMs={10000} />
           <Header className="app-container h-15" />
           <Spacing size="lg" direction="vertical" />
           <main className="flex-1">
