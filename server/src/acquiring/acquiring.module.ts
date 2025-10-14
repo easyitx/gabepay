@@ -9,12 +9,14 @@ import { AcquiringCroneService } from './acquiring-crone.service';
 import { AcquiringWebhookController } from './webhook/acquiring.webhook.controller';
 import { WebhookService } from './webhook/webhook.service';
 import { WebhookHandlerFactory } from './webhook/webhook-handler-factory';
+import { PromoCodeModule } from '../promo-code/promo-code.module';
 
 @Module({
   imports: [
     DatabaseModule.forFeature([{ name: Invoice.name, schema: InvoiceSchema }]),
     CashinoutModule,
     SteamAcquiringModule,
+    PromoCodeModule,
   ],
   controllers: [AcquiringController, AcquiringWebhookController],
   providers: [

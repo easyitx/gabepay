@@ -25,7 +25,8 @@ const PromoCodeInput = () => {
     try {
       const formattedCode = formatPromoCode(promoCode);
       const result = await activatePromoCode(formattedCode);
-      
+    
+    
       if (result?.success) {
         setActivePromoCode(result);
         setPromoCode("");

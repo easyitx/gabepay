@@ -15,6 +15,7 @@ import { CashinoutService } from './cashinout/cashinout.service';
 import { SteamAcquiringService } from '../steam-acquiring/steam-acquiring.service';
 import { mongooseTransaction } from '../../lib/database';
 import { WebhookProcessingResult } from './webhook/webhook.types';
+import { PromoCodeService } from '../promo-code/promo-code.service';
 
 @Injectable()
 export class AcquiringService {
@@ -24,6 +25,7 @@ export class AcquiringService {
     private readonly invoiceModel: Model<InvoiceDocument>,
     private readonly cashinoutService: CashinoutService,
     private readonly steamAcquiringService: SteamAcquiringService,
+    private readonly promoCodeService: PromoCodeService,
   ) {}
 
   async createNewInvoice(
@@ -52,11 +54,22 @@ export class AcquiringService {
       .mul(method.relativeCommission)
       .div(100);
 
-    const amount = method.isCommissionIncluded
-      ? new Decimal(data.amount)
-          .plus(acquiringCommission)
-          .plus(serviceCommission)
+    // Рассчитываем базовую сумму к оплате
+    const baseAmount = method.isCommissionIncluded
+      ? new Decimal(data.amount).plus(acquiringCommission).plus(serviceCommission)
       : new Decimal(data.amount);
+
+    // Применяем промокод если он предоставлен
+    let amount = baseAmount;
+    let discountAmount = new Decimal(0);
+    
+    if (data.promoCode) {
+      const promoValidation = await this.promoCodeService.validatePromoCode({ code: data.promoCode });
+      if (promoValidation.isValid) {
+        discountAmount = baseAmount.mul(promoValidation.discount).div(100);
+        amount = baseAmount.minus(discountAmount);
+      }
+    }
 
     // Проверяем количество активных платежей созданных за последние 23 часа
     const twentyThreeHoursAgo = new Date(Date.now() - 23 * 60 * 60 * 1000);
@@ -102,7 +115,10 @@ export class AcquiringService {
         acquiringCommission: new Decimal(acquiringCommission),
         serviceCommission: new Decimal(serviceCommission),
         account: data.account,
-        metadata: {},
+        metadata: {
+          promoCode: data.promoCode || null,
+          discountAmount: discountAmount.toString(),
+        },
       };
 
       const createdInvoice = await this.invoiceModel.create([payData], {

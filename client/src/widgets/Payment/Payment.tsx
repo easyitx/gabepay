@@ -7,9 +7,11 @@ import { Icon } from "@/shared/ui/Icon/Icon";
 const Payment = ({
   currentSum,
   setCurrentSum,
+  amountToPay,
 }: {
   currentSum: number;
   setCurrentSum: (value: number) => void;
+  amountToPay?: number;
 }) => {
   return (
     <div className="w-full p-6 card gap-5 flex flex-col">
@@ -56,7 +58,7 @@ const Payment = ({
             variant="h3"
             className="w-max overflow-hidden font-medium text-lg"
           >
-            ₽{currentSum}
+            ₽{amountToPay ? amountToPay.toFixed(2) : currentSum}
           </Typography>
         </div>
       </div>

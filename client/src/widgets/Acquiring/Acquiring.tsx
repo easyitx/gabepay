@@ -2,7 +2,7 @@
 
 import SteamLogin from "../SteamLogin/SteamLogin";
 
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { type AcquiringMethod } from "@/entities/acquiringMethod";
 
 import Payment from "../Payment/Payment";
@@ -32,8 +32,65 @@ const Replenishment = ({
   const [currentSum, setCurrentSum] = useState<number>(0);
   const [emailError, setEmailError] = useState<string>("");
   const [isEmailFocused, setIsEmailFocused] = useState<boolean>(false);
+  const [commissionData, setCommissionData] = useState({
+    totalCommission: 0,
+    finalCommission: 0,
+    amountToPay: 0,
+  });
 
-  const { activePromoCode, promoDiscount } = usePromoCode();
+  const { activePromoCode } = usePromoCode();
+
+  // Пересчитываем комиссию при изменении суммы, промокода или метода оплаты
+  useEffect(() => {
+    const selectedMethod = acquiringMethods.find(
+      (method) => method.code === selectedAcquiringMethodId
+    );
+
+    if (selectedMethod && currentSum > 0) {
+      const acquiringCommission =
+        (currentSum * selectedMethod.relativeProviderCommission) / 100;
+
+      const serviceCommission =
+        (currentSum * selectedMethod.relativeCommission) / 100;
+
+      // Рассчитываем общую комиссию
+      const totalCommission = acquiringCommission + serviceCommission;
+
+      // Рассчитываем базовую сумму к оплате
+      const baseAmount = selectedMethod.isCommissionIncluded
+        ? currentSum + totalCommission
+        : currentSum;
+
+      // Применяем скидку по промокоду к комиссии
+      let finalCommission = totalCommission;
+      let finalAmount = baseAmount;
+      
+      if (activePromoCode?.success) {
+        const discountAmount = totalCommission * (activePromoCode.discount / 100);
+        finalCommission = totalCommission - discountAmount;
+        finalAmount = selectedMethod.isCommissionIncluded
+          ? currentSum + finalCommission
+          : currentSum;
+      }
+
+      const newCommissionData = {
+        totalCommission: Math.round(totalCommission * 100) / 100,
+        finalCommission: Math.round(finalCommission * 100) / 100,
+        amountToPay: Math.round(finalAmount * 100) / 100,
+      };
+
+
+      setCommissionData(newCommissionData);
+    } else {
+      const newCommissionData = {
+        totalCommission: 0,
+        finalCommission: 0,
+        amountToPay: currentSum,
+      };
+   
+      setCommissionData(newCommissionData);
+    }
+  }, [currentSum, selectedAcquiringMethodId, activePromoCode, acquiringMethods]);
 
   const {
     validateSteamAccount,
@@ -105,26 +162,7 @@ const Replenishment = ({
     (method) => method.code === selectedAcquiringMethodId
   );
 
-  const amountToPay = selectedMethod
-    ? (() => {
-        const acquiringCommission =
-          (currentSum * selectedMethod.relativeProviderCommission) / 100;
-
-        let serviceCommission =
-          (currentSum * selectedMethod.relativeCommission) / 100;
-
-        // Применяем скидку по промокоду к сервисной комиссии
-        if (activePromoCode && promoDiscount > 0) {
-          serviceCommission = applyPromoCodeDiscount(serviceCommission, promoDiscount);
-        }
-
-        const amount = selectedMethod.isCommissionIncluded
-          ? currentSum + acquiringCommission + serviceCommission
-          : currentSum;
-
-        return Math.round(amount * 100) / 100;
-      })()
-    : currentSum;
+  const amountToPay = commissionData.amountToPay;
 
   const { createInvoice, isCreating } = useCreateInvoice();
 
@@ -170,17 +208,15 @@ const Replenishment = ({
 
           <PromoCode/>
 
-        <Payment currentSum={currentSum} setCurrentSum={setCurrentSum} />
+        <Payment currentSum={currentSum} setCurrentSum={setCurrentSum} amountToPay={amountToPay} />
       </div>
 
       <div className="w-1/2 not-md:w-full flex flex-col gap-4">
         <PaymentInfo
           amountToPay={amountToPay}
           amountToReceive={currentSum}
-          commission={amountToPay - currentSum}
-          originalCommission={selectedMethod ? 
-            (currentSum * selectedMethod.relativeCommission) / 100 : 0
-          }
+          commission={commissionData.finalCommission}
+          originalCommission={commissionData.totalCommission}
         />
         <AcquiringMethodList
           acquiringMethods={acquiringMethods}

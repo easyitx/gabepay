@@ -53,7 +53,7 @@ export const PaymentInfo: React.FC<PaymentInfoProps> = ({
   };
 
   const savedAmount = hasActivePromoCode && originalCommission 
-    ? ((amountToReceive * promoDiscount) / 100)
+    ? originalCommission - commission
     : 0;
 
   return (
@@ -89,7 +89,7 @@ export const PaymentInfo: React.FC<PaymentInfoProps> = ({
           {hasActivePromoCode && originalCommission ? (
             <>
               <Typography color="foreground" variant="body" className="line-through text-gray-500">
-                {((amountToReceive * originalCommission) / 100).toFixed(2)} ₽
+                {originalCommission.toFixed(2)} ₽
               </Typography>
               <Typography color="foreground" variant="body">
                 {commission.toFixed(2)} ₽

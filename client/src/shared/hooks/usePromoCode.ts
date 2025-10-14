@@ -34,7 +34,8 @@ export const usePromoCode = (): UsePromoCodeReturn => {
     
     if (promoCode) {
       try {
-        localStorage.setItem(PROMO_CODE_STORAGE_KEY, JSON.stringify(promoCode));
+        const dataToStore = JSON.stringify(promoCode);
+        localStorage.setItem(PROMO_CODE_STORAGE_KEY, dataToStore);
       } catch (error) {
         console.error("Ошибка при сохранении промокода в localStorage:", error);
       }

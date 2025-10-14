@@ -1,16 +1,16 @@
 /**
- * Применяет скидку промокода к сумме комиссии
- * @param commission - исходная сумма комиссии
+ * Применяет скидку промокода к общей сумме комиссии
+ * @param totalCommission - общая сумма комиссии (сервисная + эквайринг)
  * @param discountPercent - процент скидки (например, 2 для 2%)
  * @returns новая сумма комиссии с учетом скидки
  */
-export const applyPromoCodeDiscount = (commission: number, discountPercent: number): number => {
-    if (commission <= 0 || discountPercent <= 0 || discountPercent > 100) {
-    return commission;
+export const applyPromoCodeDiscount = (totalCommission: number, discountPercent: number): number => {
+    if (totalCommission <= 0 || discountPercent <= 0 || discountPercent > 100) {
+    return totalCommission;
   }
   
-  const discount = (commission * discountPercent) / 100;
-  const discountedCommission = commission - discount;
+  const discount = (totalCommission * discountPercent) / 100;
+  const discountedCommission = totalCommission - discount;
   
   // Округляем до 2 знаков после запятой
   return Math.round(discountedCommission * 100) / 100;
@@ -19,17 +19,17 @@ export const applyPromoCodeDiscount = (commission: number, discountPercent: numb
 /**
  * Рассчитывает общую сумму с учетом промокода и экономию
  * @param originalAmount - исходная сумма
- * @param commission - комиссия
+ * @param totalCommission - общая комиссия (сервисная + эквайринг)
  * @param discountPercent - процент скидки
  * @returns объект с итоговой суммой и суммой экономии
  */
 export const calculateAmountWithPromoCode = (
   originalAmount: number,
-  commission: number,
+  totalCommission: number,
   discountPercent: number
 ): { totalAmount: number; savedAmount: number } => {
-  const discountedCommission = applyPromoCodeDiscount(commission, discountPercent);
-  const savedAmount = commission - discountedCommission;
+  const discountedCommission = applyPromoCodeDiscount(totalCommission, discountPercent);
+  const savedAmount = totalCommission - discountedCommission;
   const totalAmount = originalAmount + discountedCommission;
   
   return {

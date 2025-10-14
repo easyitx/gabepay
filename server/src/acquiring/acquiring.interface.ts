@@ -1,4 +1,4 @@
-import { IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
 export enum AcquiringProvider {
   cashinout = 'cashinout',
@@ -24,6 +24,9 @@ export class AcquiringCreatePayReq {
   methodCode: string;
   @IsString()
   email: string;
+  @IsString()
+  @IsOptional()
+  promoCode?: string;
 }
 
 export interface AcquiringCreatePayRes {
