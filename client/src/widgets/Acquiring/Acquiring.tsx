@@ -14,6 +14,7 @@ import { useSteamValidation } from "@/features/validateSteamAccount/model/hooks/
 import { useCreateInvoice } from "@/features/createInvoice/model/hooks/useCreateInvoice";
 import { usePromoCode } from "@/shared/hooks/usePromoCode";
 import { applyPromoCodeDiscount } from "@/shared/lib/promoCode";
+import PromoCode from "@/widgets/PromoCode/PromoCode";
 
 const Replenishment = ({
   className,
@@ -104,7 +105,7 @@ const Replenishment = ({
     (method) => method.code === selectedAcquiringMethodId
   );
 
-  const fullPaymentAmount = selectedMethod
+  const amountToPay = selectedMethod
     ? (() => {
         const acquiringCommission =
           (currentSum * selectedMethod.relativeProviderCommission) / 100;
@@ -167,14 +168,16 @@ const Replenishment = ({
           onEmailBlur={handleEmailBlur}
         />
 
+          <PromoCode/>
+
         <Payment currentSum={currentSum} setCurrentSum={setCurrentSum} />
       </div>
 
       <div className="w-1/2 not-md:w-full flex flex-col gap-4">
         <PaymentInfo
-          amountToPay={fullPaymentAmount}
+          amountToPay={amountToPay}
           amountToReceive={currentSum}
-          commission={fullPaymentAmount - currentSum}
+          commission={amountToPay - currentSum}
           originalCommission={selectedMethod ? 
             (currentSum * selectedMethod.relativeCommission) / 100 : 0
           }

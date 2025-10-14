@@ -53,7 +53,7 @@ export default async function Home() {
 
       <AcquiringHistoryLive
         initial={initialAcquiringHistory}
-        intervalMs={10000}
+        intervalMs={5000}
       />
 
       <Spacing size="2xl" direction="vertical" />

@@ -66,16 +66,16 @@ const PromoCodeInput = () => {
   if (hasActivePromoCode && activePromoCode) {
     return (
       <div className="space-y-2">
-        <div className="flex items-center justify-between p-4 bg-green-50 border border-green-200 rounded-lg">
+        <div className="flex items-center justify-between p-4  border border-green-200 rounded-lg">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
               <Icon name="tick-circle" className="w-5 h-5 text-green-600" />
             </div>
             <div>
-              <Typography variant="body-sm" className="font-medium text-green-800">
-                Промокод активирован: {activePromoCode.code}
+              <Typography variant="body-sm" className="font-medium">
+                Промокод {activePromoCode.code} активирован!
               </Typography>
-              <Typography variant="caption" className="text-green-600">
+              <Typography variant="caption" className="text-green-200">
                 Скидка {activePromoCode.discount}% на комиссию
               </Typography>
             </div>
@@ -84,7 +84,6 @@ const PromoCodeInput = () => {
             size="sm" 
             variant="primary" 
             onClick={handleDeactivate}
-            className="text-red-600 hover:text-red-700"
           >
             Отменить
           </Button>

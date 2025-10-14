@@ -16,7 +16,6 @@ const PROMO_CODE_STORAGE_KEY = "gabepay_active_promo_code";
 export const usePromoCode = (): UsePromoCodeReturn => {
   const [activePromoCode, setActivePromoCodeState] = useState<PromoCodeActivateRes | null>(null);
 
-  // Загружаем промокод из localStorage при инициализации
   useEffect(() => {
     try {
       const stored = localStorage.getItem(PROMO_CODE_STORAGE_KEY);

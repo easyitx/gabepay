@@ -5,7 +5,7 @@
  * @returns новая сумма комиссии с учетом скидки
  */
 export const applyPromoCodeDiscount = (commission: number, discountPercent: number): number => {
-  if (commission <= 0 || discountPercent <= 0 || discountPercent > 100) {
+    if (commission <= 0 || discountPercent <= 0 || discountPercent > 100) {
     return commission;
   }
   
