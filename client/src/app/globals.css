@@ -71,7 +71,7 @@ body {
       rgba(26, 26, 26, 0.7),
       rgba(26, 26, 26, 0.7)
     ),
-    url("../shared/assets/images/background.svg");
+    url("../shared/assets/images/background.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
