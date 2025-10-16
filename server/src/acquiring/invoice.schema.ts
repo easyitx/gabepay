@@ -66,14 +66,6 @@ export class Invoice {
       min: 0,
     }),
   )
-  bonus: Decimal; // Бонусная сумма
-
-  @Prop(
-    decimalType({
-      default: '0',
-      min: 0,
-    }),
-  )
   acquiringCommission: Decimal; // Комиссия платежки
 
   @Prop(
@@ -108,6 +100,20 @@ export class Invoice {
     default: '',
   })
   code: string; // ID транзакции в B2B
+
+  @Prop({
+    type: String,
+    default: '',
+  })
+  promoCode: string;
+
+  @Prop(
+    decimalType({
+      default: '0',
+      min: 0,
+    }),
+  )
+  discountAmount: Decimal;
 
   @Prop({
     type: mongoose.Schema.Types.Mixed,

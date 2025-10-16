@@ -22,7 +22,7 @@ export class CashinoutApiService {
     body: CashinoutCreateOneTimeInvoiceReq,
   ): Promise<CashinoutCreateOneTimeInvoiceRes> {
     body.callbackUrl = this.callbackUrl;
-    body.redirectUrl = this.redirectUrl;
+    body.redirectUrl = `${this.redirectUrl}?&amount=${body.amount}&currency=RUB`;
     body.durationSeconds = 86400; // Сутки
     body.currencies = [3, 4, 5, 8, 9, 10];
 

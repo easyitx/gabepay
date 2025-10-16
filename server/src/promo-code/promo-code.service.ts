@@ -2,7 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { PromoCode, PromoCodeDocument } from './promo-code.schema';
-import { PromoCodeActivateReq, PromoCodeActivateRes, PromoCodeValidateReq, PromoCodeValidateRes } from './promo-code.interface';
+import {
+  PromoCodeActivateReq,
+  PromoCodeActivateRes,
+  PromoCodeValidateReq,
+  PromoCodeValidateRes,
+} from './promo-code.interface';
 import { AppException } from '../../lib/errors/appException';
 import { ErrorCode } from '../../lib/errors/errorCodes';
 
@@ -20,17 +25,21 @@ export class PromoCodeService {
   /**
    * Активирует промокод
    */
-  async activatePromoCode(data: PromoCodeActivateReq): Promise<PromoCodeActivateRes> {
+  async activatePromoCode(
+    data: PromoCodeActivateReq,
+  ): Promise<PromoCodeActivateRes> {
     const formattedCode = data.code.trim().toUpperCase();
-    
-    const promoCode = await this.promoCodeModel.findOne({ code: formattedCode });
-    
+
+    const promoCode = await this.promoCodeModel.findOne({
+      code: formattedCode,
+    });
+
     if (!promoCode) {
       return {
         success: false,
         code: formattedCode,
         discount: 0,
-        message: 'Промокод не найден'
+        message: 'Промокод не найден',
       };
     }
 
@@ -40,7 +49,7 @@ export class PromoCodeService {
         success: false,
         code: formattedCode,
         discount: 0,
-        message: 'Промокод неактивен'
+        message: 'Промокод неактивен',
       };
     }
 
@@ -50,7 +59,7 @@ export class PromoCodeService {
         success: false,
         code: formattedCode,
         discount: 0,
-        message: 'Срок действия промокода истек'
+        message: 'Срок действия промокода истек',
       };
     }
 
@@ -60,37 +69,41 @@ export class PromoCodeService {
         success: false,
         code: formattedCode,
         discount: 0,
-        message: 'Превышен лимит использований промокода'
+        message: 'Превышен лимит использований промокода',
       };
     }
 
     // Увеличиваем счетчик использований
     await this.promoCodeModel.updateOne(
       { _id: promoCode._id },
-      { $inc: { usedCount: 1 } }
+      { $inc: { usedCount: 1 } },
     );
 
     return {
       success: true,
       code: formattedCode,
       discount: promoCode.discount,
-      message: `Промокод активирован! Скидка ${promoCode.discount}% на комиссию`
+      message: `Промокод активирован! Скидка ${promoCode.discount}% на комиссию`,
     };
   }
 
   /**
    * Валидирует промокод без активации
    */
-  async validatePromoCode(data: PromoCodeValidateReq): Promise<PromoCodeValidateRes> {
+  async validatePromoCode(
+    data: PromoCodeValidateReq,
+  ): Promise<PromoCodeValidateRes> {
     const formattedCode = data.code.trim().toUpperCase();
-    
-    const promoCode = await this.promoCodeModel.findOne({ code: formattedCode });
-    
+
+    const promoCode = await this.promoCodeModel.findOne({
+      code: formattedCode,
+    });
+
     if (!promoCode) {
       return {
         isValid: false,
         discount: 0,
-        message: 'Промокод не найден'
+        message: 'Промокод не найден',
       };
     }
 
@@ -98,7 +111,7 @@ export class PromoCodeService {
       return {
         isValid: false,
         discount: 0,
-        message: 'Промокод неактивен'
+        message: 'Промокод неактивен',
       };
     }
 
@@ -106,7 +119,7 @@ export class PromoCodeService {
       return {
         isValid: false,
         discount: 0,
-        message: 'Срок действия промокода истек'
+        message: 'Срок действия промокода истек',
       };
     }
 
@@ -114,14 +127,14 @@ export class PromoCodeService {
       return {
         isValid: false,
         discount: 0,
-        message: 'Превышен лимит использований промокода'
+        message: 'Превышен лимит использований промокода',
       };
     }
 
     return {
       isValid: true,
       discount: promoCode.discount,
-      message: `Промокод действителен. Скидка ${promoCode.discount}%`
+      message: `Промокод действителен. Скидка ${promoCode.discount}%`,
     };
   }
 
@@ -135,15 +148,17 @@ export class PromoCodeService {
       expiresAt?: Date;
       maxUses?: number;
       description?: string;
-    }
+    },
   ): Promise<PromoCode> {
     const formattedCode = code.trim().toUpperCase();
-    
-    const existingPromoCode = await this.promoCodeModel.findOne({ code: formattedCode });
+
+    const existingPromoCode = await this.promoCodeModel.findOne({
+      code: formattedCode,
+    });
     if (existingPromoCode) {
       throw new AppException({
         code: ErrorCode.VALIDATION_ERROR,
-        details: { message: 'Промокод уже существует' }
+        details: { message: 'Промокод уже существует' },
       });
     }
 
@@ -156,7 +171,7 @@ export class PromoCodeService {
       discount,
       expiresAt: options?.expiresAt || defaultExpiresAt,
       maxUses: options?.maxUses,
-      description: options?.description
+      description: options?.description,
     });
 
     return await promoCode.save();
@@ -177,7 +192,7 @@ export class PromoCodeService {
     const formattedCode = code.trim().toUpperCase();
     const result = await this.promoCodeModel.updateOne(
       { code: formattedCode },
-      { isActive: false }
+      { isActive: false },
     );
     return result.modifiedCount > 0;
   }

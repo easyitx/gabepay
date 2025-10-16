@@ -23,20 +23,13 @@ export const Banner: React.FC<BannerProps> = ({
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    console.log("isModalOpen state changed to:", isModalOpen);
-  }, [isModalOpen]);
-
   const handleBannerClick = () => {
     console.log("Opening modal, setting isModalOpen to true");
     setIsModalOpen(true);
   };
 
   const handleModalClose = (open: boolean) => {
-    console.log("handleModalClose called with:", open);
-    console.log("Current isModalOpen state:", isModalOpen);
-
-    // Принудительно устанавливаем состояние в соответствии с переданным значением
+      // Принудительно устанавливаем состояние в соответствии с переданным значением
     if (open !== isModalOpen) {
       setIsModalOpen(open);
       console.log("Setting isModalOpen to:", open);
@@ -56,8 +49,8 @@ export const Banner: React.FC<BannerProps> = ({
         className="text-base md:max-w-3/4"
         variant="body"
       >
-        Комиссия всего <b>2%</b> при пополнении
-        <br /> через кошелек
+        Комиссия <b>0%</b> при пополнении
+        <br /> через кошелек с промокодом
       </Typography>
     </div>
   );

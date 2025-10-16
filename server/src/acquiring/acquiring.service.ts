@@ -54,19 +54,27 @@ export class AcquiringService {
       .mul(method.relativeCommission)
       .div(100);
 
+    // Рассчитываем общую комиссию
+    const totalCommission = acquiringCommission.plus(serviceCommission);
+
     // Рассчитываем базовую сумму к оплате
     const baseAmount = method.isCommissionIncluded
-      ? new Decimal(data.amount).plus(acquiringCommission).plus(serviceCommission)
+      ? new Decimal(data.amount).plus(totalCommission)
       : new Decimal(data.amount);
 
     // Применяем промокод если он предоставлен
     let amount = baseAmount;
     let discountAmount = new Decimal(0);
-    
+
     if (data.promoCode) {
-      const promoValidation = await this.promoCodeService.validatePromoCode({ code: data.promoCode });
+      const promoValidation = await this.promoCodeService.validatePromoCode({
+        code: data.promoCode,
+      });
       if (promoValidation.isValid) {
-        discountAmount = baseAmount.mul(promoValidation.discount).div(100);
+        // Скидка применяется только к общей комиссии
+        discountAmount = totalCommission.mul(promoValidation.discount).div(100);
+
+        // Вычитаем скидку от комиссии из общей суммы
         amount = baseAmount.minus(discountAmount);
       }
     }
@@ -115,15 +123,14 @@ export class AcquiringService {
         acquiringCommission: new Decimal(acquiringCommission),
         serviceCommission: new Decimal(serviceCommission),
         account: data.account,
-        metadata: {
-          promoCode: data.promoCode || null,
-          discountAmount: discountAmount.toString(),
-        },
+        promoCode: data.promoCode,
+        discountAmount: new Decimal(discountAmount),
       };
 
       const createdInvoice = await this.invoiceModel.create([payData], {
         session,
       });
+
       const newInvoice = createdInvoice[0];
 
       const verifyData = await this.steamAcquiringService.paymentVerify(data);

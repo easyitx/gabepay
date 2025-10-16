@@ -14,13 +14,13 @@ export class PromoCode {
   @Prop({ required: true, default: true })
   isActive: boolean;
 
-  @Prop({ 
+  @Prop({
     required: false,
-    default: function() {
+    default: function () {
       const date = new Date();
       date.setMonth(date.getMonth() + 3);
       return date;
-    }
+    },
   })
   expiresAt?: Date;
 

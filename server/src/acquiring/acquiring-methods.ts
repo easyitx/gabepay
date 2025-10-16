@@ -4,8 +4,8 @@ export const AcquiringMethods: AcquiringMethod[] = [
   {
     code: 'cashinout_method',
     provider: AcquiringProvider.cashinout,
-    relativeProviderCommission: 2,
-    relativeCommission: 0,
+    relativeProviderCommission: 0,
+    relativeCommission: 2,
     isCommissionIncluded: true,
     icon: '/methods/cashinout.svg',
   },

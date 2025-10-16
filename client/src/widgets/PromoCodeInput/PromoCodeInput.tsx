@@ -1,50 +1,23 @@
 import Button from "@/shared/ui/Button/Button";
 import { Input } from "@/shared/ui/Input";
 import React, { useState } from "react";
-import { useActivatePromoCode } from "@/features/activatePromoCode";
-import { usePromoCode } from "@/shared/hooks/usePromoCode";
-import { validatePromoCodeClient, formatPromoCode } from "@/shared/lib/promoCode";
 import { Typography } from "@/shared/ui/Typography";
 import { Icon } from "@/shared/ui/Icon/Icon";
 import { toast } from "sonner";
 
-const PromoCodeInput = () => {
+interface Props {
+    activePromo: { code: string, discount: number} | null
+    clearPromoCode: () => void
+    handleActivate: (promoCode: string) => void
+}
+
+const PromoCodeInput = ({ activePromo, clearPromoCode, handleActivate }: Props) => {
   const [promoCode, setPromoCode] = useState("");
   const [validationError, setValidationError] = useState<string>("");
-  const { activatePromoCode, isActivating } = useActivatePromoCode();
-  const { activePromoCode, setActivePromoCode, clearPromoCode, hasActivePromoCode } = usePromoCode();
-
-  const handleActivate = async () => {
-    // Используем улучшенную валидацию
-    const validation = validatePromoCodeClient(promoCode);
-    if (!validation.isValid) {
-      setValidationError(validation.error || "Неверный формат промокода");
-      return;
-    }
-
-    try {
-      const formattedCode = formatPromoCode(promoCode);
-      const result = await activatePromoCode(formattedCode);
-    
-    
-      if (result?.success) {
-        setActivePromoCode(result);
-        setPromoCode("");
-        setValidationError("");
-        toast.success(`Промокод активирован! Скидка ${result.discount}% на комиссию`);
-      } else {
-        setValidationError(result?.message || "Промокод недействителен");
-        toast.error(result?.message || "Не удалось активировать промокод");
-      }
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Произошла ошибка при активации промокода";
-      setValidationError(errorMessage);
-      toast.error(errorMessage);
-    }
-  };
 
   const handleDeactivate = () => {
     clearPromoCode();
+    setPromoCode("")
     toast.info("Промокод отменен");
   };
 
@@ -59,12 +32,12 @@ const PromoCodeInput = () => {
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !isActivating) {
-      handleActivate();
+    if (e.key === 'Enter' && !activePromo) {
+      handleActivate(promoCode);
     }
   };
 
-  if (hasActivePromoCode && activePromoCode) {
+  if (activePromo) {
     return (
       <div className="space-y-2">
         <div className="flex items-center justify-between p-4  border border-green-200 rounded-lg">
@@ -74,10 +47,10 @@ const PromoCodeInput = () => {
             </div>
             <div>
               <Typography variant="body-sm" className="font-medium">
-                Промокод {activePromoCode.code} активирован!
+                Промокод {activePromo.code} активирован!
               </Typography>
               <Typography variant="caption" className="text-green-200">
-                Скидка {activePromoCode.discount}% на комиссию
+                Скидка {activePromo.discount}% на комиссию
               </Typography>
             </div>
           </div>
@@ -107,10 +80,10 @@ const PromoCodeInput = () => {
           <Button 
             size="sm" 
             variant="primary" 
-            onClick={handleActivate}
-            disabled={isActivating || !promoCode.trim()}
+            onClick={() => handleActivate(promoCode)}
+            disabled={activePromo || !promoCode.trim()}
           >
-            {isActivating ? "..." : "Применить"}
+            {activePromo ? "..." : "Применить"}
           </Button>
         }
       />

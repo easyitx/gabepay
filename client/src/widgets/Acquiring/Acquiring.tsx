@@ -1,240 +1,247 @@
 "use client";
 
 import SteamLogin from "../SteamLogin/SteamLogin";
-
-import { useCallback, useState, useEffect } from "react";
-import { type AcquiringMethod } from "@/entities/acquiringMethod";
-
+import React, { useCallback, useState, useEffect } from "react";
+import {type AcquiringMethod} from "@/entities/acquiringMethod";
 import Payment from "../Payment/Payment";
-import { PaymentInfo } from "../PaymentInfo/PaymentInfo";
-import { AcquiringMethodList } from "../AcquiringMethodList/AcquiringMethodList";
-import { cn } from "@/shared/lib/utils";
+import {PaymentInfo} from "../PaymentInfo/PaymentInfo";
+import {AcquiringMethodList} from "../AcquiringMethodList/AcquiringMethodList";
+import {cn} from "@/shared/lib/utils";
 import Button from "@/shared/ui/Button/Button";
 import { useSteamValidation } from "@/features/validateSteamAccount/model/hooks/useSteamValidation";
 import { useCreateInvoice } from "@/features/createInvoice/model/hooks/useCreateInvoice";
-import { usePromoCode } from "@/shared/hooks/usePromoCode";
-import { applyPromoCodeDiscount } from "@/shared/lib/promoCode";
 import PromoCode from "@/widgets/PromoCode/PromoCode";
+import {formatPromoCode, validatePromoCodeClient} from "@/shared/lib/promoCode";
+import {toast} from "sonner";
+import {ActivatePromoCodeApi} from "@/features/activatePromoCode";
+import {ApiError} from "@/shared/api";
 
-const Replenishment = ({
-  className,
-  acquiringMethods,
-}: {
-  className?: string;
-  acquiringMethods: AcquiringMethod[];
+const Replenishment = ({ className, acquiringMethods }: {
+    className?: string;
+    acquiringMethods: AcquiringMethod[];
 }) => {
-  const [selectedAcquiringMethodId, setSelectedAcquiringMethodId] =
-    useState<string>(acquiringMethods[0].code);
+    const [selectedAcquiringMethodId, setSelectedAcquiringMethodId] =
+        useState<string>(acquiringMethods[0].code);
 
-  const [username, setUsername] = useState("");
-  const [emailInput, setEmailInput] = useState("");
-  const [isConfirmed, setIsConfirmed] = useState(false);
-  const [currentSum, setCurrentSum] = useState<number>(0);
-  const [emailError, setEmailError] = useState<string>("");
-  const [isEmailFocused, setIsEmailFocused] = useState<boolean>(false);
-  const [commissionData, setCommissionData] = useState({
-    totalCommission: 0,
-    finalCommission: 0,
-    amountToPay: 0,
-  });
+    const [username, setUsername] = useState("");
+    const [emailInput, setEmailInput] = useState("");
+    const [isConfirmed, setIsConfirmed] = useState(false);
+    const [emailError, setEmailError] = useState("");
+    const [isEmailFocused, setIsEmailFocused] = useState(false);
 
-  const { activePromoCode } = usePromoCode();
+    const [amount, setAmount] = useState<number>(0);
+    const [activePromo, setActivePromo] = useState<{ code: string, discount: number } | null>(null);
 
-  // Пересчитываем комиссию при изменении суммы, промокода или метода оплаты
-  useEffect(() => {
-    const selectedMethod = acquiringMethods.find(
-      (method) => method.code === selectedAcquiringMethodId
+    useEffect(() => {
+        const savedPromo = localStorage.getItem('promo_gabepay');
+        if (savedPromo) {
+            try {
+                const promoData = JSON.parse(savedPromo);
+                if (promoData && promoData.code && promoData.discount !== undefined) {
+                    setActivePromo(promoData);
+                }
+            } catch (error) {
+                console.error('Ошибка при парсинге промокода из localStorage:', error);
+                localStorage.removeItem('promo_gabepay');
+            }
+        }
+    }, []);
+
+    const handleActivate = async (promoCode: string) => {
+        if (activePromo) {
+            toast.error("Уже активирован");
+            return;
+        }
+        const validation = validatePromoCodeClient(promoCode);
+        if (!validation.isValid) {
+            toast.error(validation.error);
+            return null;
+        }
+
+        const formattedCode = formatPromoCode(promoCode);
+
+        try {
+            const api = new ActivatePromoCodeApi();
+            const response = await api.activatePromoCode(formattedCode);
+
+            if (response.success) {
+                localStorage.setItem('promo_gabepay', JSON.stringify(response));
+                setActivePromo(response);
+                toast.success(response.message || `Промокод активирован! Скидка ${response.discount}%`);
+            } else {
+                toast.error(response.message || "Не удалось активировать промокод");
+            }
+
+            return response;
+        } catch (err) {
+            if (err instanceof ApiError) {
+                const errorMessage = err.errorData || err.message || "Ошибка при активации промокода";
+                toast.error(errorMessage);
+            } else {
+                const errorMessage = "Неизвестная ошибка";
+                toast.error(errorMessage);
+            }
+            return null;
+        }
+    };
+
+    const clearPromoCode = useCallback(() => {
+        setActivePromo(null);
+        localStorage.removeItem('promo_gabepay');
+    }, []);
+
+    const {
+        validateSteamAccount,
+        isLoading,
+        error,
+        data: steamData,
+        reset,
+    } = useSteamValidation();
+
+    const handleBlur = useCallback(async () => {
+        if (username.trim()) {
+            await validateSteamAccount(username);
+        }
+    }, [username, validateSteamAccount]);
+
+    const handleUsernameChange = useCallback(
+        (value: string) => {
+            setUsername(value);
+
+            if (steamData || error) {
+                reset();
+            }
+        },
+        [steamData, error, reset]
     );
 
-    if (selectedMethod && currentSum > 0) {
-      const acquiringCommission =
-        (currentSum * selectedMethod.relativeProviderCommission) / 100;
+    const validateEmail = (email: string) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            setEmailError("Введите корректный email адрес");
+            return false;
+        }
+        setEmailError("");
+        return true;
+    };
 
-      const serviceCommission =
-        (currentSum * selectedMethod.relativeCommission) / 100;
+    const handleEmailChange = (value: string) => {
+        setEmailInput(value);
+        if (emailError) {
+            setEmailError("");
+        }
+    };
 
-      // Рассчитываем общую комиссию
-      const totalCommission = acquiringCommission + serviceCommission;
+    const handleEmailFocus = () => {
+        setIsEmailFocused(true);
+    };
 
-      // Рассчитываем базовую сумму к оплате
-      const baseAmount = selectedMethod.isCommissionIncluded
-        ? currentSum + totalCommission
-        : currentSum;
+    const handleEmailBlur = () => {
+        setIsEmailFocused(false);
+        if (emailInput.trim()) {
+            validateEmail(emailInput.trim());
+        }
+    };
 
-      // Применяем скидку по промокоду к комиссии
-      let finalCommission = totalCommission;
-      let finalAmount = baseAmount;
-      
-      if (activePromoCode?.success) {
-        const discountAmount = totalCommission * (activePromoCode.discount / 100);
-        finalCommission = totalCommission - discountAmount;
-        finalAmount = selectedMethod.isCommissionIncluded
-          ? currentSum + finalCommission
-          : currentSum;
-      }
+    const handleSelectAcquiringMethod = (acquiringMethod: AcquiringMethod) => {
+        setSelectedAcquiringMethodId(acquiringMethod.code);
+    };
 
-      const newCommissionData = {
-        totalCommission: Math.round(totalCommission * 100) / 100,
-        finalCommission: Math.round(finalCommission * 100) / 100,
-        amountToPay: Math.round(finalAmount * 100) / 100,
-      };
+    const paymentIsAvailable =
+        username &&
+        steamData?.valid &&
+        emailInput &&
+        !emailError &&
+        isConfirmed &&
+        amount > 0 &&
+        selectedAcquiringMethodId;
 
+    const method = React.useMemo(() => {
+        return acquiringMethods.find((method: AcquiringMethod) => method.code === selectedAcquiringMethodId)
+    }, [acquiringMethods, selectedAcquiringMethodId])
 
-      setCommissionData(newCommissionData);
-    } else {
-      const newCommissionData = {
-        totalCommission: 0,
-        finalCommission: 0,
-        amountToPay: currentSum,
-      };
-   
-      setCommissionData(newCommissionData);
-    }
-  }, [currentSum, selectedAcquiringMethodId, activePromoCode, acquiringMethods]);
+    const serviceCommission = amount > 0 && method?.relativeCommission ? ((amount * method?.relativeCommission) / 100) : 0;
+    const providerCommission = amount > 0 && method?.relativeProviderCommission ? ((amount * method?.relativeProviderCommission) / 100) : 0;
+    const totalCommission = serviceCommission + providerCommission
+    const discount = activePromo ? (totalCommission * activePromo.discount) / 100 : 0;
+    const finalCommission = totalCommission - discount;
+    const amountToPay = amount + finalCommission
 
-  const {
-    validateSteamAccount,
-    isLoading,
-    error,
-    data: steamData,
-    reset,
-  } = useSteamValidation();
+    const { createInvoice, isCreating } = useCreateInvoice();
 
-  const handleBlur = useCallback(async () => {
-    if (username.trim()) {
-      await validateSteamAccount(username);
-    }
-  }, [username, validateSteamAccount]);
+    const handlePayment = useCallback(async () => {
+        const data = await createInvoice({
+            amount: amount.toString(),
+            currency: "RUB",
+            account: username,
+            methodCode: selectedAcquiringMethodId,
+            email: emailInput,
+            promoCode: activePromo?.code, // Передаем промокод в запрос
+        });
+        localStorage.removeItem('promo_gabepay');
+        if (data) {
+            window.open(data.paymentLink, "_blank", "noopener,noreferrer");
+        }
+    }, [
+        createInvoice,
+        amount,
+        username,
+        selectedAcquiringMethodId,
+        emailInput,
+        activePromo?.code
+    ]);
 
-  const handleUsernameChange = useCallback(
-    (value: string) => {
-      setUsername(value);
+    return (
+        <div className={cn("flex gap-3 not-md:flex-wrap", className)}>
+            <div className="w-1/2 not-md:w-full gap-6 flex flex-col">
+                <SteamLogin
+                    username={username}
+                    handleUsernameChange={handleUsernameChange}
+                    handleBlur={handleBlur}
+                    isLoading={isLoading}
+                    data={steamData}
+                    emailInput={emailInput}
+                    setEmailInput={handleEmailChange}
+                    isConfirmed={isConfirmed}
+                    setIsConfirmed={setIsConfirmed}
+                    emailError={emailError}
+                    isEmailFocused={isEmailFocused}
+                    onEmailFocus={handleEmailFocus}
+                    onEmailBlur={handleEmailBlur}
+                />
 
-      if (steamData || error) {
-        reset();
-      }
-    },
-    [steamData, error, reset]
-  );
+                <PromoCode
+                    handleActivate={handleActivate}
+                    activePromo={activePromo}
+                    clearPromoCode={clearPromoCode}
+                />
 
-  const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setEmailError("Введите корректный email адрес");
-      return false;
-    }
-    setEmailError("");
-    return true;
-  };
+                <Payment currentSum={amount} setCurrentSum={setAmount} amountToPay={amountToPay}/>
+            </div>
 
-  const handleEmailChange = (value: string) => {
-    setEmailInput(value);
-    if (emailError) {
-      setEmailError("");
-    }
-  };
-
-  const handleEmailFocus = () => {
-    setIsEmailFocused(true);
-  };
-
-  const handleEmailBlur = () => {
-    setIsEmailFocused(false);
-    if (emailInput.trim()) {
-      validateEmail(emailInput.trim());
-    }
-  };
-
-  const handleSelectAcquiringMethod = (acquiringMethod: AcquiringMethod) => {
-    setSelectedAcquiringMethodId(acquiringMethod.code);
-  };
-
-  const paymentIsAvailable =
-    username &&
-    steamData?.valid &&
-    emailInput &&
-    !emailError &&
-    isConfirmed &&
-    currentSum > 0 &&
-    selectedAcquiringMethodId;
-
-  const selectedMethod = acquiringMethods.find(
-    (method) => method.code === selectedAcquiringMethodId
-  );
-
-  const amountToPay = commissionData.amountToPay;
-
-  const { createInvoice, isCreating } = useCreateInvoice();
-
-  const handlePayment = useCallback(async () => {
-    const data = await createInvoice({
-      amount: currentSum.toString(),
-      currency: "RUB",
-      account: username,
-      methodCode: selectedAcquiringMethodId,
-      email: emailInput,
-      promoCode: activePromoCode?.code || undefined,
-    });
-    if (data) {
-      window.open(data.paymentLink, "_blank", "noopener,noreferrer");
-    }
-  }, [
-    createInvoice,
-    currentSum,
-    username,
-    selectedAcquiringMethodId,
-    emailInput,
-    activePromoCode,
-  ]);
-
-  return (
-    <div className={cn("flex gap-3 not-md:flex-wrap", className)}>
-      <div className="w-1/2 not-md:w-full gap-6 flex flex-col">
-        <SteamLogin
-          username={username}
-          handleUsernameChange={handleUsernameChange}
-          handleBlur={handleBlur}
-          isLoading={isLoading}
-          data={steamData}
-          emailInput={emailInput}
-          setEmailInput={handleEmailChange}
-          isConfirmed={isConfirmed}
-          setIsConfirmed={setIsConfirmed}
-          emailError={emailError}
-          isEmailFocused={isEmailFocused}
-          onEmailFocus={handleEmailFocus}
-          onEmailBlur={handleEmailBlur}
-        />
-
-          <PromoCode/>
-
-        <Payment currentSum={currentSum} setCurrentSum={setCurrentSum} amountToPay={amountToPay} />
-      </div>
-
-      <div className="w-1/2 not-md:w-full flex flex-col gap-4">
-        <PaymentInfo
-          amountToPay={amountToPay}
-          amountToReceive={currentSum}
-          commission={commissionData.finalCommission}
-          originalCommission={commissionData.totalCommission}
-        />
-        <AcquiringMethodList
-          acquiringMethods={acquiringMethods}
-          onSelectAcquiringMethod={handleSelectAcquiringMethod}
-          selectedAcquiringMethodId={selectedAcquiringMethodId}
-        />
-        <Button
-          variant="primary"
-          size="lg"
-          className="w-full"
-          disabled={!paymentIsAvailable || isCreating}
-          onClick={handlePayment}
-        >
-          {isCreating ? "Создание платежа..." : "Пополнить баланс"}
-        </Button>
-      </div>
-    </div>
-  );
+            <div className="w-1/2 not-md:w-full flex flex-col gap-4">
+                <PaymentInfo
+                    amount={amount}
+                    amountToPay={amountToPay}
+                    commission={finalCommission}
+                />
+                <AcquiringMethodList
+                    acquiringMethods={acquiringMethods}
+                    onSelectAcquiringMethod={handleSelectAcquiringMethod}
+                    selectedAcquiringMethodId={selectedAcquiringMethodId}
+                />
+                <Button
+                    variant="primary"
+                    size="lg"
+                    className="w-full"
+                    disabled={!paymentIsAvailable || isCreating}
+                    onClick={handlePayment}
+                >
+                    {isCreating ? "Создание платежа..." : "Пополнить баланс"}
+                </Button>
+            </div>
+        </div>
+    );
 };
 
 export default Replenishment;
